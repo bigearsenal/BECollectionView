@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import ListPlaceholder
 
 open class BECollectionView: UIView {
     // MARK: - Property
@@ -131,16 +132,17 @@ open class BECollectionView: UIView {
     
     private func configureCell(collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: sections.map {$0.layout} [indexPath.section].cellType), for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: sections.map {$0.layout} [indexPath.section].cellType), for: indexPath) as? BECollectionViewCell else {
+            fatalError("Must use BECollectionViewCell")
+        }
         
         setUpCell(cell: cell, withItem: item.value)
         
-        if let cell = cell as? BELoadableViewType {
-            if item.isPlaceholder {
-                cell.showLoading()
-            } else {
-                cell.hideLoading()
-            }
+        if item.isPlaceholder {
+            cell.stackView.hideLoader()
+            cell.stackView.showLoader()
+        } else {
+            cell.stackView.hideLoader()
         }
         
         return cell

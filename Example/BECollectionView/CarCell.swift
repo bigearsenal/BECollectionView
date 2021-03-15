@@ -9,8 +9,7 @@
 import Foundation
 import BECollectionView
 
-class CarCell: BECollectionViewCell, LoadableView {
-    var loadingViews: [UIView] {[titleLabel, descriptionLabel]}
+class CarCell: BECollectionViewCell {
     
     lazy var titleLabel = UILabel(forAutoLayout: ())
     lazy var descriptionLabel = UILabel(forAutoLayout: ())

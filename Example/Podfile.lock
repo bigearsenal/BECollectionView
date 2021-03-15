@@ -1,7 +1,9 @@
 PODS:
   - BECollectionView (0.1.0):
+    - ListPlaceholder
     - PureLayout
     - RxCocoa
+  - ListPlaceholder (1.4)
   - PureLayout (3.1.7)
   - RxCocoa (6.1.0):
     - RxRelay (= 6.1.0)
@@ -16,6 +18,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - ListPlaceholder
     - PureLayout
     - RxCocoa
     - RxRelay
@@ -26,7 +29,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  BECollectionView: bd21774ec802d59fe0f59dcd62a1dbcf08d5397d
+  BECollectionView: 97aa0997325f91601f3bfad42165fb7438f4e45a
+  ListPlaceholder: 08ddaddf67520a20fc52cf37160fb56aa64d071d
   PureLayout: e9e5921347547e1068333f3149e737c972cb6037
   RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
   RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe

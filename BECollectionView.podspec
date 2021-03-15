@@ -40,4 +40,5 @@ TODO: Add long description of the pod here.
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'RxCocoa'
   s.dependency 'PureLayout'
+  s.dependency 'ListPlaceholder'
 end

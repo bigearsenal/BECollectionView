@@ -12,7 +12,7 @@ import RxSwift
 
 class FriendsViewModel: BEListViewModel<Friend> {
     override func createRequest() -> Single<[Friend]> {
-        super.createRequest()
+        Single<[Friend]>.just(data).delay(.seconds(Int.random(in: 2..<6)), scheduler: MainScheduler.instance)
             .map { _ in
                 [
                     Friend(name: "Ty", numberOfLegs: 1),

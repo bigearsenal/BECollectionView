@@ -9,9 +9,7 @@
 import Foundation
 import BECollectionView
 
-class FriendCell: BECollectionViewCell, LoadableView {
-    var loadingViews: [UIView] {[imageView, nameLabel]}
-    
+class FriendCell: BECollectionViewCell {
     lazy var imageView = UIImageView()
     lazy var nameLabel = UILabel()
     
