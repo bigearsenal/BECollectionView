@@ -25,8 +25,8 @@ public struct BECollectionViewSection {
         switch viewModel.currentState {
         case .loading:
             items += [
-                BECollectionViewItem(placeholderIndex: 0),
-                BECollectionViewItem(placeholderIndex: 1)
+                BECollectionViewItem(placeholderIndex: UUID().uuidString),
+                BECollectionViewItem(placeholderIndex: UUID().uuidString)
             ]
         case .loaded, .error, .initializing:
             break
