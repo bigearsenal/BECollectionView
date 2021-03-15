@@ -8,6 +8,20 @@
 import Foundation
 
 public struct BECollectionViewSectionLayout {
+    public init(header: BECollectionViewSectionLayout.Header? = nil, footer: BECollectionViewSectionLayout.Footer? = nil, cellType: BECollectionViewCell.Type, interGroupSpacing: CGFloat? = nil, orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior? = nil, itemHeight: NSCollectionLayoutDimension = NSCollectionLayoutDimension.estimated(100), contentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0), horizontalInterItemSpacing: NSCollectionLayoutSpacing = NSCollectionLayoutSpacing.fixed(16), background: BESectionBackgroundView.Type? = nil, customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil, customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil) {
+        self.header = header
+        self.footer = footer
+        self.cellType = cellType
+        self.interGroupSpacing = interGroupSpacing
+        self.orthogonalScrollingBehavior = orthogonalScrollingBehavior
+        self.itemHeight = itemHeight
+        self.contentInsets = contentInsets
+        self.horizontalInterItemSpacing = horizontalInterItemSpacing
+        self.background = background
+        self.customLayoutForGroupOnSmallScreen = customLayoutForGroupOnSmallScreen
+        self.customLayoutForGroupOnLargeScreen = customLayoutForGroupOnLargeScreen
+    }
+    
     public struct Header {
         public var viewClass: BESectionHeaderView.Type = BESectionHeaderView.self
         public var title: String

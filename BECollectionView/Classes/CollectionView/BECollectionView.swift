@@ -11,7 +11,7 @@ import RxSwift
 open class BECollectionView: UIView {
     // MARK: - Property
     private let disposeBag = DisposeBag()
-    private let sections: [BECollectionViewSectionType]
+    private let sections: [BECollectionViewSection]
     public private(set) var dataSource: UICollectionViewDiffableDataSource<String, BECollectionViewItem>!
     weak var delegate: BECollectionViewDelegate?
     
@@ -30,7 +30,7 @@ open class BECollectionView: UIView {
     }()
     
     // MARK: - Initializer
-    public init(sections: [BECollectionViewSectionType]) {
+    public init(sections: [BECollectionViewSection]) {
         self.sections = sections
         super.init(frame: .zero)
         commonInit()
@@ -43,7 +43,8 @@ open class BECollectionView: UIView {
     func commonInit() {
         // add subviews
         addSubview(collectionView)
-        collectionView.autoPinEdgesToSuperviewSafeArea()
+        collectionView.backgroundColor = .clear
+        collectionView.autoPinEdgesToSuperviewEdges()
         collectionView.refreshControl = refreshControl
         
         // register cell and configure datasource
@@ -188,6 +189,7 @@ open class BECollectionView: UIView {
     
     // MARK: - Actions
     @objc open func refresh() {
+        refreshControl.endRefreshing()
         sections.forEach {$0.viewModel.reload()}
     }
     

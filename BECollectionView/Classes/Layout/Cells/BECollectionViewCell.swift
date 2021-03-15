@@ -7,7 +7,9 @@
 
 import Foundation
 
-public class BECollectionViewCell: UICollectionViewCell {
+open class BECollectionViewCell: UICollectionViewCell {
+    public lazy var stackView = UIStackView(forAutoLayout: ())
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -20,8 +22,9 @@ public class BECollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func commonInit() {
-        
+    open func commonInit() {
+        addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges()
     }
-    func setUp(with item: AnyHashable) {}
+    open func setUp(with item: AnyHashable) {}
 }

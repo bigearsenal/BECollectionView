@@ -39,7 +39,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
         self.isPaginationEnabled = isPaginationEnabled
         self.limit = limit
         self.offset = offset
-        super.init(initialData: [])
+        super.init(initialData: initialData)
     }
     
     // MARK: - Actions

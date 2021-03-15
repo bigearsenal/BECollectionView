@@ -8,18 +8,16 @@
 import Foundation
 import RxSwift
 
-public struct BECollectionViewSection<T: Hashable>: BECollectionViewSectionType
-{
+public struct BECollectionViewSection {
     public let layout: BECollectionViewSectionLayout
     public let viewModel: BEListViewModelType
-}
-
-public protocol BECollectionViewSectionType {
-    var layout: BECollectionViewSectionLayout {get}
-    var viewModel: BEListViewModelType {get}
-}
-
-extension BECollectionViewSectionType {
+    
+    public init(layout: BECollectionViewSectionLayout, viewModel: BEListViewModelType)
+    {
+        self.layout = layout
+        self.viewModel = viewModel
+    }
+    
     func mapDataToCollectionViewItems() -> [BECollectionViewItem]
     {
         var items = viewModel.convertDataToAnyHashable()
@@ -37,7 +35,7 @@ extension BECollectionViewSectionType {
     }
 }
 
-extension Array where Element == BECollectionViewSectionType {
+extension Array where Element == BECollectionViewSection {
     func createLayout(interSectionSpacing: CGFloat? = nil) -> UICollectionViewLayout {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         if let interSectionSpacing = interSectionSpacing {

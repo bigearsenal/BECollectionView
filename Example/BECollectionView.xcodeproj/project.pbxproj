@@ -13,7 +13,13 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		B81413651C8BF573CDE80177 /* Pods_BECollectionView_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50922BF257C215EE0BC5FC2F /* Pods_BECollectionView_Tests.framework */; };
+		BC2EB1E825FF9E7F006CE170 /* CarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB1E725FF9E7F006CE170 /* CarCell.swift */; };
+		BC2EB1EC25FF9F45006CE170 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB1EB25FF9F45006CE170 /* FriendCell.swift */; };
 		BCBCE63225FF4DC1006A5437 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE63125FF4DC1006A5437 /* ViewController.swift */; };
+		BCBCE76625FF9BBB006A5437 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE76525FF9BBB006A5437 /* Car.swift */; };
+		BCBCE76C25FF9BCE006A5437 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE76B25FF9BCE006A5437 /* Friend.swift */; };
+		BCBCE77125FF9C7C006A5437 /* CarsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE77025FF9C7C006A5437 /* CarsViewModel.swift */; };
+		BCBCE77525FF9D52006A5437 /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE77425FF9D52006A5437 /* FriendsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +48,13 @@
 		9C2F691269A3B2D3F78239FF /* Pods-BECollectionView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BECollectionView_Tests.debug.xcconfig"; path = "Target Support Files/Pods-BECollectionView_Tests/Pods-BECollectionView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		A415685C34C437B05C5D2620 /* Pods-BECollectionView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BECollectionView_Example.release.xcconfig"; path = "Target Support Files/Pods-BECollectionView_Example/Pods-BECollectionView_Example.release.xcconfig"; sourceTree = "<group>"; };
 		AAEA01EAB0D92300BDF7D389 /* Pods_BECollectionView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BECollectionView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC2EB1E725FF9E7F006CE170 /* CarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCell.swift; sourceTree = "<group>"; };
+		BC2EB1EB25FF9F45006CE170 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
 		BCBCE63125FF4DC1006A5437 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BCBCE76525FF9BBB006A5437 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		BCBCE76B25FF9BCE006A5437 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		BCBCE77025FF9C7C006A5437 /* CarsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsViewModel.swift; sourceTree = "<group>"; };
+		BCBCE77425FF9D52006A5437 /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		BF813C48523C8DC99F07A51F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		C91E29EC6A2574A6DE049E7A /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,6 +103,9 @@
 		607FACD21AFB9204008FA782 /* Example for BECollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				BCBCE76425FF9BAD006A5437 /* Models */,
+				BCBCE76F25FF9C6B006A5437 /* ViewModels */,
+				BC2EB1E625FF9E71006CE170 /* Cells */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				BCBCE63125FF4DC1006A5437 /* ViewController.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -145,6 +160,33 @@
 				2BCEB236EDF479AD44F90DD7 /* Pods-BECollectionView_Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		BC2EB1E625FF9E71006CE170 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				BC2EB1E725FF9E7F006CE170 /* CarCell.swift */,
+				BC2EB1EB25FF9F45006CE170 /* FriendCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		BCBCE76425FF9BAD006A5437 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BCBCE76525FF9BBB006A5437 /* Car.swift */,
+				BCBCE76B25FF9BCE006A5437 /* Friend.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		BCBCE76F25FF9C6B006A5437 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				BCBCE77025FF9C7C006A5437 /* CarsViewModel.swift */,
+				BCBCE77425FF9D52006A5437 /* FriendsViewModel.swift */,
+			);
+			name = ViewModels;
 			sourceTree = "<group>";
 		};
 		E637ADF4540A12A7ED40699C /* Frameworks */ = {
@@ -335,8 +377,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCBCE77125FF9C7C006A5437 /* CarsViewModel.swift in Sources */,
+				BCBCE76625FF9BBB006A5437 /* Car.swift in Sources */,
+				BCBCE77525FF9D52006A5437 /* FriendsViewModel.swift in Sources */,
+				BC2EB1EC25FF9F45006CE170 /* FriendCell.swift in Sources */,
 				BCBCE63225FF4DC1006A5437 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				BC2EB1E825FF9E7F006CE170 /* CarCell.swift in Sources */,
+				BCBCE76C25FF9BCE006A5437 /* Friend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
