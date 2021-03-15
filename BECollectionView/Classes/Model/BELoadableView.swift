@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol BELoadableViewType: UIView {
+public protocol BELoadableViewType: UIView {
     func showLoading()
     func hideLoading()
 }

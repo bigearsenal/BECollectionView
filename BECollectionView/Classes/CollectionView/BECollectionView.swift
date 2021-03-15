@@ -147,7 +147,7 @@ open class BECollectionView: UIView {
     }
     
     open func setUpCell(cell: UICollectionViewCell, withItem item: AnyHashable?) {
-        if let cell = cell as? BECollectionViewCell, let item = item {
+        if let cell = cell as? BECollectionViewCell {
             cell.setUp(with: item)
         }
     }

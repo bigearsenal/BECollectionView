@@ -9,7 +9,9 @@
 import Foundation
 import BECollectionView
 
-class CarCell: BECollectionViewCell {
+class CarCell: BECollectionViewCell, LoadableView {
+    var loadingViews: [UIView] {[titleLabel, descriptionLabel]}
+    
     lazy var titleLabel = UILabel(forAutoLayout: ())
     lazy var descriptionLabel = UILabel(forAutoLayout: ())
     
@@ -21,8 +23,12 @@ class CarCell: BECollectionViewCell {
         stackView.addArrangedSubview(descriptionLabel)
     }
     
-    override func setUp(with item: AnyHashable) {
-        guard let car = item as? Car else {return}
+    override func setUp(with item: AnyHashable?) {
+        guard let car = item as? Car else {
+            titleLabel.text = "<placeholder>"
+            descriptionLabel.text = "<placeholder>"
+            return
+        }
         titleLabel.text = car.name
         descriptionLabel.text = "\(car.numberOfWheels)"
     }

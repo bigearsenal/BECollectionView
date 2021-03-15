@@ -65,6 +65,7 @@ open class BEViewModel<T: Hashable> {
             // there is an running operation
             return
         }
+        state.accept(.loading)
         requestDisposable = createRequest()
             .subscribe(onSuccess: {newData in
                 self.handleNewData(newData)

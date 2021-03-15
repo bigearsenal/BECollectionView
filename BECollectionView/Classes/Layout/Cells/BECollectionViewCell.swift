@@ -23,8 +23,8 @@ open class BECollectionViewCell: UICollectionViewCell {
     }
     
     open func commonInit() {
-        addSubview(stackView)
+        contentView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
     }
-    open func setUp(with item: AnyHashable) {}
+    open func setUp(with item: AnyHashable?) {}
 }

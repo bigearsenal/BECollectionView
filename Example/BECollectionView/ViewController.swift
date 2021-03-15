@@ -17,26 +17,28 @@ class ViewController: UIViewController {
 //                header: BECollectionViewSection.Header(viewClass: ActiveWalletsSectionHeaderView.self, title: ""),
                 cellType: CarCell.self,
                 interGroupSpacing: 30,
-                itemHeight: .absolute(45),
+                itemHeight: .estimated(17),
                 horizontalInterItemSpacing: NSCollectionLayoutSpacing.fixed(16)
             ),
             viewModel: CarsViewModel()
         )
         let section1 = BECollectionViewSection(
             layout: BECollectionViewSectionLayout(
-//                header: CollectionViewSection.Header(
-//                    viewClass: HiddenWalletsSectionHeaderView.self, title: L10n.hiddenWallets
-//                ),
-//                footer: CollectionViewSection.Footer(viewClass: WalletsSectionFooterView.self),
                 cellType: FriendCell.self,
-                interGroupSpacing: 30,
-                itemHeight: .absolute(45),
-                horizontalInterItemSpacing: NSCollectionLayoutSpacing.fixed(16)
-            ),
+                interGroupSpacing: 16,
+                contentInsets: NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10),
+                horizontalInterItemSpacing: .fixed(16),
+                customLayoutForGroupOnSmallScreen: {_ in
+                    self.groupLayoutForFriendSection()
+                },
+                customLayoutForGroupOnLargeScreen: {_ in
+                    self.groupLayoutForFriendSection()
+                }),
             viewModel: FriendsViewModel()
         )
         let collectionView = BECollectionView(sections: [
-            section0
+            section0,
+            section1
         ])
         return collectionView
     }()
@@ -47,5 +49,16 @@ class ViewController: UIViewController {
         collectionView.configureForAutoLayout()
         view.addSubview(collectionView)
         collectionView.autoPinEdgesToSuperviewEdges()
+    }
+    
+    private func groupLayoutForFriendSection() -> NSCollectionLayoutGroup {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(80), heightDimension: .estimated(73))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(16)
+        return group
     }
 }

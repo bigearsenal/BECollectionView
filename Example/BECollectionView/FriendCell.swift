@@ -9,6 +9,32 @@
 import Foundation
 import BECollectionView
 
-class FriendCell: BECollectionViewCell {
+class FriendCell: BECollectionViewCell, LoadableView {
+    var loadingViews: [UIView] {[imageView, nameLabel]}
     
+    lazy var imageView = UIImageView()
+    lazy var nameLabel = UILabel()
+    
+    override func commonInit() {
+        super.commonInit()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 8
+        
+        imageView.autoSetDimensions(to: CGSize(width: 50, height: 50))
+        imageView.layer.cornerRadius = 25
+        imageView.layer.masksToBounds = true
+        stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(nameLabel)
+    }
+    
+    override func setUp(with item: AnyHashable?) {
+        guard let friend = item as? Friend else {
+            imageView.backgroundColor = .orange
+            nameLabel.text = "<placeholder>"
+            return
+        }
+        imageView.backgroundColor = .orange
+        nameLabel.text = friend.name
+    }
 }
