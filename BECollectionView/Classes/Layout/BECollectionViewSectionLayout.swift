@@ -1,5 +1,5 @@
 //
-//  BECollectionViewSection.swift
+//  BECollectionViewSectionLayout.swift
 //  BECollectionView
 //
 //  Created by Chung Tran on 15/03/2021.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct BECollectionViewSection {
-    struct Header {
-        var viewClass: BESectionHeaderView.Type = BESectionHeaderView.self
-        var title: String
-        var titleFont: UIFont = .systemFont(ofSize: 17, weight: .semibold)
-        var heightDimension: NSCollectionLayoutDimension = .estimated(10)
-        var layout: NSCollectionLayoutBoundarySupplementaryItem {
+public struct BECollectionViewSectionLayout {
+    public struct Header {
+        public var viewClass: BESectionHeaderView.Type = BESectionHeaderView.self
+        public var title: String
+        public var titleFont: UIFont = .systemFont(ofSize: 17, weight: .semibold)
+        public var heightDimension: NSCollectionLayoutDimension = .estimated(10)
+        public var layout: NSCollectionLayoutBoundarySupplementaryItem {
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
             return NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize,
@@ -23,9 +23,9 @@ struct BECollectionViewSection {
         }
     }
     
-    struct Footer {
-        var viewClass: BESectionFooterView.Type = BESectionFooterView.self
-        var layout: NSCollectionLayoutBoundarySupplementaryItem = {
+    public struct Footer {
+        public var viewClass: BESectionFooterView.Type = BESectionFooterView.self
+        public var layout: NSCollectionLayoutBoundarySupplementaryItem = {
             let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(20))
             return NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: size,
@@ -35,17 +35,17 @@ struct BECollectionViewSection {
         }()
     }
     
-    var header: Header?
-    var footer: Footer?
-    var cellType: BaseCollectionViewCell.Type
-    var interGroupSpacing: CGFloat?
-    var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior?
-    var itemHeight = NSCollectionLayoutDimension.estimated(100)
-    var contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-    var horizontalInterItemSpacing = NSCollectionLayoutSpacing.fixed(16)
-    var background: BESectionBackgroundView.Type?
-    var customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
-    var customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
+    public var header: Header?
+    public var footer: Footer?
+    public var cellType: BECollectionViewCell.Type
+    public var interGroupSpacing: CGFloat?
+    public var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior?
+    public var itemHeight = NSCollectionLayoutDimension.estimated(100)
+    public var contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+    public var horizontalInterItemSpacing = NSCollectionLayoutSpacing.fixed(16)
+    public var background: BESectionBackgroundView.Type?
+    public var customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
+    public var customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
     
     func registerCellAndSupplementaryViews(in collectionView: UICollectionView) {
         // register cell
@@ -149,7 +149,7 @@ struct BECollectionViewSection {
     }
 }
 
-extension Array where Element == BECollectionViewSection {
+extension Array where Element == BECollectionViewSectionLayout {
     func createLayout(interSectionSpacing: CGFloat? = nil) -> UICollectionViewLayout {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         if let interSectionSpacing = interSectionSpacing {

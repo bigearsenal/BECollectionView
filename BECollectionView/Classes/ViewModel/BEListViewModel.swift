@@ -6,8 +6,19 @@
 //
 
 import Foundation
+import RxSwift
 
-open class BEListViewModel<T: Hashable>: BEViewModel<[T]> {
+public protocol BEListViewModelType {
+    var dataDidChange: Observable<Void> {get}
+    var currentState: BEFetcherState {get}
+    var isPaginationEnabled: Bool {get}
+    
+    func reload()
+    func convertDataToAnyHashable() -> [AnyHashable]
+    func fetchNext()
+}
+
+open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     // MARK: - Properties
     public var isPaginationEnabled: Bool
     
@@ -130,5 +141,9 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]> {
             handleNewData(data)
         }
         return nil
+    }
+    
+    public func convertDataToAnyHashable() -> [AnyHashable] {
+        data as [AnyHashable]
     }
 }

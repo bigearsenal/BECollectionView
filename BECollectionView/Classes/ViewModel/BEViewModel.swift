@@ -14,15 +14,19 @@ open class BEViewModel<T: Hashable> {
     let initialData: T
     private var requestDisposable: Disposable?
     public private(set) var data: T
+    public private(set) var error: Error?
+    public var currentState: BEFetcherState {
+        state.value
+    }
     
     // MARK: - Subject
-    let state: BehaviorRelay<BEFetcherState<T>>
+    let state: BehaviorRelay<BEFetcherState>
     
     // MARK: - Initializer
     public init(initialData: T) {
         self.initialData = initialData
         data = initialData
-        state = BehaviorRelay<BEFetcherState<T>>(value: .initializing)
+        state = BehaviorRelay<BEFetcherState>(value: .initializing)
         bind()
     }
     
@@ -71,24 +75,32 @@ open class BEViewModel<T: Hashable> {
     
     open func handleNewData(_ newData: T) {
         data = newData
-        state.accept(.loaded(data))
+        state.accept(.loaded)
     }
     
     open func handleError(_ error: Error) {
-        state.accept(.error(error))
+        self.error = error
+        state.accept(.error)
     }
     
     // MARK: - Observable
     open var dataDidChange: Observable<Void> {
-        state.distinctUntilChanged().map {_ in ()}
+        state.distinctUntilChanged({
+            switch ($0, $1) {
+            case (.initializing, .initializing),  (.loading, .loading):
+                return true
+            default:
+                return false
+            }
+        }).map {_ in ()}
     }
     
     open var dataObservable: Observable<T?> {
         state
-            .map { state -> T? in
+            .map { [weak self] state -> T? in
                 switch state {
                 case .loaded:
-                    return self.data
+                    return self?.data
                 default:
                     return nil
                 }

@@ -1,5 +1,5 @@
 //
-//  BESectionBackgroundView.swift
+//  BECollectionViewCell.swift
 //  BECollectionView
 //
 //  Created by Chung Tran on 15/03/2021.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-class BESectionBackgroundView: UICollectionReusableView {
-    override init(frame: CGRect) {
+public class BECollectionViewCell: UICollectionViewCell {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
@@ -16,10 +16,12 @@ class BESectionBackgroundView: UICollectionReusableView {
     @available(*, unavailable,
     message: "Loading this view from a nib is unsupported in favor of initializer dependency injection."
     )
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func commonInit() {
+    public func commonInit() {
+        
     }
+    func setUp(with item: AnyHashable) {}
 }
