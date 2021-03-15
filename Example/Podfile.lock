@@ -1,5 +1,6 @@
 PODS:
   - BECollectionView (0.1.0):
+    - PureLayout
     - RxCocoa
   - PureLayout (3.1.7)
   - RxCocoa (6.1.0):
@@ -25,7 +26,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  BECollectionView: 925e61e1a4b6b039b14a4d91953e2f57e60ddfdb
+  BECollectionView: bd21774ec802d59fe0f59dcd62a1dbcf08d5397d
   PureLayout: e9e5921347547e1068333f3149e737c972cb6037
   RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
   RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
