@@ -15,6 +15,8 @@
 		B81413651C8BF573CDE80177 /* Pods_BECollectionView_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50922BF257C215EE0BC5FC2F /* Pods_BECollectionView_Tests.framework */; };
 		BC2EB1E825FF9E7F006CE170 /* CarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB1E725FF9E7F006CE170 /* CarCell.swift */; };
 		BC2EB1EC25FF9F45006CE170 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB1EB25FF9F45006CE170 /* FriendCell.swift */; };
+		BC2EB25425FFD069006CE170 /* CarsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB25325FFD069006CE170 /* CarsSection.swift */; };
+		BC2EB25825FFD092006CE170 /* FriendsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB25725FFD092006CE170 /* FriendsSection.swift */; };
 		BCBCE63225FF4DC1006A5437 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE63125FF4DC1006A5437 /* ViewController.swift */; };
 		BCBCE76625FF9BBB006A5437 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE76525FF9BBB006A5437 /* Car.swift */; };
 		BCBCE76C25FF9BCE006A5437 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE76B25FF9BCE006A5437 /* Friend.swift */; };
@@ -50,6 +52,8 @@
 		AAEA01EAB0D92300BDF7D389 /* Pods_BECollectionView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BECollectionView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC2EB1E725FF9E7F006CE170 /* CarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCell.swift; sourceTree = "<group>"; };
 		BC2EB1EB25FF9F45006CE170 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
+		BC2EB25325FFD069006CE170 /* CarsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsSection.swift; sourceTree = "<group>"; };
+		BC2EB25725FFD092006CE170 /* FriendsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsSection.swift; sourceTree = "<group>"; };
 		BCBCE63125FF4DC1006A5437 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BCBCE76525FF9BBB006A5437 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
 		BCBCE76B25FF9BCE006A5437 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
@@ -106,6 +110,7 @@
 				BCBCE76425FF9BAD006A5437 /* Models */,
 				BCBCE76F25FF9C6B006A5437 /* ViewModels */,
 				BC2EB1E625FF9E71006CE170 /* Cells */,
+				BC2EB25225FFD05D006CE170 /* Sections */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				BCBCE63125FF4DC1006A5437 /* ViewController.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -169,6 +174,15 @@
 				BC2EB1EB25FF9F45006CE170 /* FriendCell.swift */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		BC2EB25225FFD05D006CE170 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				BC2EB25325FFD069006CE170 /* CarsSection.swift */,
+				BC2EB25725FFD092006CE170 /* FriendsSection.swift */,
+			);
+			name = Sections;
 			sourceTree = "<group>";
 		};
 		BCBCE76425FF9BAD006A5437 /* Models */ = {
@@ -382,9 +396,11 @@
 				BCBCE77125FF9C7C006A5437 /* CarsViewModel.swift in Sources */,
 				BCBCE76625FF9BBB006A5437 /* Car.swift in Sources */,
 				BCBCE77525FF9D52006A5437 /* FriendsViewModel.swift in Sources */,
+				BC2EB25825FFD092006CE170 /* FriendsSection.swift in Sources */,
 				BC2EB1EC25FF9F45006CE170 /* FriendCell.swift in Sources */,
 				BCBCE63225FF4DC1006A5437 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				BC2EB25425FFD069006CE170 /* CarsSection.swift in Sources */,
 				BC2EB1E825FF9E7F006CE170 /* CarCell.swift in Sources */,
 				BCBCE76C25FF9BCE006A5437 /* Friend.swift in Sources */,
 			);

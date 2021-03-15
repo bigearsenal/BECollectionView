@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-public struct BECollectionViewSection {
+open class BECollectionViewSection {
     public let layout: BECollectionViewSectionLayout
     public let viewModel: BEListViewModelType
     
