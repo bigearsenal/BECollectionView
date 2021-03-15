@@ -1,0 +1,36 @@
+PODS:
+  - BECollectionView (0.1.0):
+    - RxCocoa
+  - PureLayout (3.1.7)
+  - RxCocoa (6.1.0):
+    - RxRelay (= 6.1.0)
+    - RxSwift (= 6.1.0)
+  - RxRelay (6.1.0):
+    - RxSwift (= 6.1.0)
+  - RxSwift (6.1.0)
+
+DEPENDENCIES:
+  - BECollectionView (from `../`)
+  - PureLayout
+
+SPEC REPOS:
+  trunk:
+    - PureLayout
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+
+EXTERNAL SOURCES:
+  BECollectionView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  BECollectionView: 925e61e1a4b6b039b14a4d91953e2f57e60ddfdb
+  PureLayout: e9e5921347547e1068333f3149e737c972cb6037
+  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
+  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
+
+PODFILE CHECKSUM: 4a777921a4fd68326954f0979251282afbd3422c
+
+COCOAPODS: 1.10.1

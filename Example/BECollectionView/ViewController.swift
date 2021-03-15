@@ -1,24 +1,14 @@
 //
 //  ViewController.swift
-//  BECollectionView
+//  BECollectionView_Example
 //
-//  Created by Chung Tran on 03/15/2021.
-//  Copyright (c) 2021 Chung Tran. All rights reserved.
+//  Created by Chung Tran on 15/03/2021.
+//  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
 }
-
