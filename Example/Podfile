@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '9.0'
+
+target 'BECollectionView_Example' do
+  pod 'BECollectionView', :path => '../'
+
+  target 'BECollectionView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
