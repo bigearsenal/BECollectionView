@@ -29,15 +29,20 @@ class ViewController: UIViewController, BECollectionViewDelegate {
     
     func beCollectionViewDataDidLoad(collectionView: BECollectionView) {
         let section0Header = collectionView.sectionHeaderView(sectionIndex: 0) as? CarsSectionHeaderView
-        let oldText = section0Header?.titleLabel.text
-        let newText = "Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text."
+        var newText = ""
+        let text1 = "Test title"
+        let text2 = "Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text."
         
-        if oldText != newText {
-            section0Header?.titleLabel.text = "Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text."
-            let context = UICollectionViewLayoutInvalidationContext()
-            context.invalidateSupplementaryElements(ofKind: UICollectionElementKindSectionHeader, at: [IndexPath(row: 0, section: 0)])
-            collectionView.relayout(context)
+        if text1 == section0Header?.titleLabel.text {
+            newText = text2
+        } else {
+            newText = text1
         }
+        
+        section0Header?.titleLabel.text = newText
+        let context = UICollectionViewLayoutInvalidationContext()
+        context.invalidateSupplementaryElements(ofKind: UICollectionElementKindSectionHeader, at: [IndexPath(row: 0, section: 0)])
+        collectionView.relayout(context)
     }
     
     func beCollectionView(collectionView: BECollectionView, didSelect item: AnyHashable) {
