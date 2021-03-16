@@ -14,7 +14,7 @@ open class BECollectionView: UIView {
     private let disposeBag = DisposeBag()
     private let sections: [BECollectionViewSection]
     public private(set) var dataSource: UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>!
-    weak var delegate: BECollectionViewDelegate?
+    public weak var delegate: BECollectionViewDelegate?
     
     // MARK: - Subviews
     public lazy var collectionView: UICollectionView = {
@@ -202,7 +202,7 @@ open class BECollectionView: UIView {
                 return
             }
             if let item = item.value {
-                delegate?.itemDidSelect(item)
+                delegate?.itemDidSelect?(item)
             }
         } else {
             print("collection view was tapped")
@@ -221,6 +221,6 @@ open class BECollectionView: UIView {
 ////        collectionView.collectionViewLayout.invalidateLayout()
 //        footer.setNeedsDisplay()
         
-        delegate?.dataDidLoad()
+        delegate?.dataDidLoad?()
     }
 }

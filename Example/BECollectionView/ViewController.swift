@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import BECollectionView
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, BECollectionViewDelegate {
     lazy var collectionView: BECollectionView = {
         let section0 = CarsSection(viewModel: CarsViewModel())
         let section1 = FriendsSection(viewModel: FriendsViewModel())
@@ -24,5 +24,17 @@ class ViewController: UIViewController {
         collectionView.configureForAutoLayout()
         view.addSubview(collectionView)
         collectionView.autoPinEdgesToSuperviewEdges()
+        collectionView.delegate = self
+    }
+    
+    func itemDidSelect(_ item: AnyHashable) {
+        switch item {
+        case let car as Car:
+            print(car.name)
+        case let friend as Friend:
+            print(friend.name)
+        default:
+            break
+        }
     }
 }
