@@ -17,6 +17,7 @@
 		BC2EB1EC25FF9F45006CE170 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB1EB25FF9F45006CE170 /* FriendCell.swift */; };
 		BC2EB25425FFD069006CE170 /* CarsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB25325FFD069006CE170 /* CarsSection.swift */; };
 		BC2EB25825FFD092006CE170 /* FriendsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB25725FFD092006CE170 /* FriendsSection.swift */; };
+		BC2EB26026005764006CE170 /* CarsSection+SupplementaryViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB25F26005764006CE170 /* CarsSection+SupplementaryViews.swift */; };
 		BCBCE63225FF4DC1006A5437 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE63125FF4DC1006A5437 /* ViewController.swift */; };
 		BCBCE76625FF9BBB006A5437 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE76525FF9BBB006A5437 /* Car.swift */; };
 		BCBCE76C25FF9BCE006A5437 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE76B25FF9BCE006A5437 /* Friend.swift */; };
@@ -54,6 +55,7 @@
 		BC2EB1EB25FF9F45006CE170 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
 		BC2EB25325FFD069006CE170 /* CarsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsSection.swift; sourceTree = "<group>"; };
 		BC2EB25725FFD092006CE170 /* FriendsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsSection.swift; sourceTree = "<group>"; };
+		BC2EB25F26005764006CE170 /* CarsSection+SupplementaryViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CarsSection+SupplementaryViews.swift"; sourceTree = "<group>"; };
 		BCBCE63125FF4DC1006A5437 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BCBCE76525FF9BBB006A5437 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
 		BCBCE76B25FF9BCE006A5437 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
@@ -179,10 +181,19 @@
 		BC2EB25225FFD05D006CE170 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				BC2EB25325FFD069006CE170 /* CarsSection.swift */,
+				BC2EB25E26005750006CE170 /* CarsSection */,
 				BC2EB25725FFD092006CE170 /* FriendsSection.swift */,
 			);
 			name = Sections;
+			sourceTree = "<group>";
+		};
+		BC2EB25E26005750006CE170 /* CarsSection */ = {
+			isa = PBXGroup;
+			children = (
+				BC2EB25325FFD069006CE170 /* CarsSection.swift */,
+				BC2EB25F26005764006CE170 /* CarsSection+SupplementaryViews.swift */,
+			);
+			name = CarsSection;
 			sourceTree = "<group>";
 		};
 		BCBCE76425FF9BAD006A5437 /* Models */ = {
@@ -402,6 +413,7 @@
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				BC2EB25425FFD069006CE170 /* CarsSection.swift in Sources */,
 				BC2EB1E825FF9E7F006CE170 /* CarCell.swift in Sources */,
+				BC2EB26026005764006CE170 /* CarsSection+SupplementaryViews.swift in Sources */,
 				BCBCE76C25FF9BCE006A5437 /* Friend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

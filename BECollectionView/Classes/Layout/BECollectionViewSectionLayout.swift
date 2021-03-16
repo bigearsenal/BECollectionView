@@ -23,10 +23,15 @@ public struct BECollectionViewSectionLayout {
     }
     
     public struct Header {
+        public init(viewClass: BESectionHeaderView.Type = BESectionHeaderView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
+            self.viewClass = viewClass
+            self.heightDimension = heightDimension
+            self.customLayout = customLayout
+        }
+        
         public var viewClass: BESectionHeaderView.Type = BESectionHeaderView.self
-        public var title: String
-        public var titleFont: UIFont = .systemFont(ofSize: 17, weight: .semibold)
-        public var heightDimension: NSCollectionLayoutDimension = .estimated(10)
+        public var heightDimension: NSCollectionLayoutDimension = .estimated(20)
+        public var customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil
         public var layout: NSCollectionLayoutBoundarySupplementaryItem {
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
             return NSCollectionLayoutBoundarySupplementaryItem(
@@ -38,15 +43,24 @@ public struct BECollectionViewSectionLayout {
     }
     
     public struct Footer {
+        public init(viewClass: BESectionFooterView.Type = BESectionFooterView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
+            self.viewClass = viewClass
+            self.heightDimension = heightDimension
+            self.customLayout = customLayout
+        }
+        
         public var viewClass: BESectionFooterView.Type = BESectionFooterView.self
-        public var layout: NSCollectionLayoutBoundarySupplementaryItem = {
-            let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(20))
+        public var heightDimension: NSCollectionLayoutDimension = .estimated(20)
+        public var customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil
+        public var layout: NSCollectionLayoutBoundarySupplementaryItem {
+            if let layout = customLayout {return layout}
+            let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
             return NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: size,
                 elementKind: UICollectionElementKindSectionFooter,
                 alignment: .bottom
             )
-        }()
+        }
     }
     
     public var header: Header?

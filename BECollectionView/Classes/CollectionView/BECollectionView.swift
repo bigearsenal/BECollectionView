@@ -13,7 +13,7 @@ open class BECollectionView: UIView {
     // MARK: - Property
     private let disposeBag = DisposeBag()
     private let sections: [BECollectionViewSection]
-    public private(set) var dataSource: UICollectionViewDiffableDataSource<String, BECollectionViewItem>!
+    public private(set) var dataSource: UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>!
     weak var delegate: BECollectionViewDelegate?
     
     // MARK: - Subviews
@@ -107,9 +107,9 @@ open class BECollectionView: UIView {
             .map {_ in ()}
     }
     
-    open func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<String, BECollectionViewItem> {
-        var snapshot = NSDiffableDataSourceSnapshot<String, BECollectionViewItem>()
-        let sectionsHeaders = self.sections.enumerated().map {$0.element.layout.header?.title ?? "\($0.offset)"}
+    open func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
+        var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem>()
+        let sectionsHeaders = self.sections.indices.map {$0}
         snapshot.appendSections(sectionsHeaders)
         
         for (index, section) in sections.enumerated() {
@@ -121,7 +121,7 @@ open class BECollectionView: UIView {
     
     // MARK: - Datasource
     private func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<String, BECollectionViewItem>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
             self?.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
         }
                 
