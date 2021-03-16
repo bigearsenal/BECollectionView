@@ -15,6 +15,7 @@ class CarsSectionHeaderView: BESectionHeaderView {
     override func commonInit() {
         super.commonInit()
         titleLabel.text = "Test title"
+        titleLabel.numberOfLines = 0
         titleLabel.font = .boldSystemFont(ofSize: 21)
         stackView.addArrangedSubview(titleLabel)
     }

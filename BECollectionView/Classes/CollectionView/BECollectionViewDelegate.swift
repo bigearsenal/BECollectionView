@@ -8,6 +8,6 @@
 import Foundation
 
 @objc public protocol BECollectionViewDelegate: class {
-    @objc optional func dataDidLoad()
-    @objc optional func itemDidSelect(_ item: AnyHashable)
+    @objc optional func beCollectionViewDataDidLoad(collectionView: BECollectionView)
+    @objc optional func beCollectionView(collectionView: BECollectionView, didSelect item: AnyHashable)
 }

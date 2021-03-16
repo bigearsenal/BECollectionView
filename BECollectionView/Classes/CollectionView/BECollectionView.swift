@@ -202,7 +202,7 @@ open class BECollectionView: UIView {
                 return
             }
             if let item = item.value {
-                delegate?.itemDidSelect?(item)
+                delegate?.beCollectionView?(collectionView: self, didSelect: item)
             }
         } else {
             print("collection view was tapped")
@@ -221,6 +221,23 @@ open class BECollectionView: UIView {
 ////        collectionView.collectionViewLayout.invalidateLayout()
 //        footer.setNeedsDisplay()
         
-        delegate?.dataDidLoad?()
+        delegate?.beCollectionViewDataDidLoad?(collectionView: self)
+    }
+    
+    // MARK: - Helpers
+    public func sectionHeaderView(sectionIndex: Int) -> BESectionHeaderView? {
+        collectionView.supplementaryView(forElementKind: UICollectionElementKindSectionHeader, at: IndexPath(row: 0, section: sectionIndex)) as? BESectionHeaderView
+    }
+    
+    public func sectionFooterView(sectionIndex: Int) -> BESectionFooterView? {
+        collectionView.supplementaryView(forElementKind: UICollectionElementKindSectionFooter, at: IndexPath(row: 0, section: sectionIndex)) as? BESectionFooterView
+    }
+    
+    public func relayout(_ context: UICollectionViewLayoutInvalidationContext? = nil) {
+        if let context = context {
+            collectionView.collectionViewLayout.invalidateLayout(with: context)
+        } else {
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
     }
 }

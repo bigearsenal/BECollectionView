@@ -27,7 +27,20 @@ class ViewController: UIViewController, BECollectionViewDelegate {
         collectionView.delegate = self
     }
     
-    func itemDidSelect(_ item: AnyHashable) {
+    func beCollectionViewDataDidLoad(collectionView: BECollectionView) {
+        let section0Header = collectionView.sectionHeaderView(sectionIndex: 0) as? CarsSectionHeaderView
+        let oldText = section0Header?.titleLabel.text
+        let newText = "Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text."
+        
+        if oldText != newText {
+            section0Header?.titleLabel.text = "Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text."
+            let context = UICollectionViewLayoutInvalidationContext()
+            context.invalidateSupplementaryElements(ofKind: UICollectionElementKindSectionHeader, at: [IndexPath(row: 0, section: 0)])
+            collectionView.relayout(context)
+        }
+    }
+    
+    func beCollectionView(collectionView: BECollectionView, didSelect item: AnyHashable) {
         switch item {
         case let car as Car:
             print(car.name)
