@@ -156,10 +156,10 @@ open class BECollectionView: UIView {
     }
     
     func configureSupplementaryView(collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
-        if kind == UICollectionElementKindSectionHeader {
+        if kind == UICollectionView.elementKindSectionHeader {
             return configureHeaderForSectionAtIndexPath(indexPath, inCollectionView: collectionView)
         }
-        if kind == UICollectionElementKindSectionFooter {
+        if kind == UICollectionView.elementKindSectionFooter {
             return configureFooterForSectionAtIndexPath(indexPath, inCollectionView: collectionView)
         }
         return nil
@@ -171,7 +171,7 @@ open class BECollectionView: UIView {
         }
         
         let view = collectionView.dequeueReusableSupplementaryView(
-            ofKind: UICollectionElementKindSectionHeader,
+            ofKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: String(describing: sections.map {$0.layout} [indexPath.section].header!.viewClass),
             for: indexPath)
         return view
@@ -183,7 +183,7 @@ open class BECollectionView: UIView {
         }
         
         let view = collectionView.dequeueReusableSupplementaryView(
-            ofKind: UICollectionElementKindSectionFooter,
+            ofKind: UICollectionView.elementKindSectionFooter,
             withReuseIdentifier: String(describing: sections.map {$0.layout} [indexPath.section].footer!.viewClass),
             for: indexPath)
         
@@ -227,11 +227,11 @@ open class BECollectionView: UIView {
     
     // MARK: - Helpers
     public func sectionHeaderView(sectionIndex: Int) -> BESectionHeaderView? {
-        collectionView.supplementaryView(forElementKind: UICollectionElementKindSectionHeader, at: IndexPath(row: 0, section: sectionIndex)) as? BESectionHeaderView
+        collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(row: 0, section: sectionIndex)) as? BESectionHeaderView
     }
     
     public func sectionFooterView(sectionIndex: Int) -> BESectionFooterView? {
-        collectionView.supplementaryView(forElementKind: UICollectionElementKindSectionFooter, at: IndexPath(row: 0, section: sectionIndex)) as? BESectionFooterView
+        collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionFooter, at: IndexPath(row: 0, section: sectionIndex)) as? BESectionFooterView
     }
     
     public func relayout(_ context: UICollectionViewLayoutInvalidationContext? = nil) {

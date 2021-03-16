@@ -38,7 +38,7 @@ class CarsSection: BECollectionViewSection {
         
         section0Header?.titleLabel.text = newText
         let context = UICollectionViewLayoutInvalidationContext()
-        context.invalidateSupplementaryElements(ofKind: UICollectionElementKindSectionHeader, at: [IndexPath(row: 0, section: 0)])
+        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionHeader, at: [IndexPath(row: 0, section: 0)])
         collectionView?.relayout(context)
     }
 }

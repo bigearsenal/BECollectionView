@@ -36,7 +36,7 @@ public struct BECollectionViewSectionLayout {
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
             return NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize,
-                elementKind: UICollectionElementKindSectionHeader,
+                elementKind: UICollectionView.elementKindSectionHeader,
                 alignment: .top
             )
         }
@@ -57,7 +57,7 @@ public struct BECollectionViewSectionLayout {
             let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension)
             return NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: size,
-                elementKind: UICollectionElementKindSectionFooter,
+                elementKind: UICollectionView.elementKindSectionFooter,
                 alignment: .bottom
             )
         }
@@ -81,12 +81,12 @@ public struct BECollectionViewSectionLayout {
         
         // register header
         if let header = header {
-            collectionView.register(header.viewClass, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: String(describing: header.viewClass))
+            collectionView.register(header.viewClass, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: header.viewClass))
         }
         
         // register footer
         if let footer = footer {
-            collectionView.register(footer.viewClass, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: String(describing: footer.viewClass))
+            collectionView.register(footer.viewClass, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: String(describing: footer.viewClass))
         }
     }
     

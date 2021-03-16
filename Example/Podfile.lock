@@ -29,7 +29,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  BECollectionView: 97aa0997325f91601f3bfad42165fb7438f4e45a
+  BECollectionView: 098e19a8d0f4ecaa96018ec43fe776e5dc60f4fe
   ListPlaceholder: 08ddaddf67520a20fc52cf37160fb56aa64d071d
   PureLayout: e9e5921347547e1068333f3149e737c972cb6037
   RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
