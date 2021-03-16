@@ -73,16 +73,20 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
         offset += limit
     }
     
-    func join(_ newItems: [T]) -> [T] {
+    open func join(_ newItems: [T]) -> [T] {
         if !isPaginationEnabled {
             return newItems
         }
         return data + newItems.filter {!data.contains($0)}
     }
     
+    public func overrideData(by newData: [T]) {
+        super.handleNewData(newData)
+    }
+    
     // MARK: - Helper
     @discardableResult
-    func updateItem(where predicate: (T) -> Bool, transform: (T) -> T?) -> Bool {
+    open func updateItem(where predicate: (T) -> Bool, transform: (T) -> T?) -> Bool {
         switch state.value {
         case .loaded :
             // modify items
@@ -104,7 +108,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     }
     
     @discardableResult
-    func insert(_ item: T, where predicate: (T) -> Bool, shouldUpdate: Bool = false) -> Bool
+    open func insert(_ item: T, where predicate: (T) -> Bool, shouldUpdate: Bool = false) -> Bool
     {
         switch state.value {
         case .loaded :
@@ -131,7 +135,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     }
     
     @discardableResult
-    func removeItem(where predicate: (T) -> Bool) -> T? {
+    open func removeItem(where predicate: (T) -> Bool) -> T? {
         var result: T?
         var data = self.data
         if let index = data.firstIndex(where: predicate) {
