@@ -22,4 +22,23 @@ class CarsSection: BECollectionViewSection {
         )
         super.init(layout: layout, viewModel: viewModel)
     }
+    
+    override func dataDidLoad() {
+        super.dataDidLoad()
+        let section0Header = collectionView?.sectionHeaderView(sectionIndex: 0) as? CarsSectionHeaderView
+        var newText = ""
+        let text1 = "Test title"
+        let text2 = "Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text.Very long text."
+        
+        if text1 == section0Header?.titleLabel.text {
+            newText = text2
+        } else {
+            newText = text1
+        }
+        
+        section0Header?.titleLabel.text = newText
+        let context = UICollectionViewLayoutInvalidationContext()
+        context.invalidateSupplementaryElements(ofKind: UICollectionElementKindSectionHeader, at: [IndexPath(row: 0, section: 0)])
+        collectionView?.relayout(context)
+    }
 }

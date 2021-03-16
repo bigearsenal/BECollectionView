@@ -35,6 +35,7 @@ open class BECollectionView: UIView {
         self.sections = sections
         super.init(frame: .zero)
         commonInit()
+        defer {sections.forEach {$0.collectionView = self}}
     }
     
     required public init?(coder: NSCoder) {
@@ -220,7 +221,7 @@ open class BECollectionView: UIView {
 //        footer.setUp(state: viewModel.state.value, isListEmpty: viewModel.isListEmpty)
 ////        collectionView.collectionViewLayout.invalidateLayout()
 //        footer.setNeedsDisplay()
-        
+        sections.forEach {$0.dataDidLoad()}
         delegate?.beCollectionViewDataDidLoad?(collectionView: self)
     }
     
@@ -234,10 +235,13 @@ open class BECollectionView: UIView {
     }
     
     public func relayout(_ context: UICollectionViewLayoutInvalidationContext? = nil) {
+        let layout = collectionView.collectionViewLayout
         if let context = context {
-            collectionView.collectionViewLayout.invalidateLayout(with: context)
+            layout.invalidateLayout(with: context)
         } else {
-            collectionView.collectionViewLayout.invalidateLayout()
+            layout.invalidateLayout()
         }
+        
+        collectionView.setCollectionViewLayout(layout, animated: true)
     }
 }

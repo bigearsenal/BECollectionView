@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 
 open class BECollectionViewSection {
+    public weak var collectionView: BECollectionView?
     public let layout: BECollectionViewSectionLayout
     public let viewModel: BEListViewModelType
     
@@ -32,6 +33,10 @@ open class BECollectionViewSection {
             break
         }
         return items
+    }
+    
+    open func dataDidLoad() {
+        
     }
 }
 
