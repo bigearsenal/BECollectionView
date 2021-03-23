@@ -9,7 +9,7 @@
 import Foundation
 import BECollectionView
 
-class FriendCell: BECollectionViewCell {
+class FriendCell: BaseCell {
     lazy var imageView = UIImageView()
     lazy var nameLabel = UILabel()
     

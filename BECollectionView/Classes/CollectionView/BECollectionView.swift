@@ -6,8 +6,8 @@
 //
 
 import Foundation
+import PureLayout
 import RxSwift
-import ListPlaceholder
 
 open class BECollectionView: UIView {
     // MARK: - Property
@@ -140,10 +140,10 @@ open class BECollectionView: UIView {
         setUpCell(cell: cell, withItem: item.value)
         
         if item.isPlaceholder {
-            cell.stackView.hideLoader()
-            cell.stackView.showLoader()
+            cell.hideLoading()
+            cell.showLoading()
         } else {
-            cell.stackView.hideLoader()
+            cell.hideLoading()
         }
         
         return cell
@@ -226,12 +226,12 @@ open class BECollectionView: UIView {
     }
     
     // MARK: - Helpers
-    public func sectionHeaderView(sectionIndex: Int) -> BESectionHeaderView? {
-        collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(row: 0, section: sectionIndex)) as? BESectionHeaderView
+    public func sectionHeaderView(sectionIndex: Int) -> UICollectionReusableView? {
+        collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(row: 0, section: sectionIndex))
     }
     
-    public func sectionFooterView(sectionIndex: Int) -> BESectionFooterView? {
-        collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionFooter, at: IndexPath(row: 0, section: sectionIndex)) as? BESectionFooterView
+    public func sectionFooterView(sectionIndex: Int) -> UICollectionReusableView? {
+        collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionFooter, at: IndexPath(row: 0, section: sectionIndex))
     }
     
     public func relayout(_ context: UICollectionViewLayoutInvalidationContext? = nil) {

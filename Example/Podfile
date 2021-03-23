@@ -5,6 +5,7 @@ platform :ios, '13.0'
 target 'BECollectionView_Example' do
   pod 'BECollectionView', :path => '../'
   pod 'PureLayout'
+  pod 'ListPlaceholder'
 
   target 'BECollectionView_Tests' do
     inherit! :search_paths

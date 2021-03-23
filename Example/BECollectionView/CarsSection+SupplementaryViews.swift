@@ -9,7 +9,29 @@
 import Foundation
 import BECollectionView
 
-class CarsSectionHeaderView: BESectionHeaderView {
+class BaseCollectionReusableView: UICollectionReusableView {
+    open var padding: UIEdgeInsets {.zero}
+    public lazy var stackView = UIStackView(forAutoLayout: ())
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    @available(*, unavailable,
+    message: "Loading this view from a nib is unsupported in favor of initializer dependency injection."
+    )
+    public required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    open func commonInit() {
+        addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: padding)
+    }
+}
+
+class CarsSectionHeaderView: BaseCollectionReusableView {
     override var padding: UIEdgeInsets {.init(top: 16, left: 16, bottom: 16, right: 16)}
     lazy var titleLabel = UILabel(forAutoLayout: ())
     override func commonInit() {
@@ -21,7 +43,7 @@ class CarsSectionHeaderView: BESectionHeaderView {
     }
 }
 
-class CarsSectionFooterView: BESectionFooterView {
+class CarsSectionFooterView: BaseCollectionReusableView {
     override var padding: UIEdgeInsets {.init(top: 10, left: 0, bottom: 10, right: 0)}
     lazy var colorView = UIView(forAutoLayout: ())
     override func commonInit() {

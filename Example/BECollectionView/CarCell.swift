@@ -9,7 +9,7 @@
 import Foundation
 import BECollectionView
 
-class CarCell: BECollectionViewCell {
+class CarCell: BaseCell {
     
     lazy var titleLabel = UILabel(forAutoLayout: ())
     lazy var descriptionLabel = UILabel(forAutoLayout: ())

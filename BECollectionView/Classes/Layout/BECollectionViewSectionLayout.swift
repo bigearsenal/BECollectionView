@@ -8,7 +8,7 @@
 import Foundation
 
 public struct BECollectionViewSectionLayout {
-    public init(header: BECollectionViewSectionLayout.Header? = nil, footer: BECollectionViewSectionLayout.Footer? = nil, cellType: BECollectionViewCell.Type, interGroupSpacing: CGFloat? = nil, orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior? = nil, itemHeight: NSCollectionLayoutDimension = NSCollectionLayoutDimension.estimated(100), contentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0), horizontalInterItemSpacing: NSCollectionLayoutSpacing = NSCollectionLayoutSpacing.fixed(16), background: BESectionBackgroundView.Type? = nil, customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil, customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil) {
+    public init(header: BECollectionViewSectionLayout.Header? = nil, footer: BECollectionViewSectionLayout.Footer? = nil, cellType: BECollectionViewCell.Type, interGroupSpacing: CGFloat? = nil, orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior? = nil, itemHeight: NSCollectionLayoutDimension = NSCollectionLayoutDimension.estimated(100), contentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0), horizontalInterItemSpacing: NSCollectionLayoutSpacing = NSCollectionLayoutSpacing.fixed(16), background: UICollectionReusableView.Type? = nil, customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil, customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil) {
         self.header = header
         self.footer = footer
         self.cellType = cellType
@@ -23,13 +23,13 @@ public struct BECollectionViewSectionLayout {
     }
     
     public struct Header {
-        public init(viewClass: BESectionHeaderView.Type = BESectionHeaderView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
+        public init(viewClass: UICollectionReusableView.Type = UICollectionReusableView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
             self.viewClass = viewClass
             self.heightDimension = heightDimension
             self.customLayout = customLayout
         }
         
-        public var viewClass: BESectionHeaderView.Type = BESectionHeaderView.self
+        public var viewClass: UICollectionReusableView.Type = UICollectionReusableView.self
         public var heightDimension: NSCollectionLayoutDimension = .estimated(20)
         public var customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil
         public var layout: NSCollectionLayoutBoundarySupplementaryItem {
@@ -43,13 +43,13 @@ public struct BECollectionViewSectionLayout {
     }
     
     public struct Footer {
-        public init(viewClass: BESectionFooterView.Type = BESectionFooterView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
+        public init(viewClass: UICollectionReusableView.Type = UICollectionReusableView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
             self.viewClass = viewClass
             self.heightDimension = heightDimension
             self.customLayout = customLayout
         }
         
-        public var viewClass: BESectionFooterView.Type = BESectionFooterView.self
+        public var viewClass: UICollectionReusableView.Type = UICollectionReusableView.self
         public var heightDimension: NSCollectionLayoutDimension = .estimated(20)
         public var customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil
         public var layout: NSCollectionLayoutBoundarySupplementaryItem {
@@ -71,7 +71,7 @@ public struct BECollectionViewSectionLayout {
     public var itemHeight = NSCollectionLayoutDimension.estimated(100)
     public var contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
     public var horizontalInterItemSpacing = NSCollectionLayoutSpacing.fixed(16)
-    public var background: BESectionBackgroundView.Type?
+    public var background: UICollectionReusableView.Type?
     public var customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
     public var customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
     
