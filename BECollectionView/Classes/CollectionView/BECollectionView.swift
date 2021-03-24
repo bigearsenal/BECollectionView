@@ -13,6 +13,11 @@ open class BECollectionView: UIView {
     // MARK: - Property
     private let disposeBag = DisposeBag()
     private let sections: [BECollectionViewSection]
+    public var canRefresh: Bool = true {
+        didSet {
+            setUpRefreshControl()
+        }
+    }
     public private(set) var dataSource: UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>!
     public weak var delegate: BECollectionViewDelegate?
     
@@ -22,12 +27,6 @@ open class BECollectionView: UIView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(collectionViewDidTouch(_:)))
         collectionView.addGestureRecognizer(tapGesture)
         return collectionView
-    }()
-    
-    lazy var refreshControl: UIRefreshControl = {
-        let control = UIRefreshControl()
-        control.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        return control
     }()
     
     // MARK: - Initializer
@@ -47,7 +46,7 @@ open class BECollectionView: UIView {
         addSubview(collectionView)
         collectionView.backgroundColor = .clear
         collectionView.autoPinEdgesToSuperviewEdges()
-        collectionView.refreshControl = refreshControl
+        setUpRefreshControl()
         
         // register cell and configure datasource
         sections.map {$0.layout}.forEach {$0.registerCellAndSupplementaryViews(in: collectionView)}
@@ -57,9 +56,14 @@ open class BECollectionView: UIView {
         bind()
     }
     
-    open override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        refresh()
+    private func setUpRefreshControl() {
+        if canRefresh {
+            let control = UIRefreshControl()
+            control.addTarget(self, action: #selector(refresh), for: .valueChanged)
+            collectionView.refreshControl = control
+        } else {
+            collectionView.refreshControl = nil
+        }
     }
     
     open func bind() {
@@ -192,7 +196,7 @@ open class BECollectionView: UIView {
     
     // MARK: - Actions
     @objc open func refresh() {
-        refreshControl.endRefreshing()
+        collectionView.refreshControl?.endRefreshing()
         sections.forEach {$0.viewModel.reload()}
     }
     
