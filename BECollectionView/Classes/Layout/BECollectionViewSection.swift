@@ -12,27 +12,35 @@ open class BECollectionViewSection {
     public weak var collectionView: BECollectionView?
     public let layout: BECollectionViewSectionLayout
     public let viewModel: BEListViewModelType
+    public var customFilter: ((AnyHashable) -> Bool)?
     
-    public init(layout: BECollectionViewSectionLayout, viewModel: BEListViewModelType)
+    public init(layout: BECollectionViewSectionLayout, viewModel: BEListViewModelType, customFilter: ((AnyHashable) -> Bool)? = nil)
     {
         self.layout = layout
         self.viewModel = viewModel
+        self.customFilter = customFilter
     }
     
     func mapDataToCollectionViewItems() -> [BECollectionViewItem]
     {
         var items = viewModel.convertDataToAnyHashable()
+            
+        if let customFilter = customFilter {
+            items = items.filter {customFilter($0)}
+        }
+        
+        var collectionViewItems = items
             .map {BECollectionViewItem(value: $0)}
         switch viewModel.currentState {
         case .loading:
-            items += [
+            collectionViewItems += [
                 BECollectionViewItem(placeholderIndex: UUID().uuidString),
                 BECollectionViewItem(placeholderIndex: UUID().uuidString)
             ]
         case .loaded, .error, .initializing:
             break
         }
-        return items
+        return collectionViewItems
     }
     
     open func dataDidLoad() {
