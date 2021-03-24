@@ -18,10 +18,16 @@ public protocol BEListViewModelType {
     func fetchNext()
 }
 
+public extension BEListViewModelType {
+    func getData<T: Hashable>(type: T.Type) -> [T] {
+        convertDataToAnyHashable().compactMap {$0 as? T}
+    }
+}
+
 open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     // MARK: - Properties
     public var isPaginationEnabled: Bool
-    
+    public var customFilter: ((T) -> Bool)?
     public var isEmpty: Bool {isLastPageLoaded && data.count == 0}
     
     // For pagination
@@ -59,7 +65,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     }
     
     open override func handleNewData(_ newItems: [T]) {
-        let newData = self.join(newItems)
+        var newData = self.join(newItems)
         
         // resign state
         if !isPaginationEnabled || newItems.count < limit {
@@ -67,6 +73,9 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
         }
         
         // handle new data
+        if let customFilter = customFilter {
+            newData = newData.filter {customFilter($0)}
+        }
         super.handleNewData(newData)
         
         // get next offset
