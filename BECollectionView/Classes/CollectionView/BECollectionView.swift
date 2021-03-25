@@ -21,6 +21,15 @@ open class BECollectionView: UIView {
     public private(set) var dataSource: UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>!
     public weak var delegate: BECollectionViewDelegate?
     
+    public var contentInset: UIEdgeInsets {
+        get {
+            collectionView.contentInset
+        }
+        set {
+            collectionView.contentInset = newValue
+        }
+    }
+    
     // MARK: - Subviews
     public lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: sections.createLayout())
@@ -37,7 +46,10 @@ open class BECollectionView: UIView {
         defer {sections.forEach {$0.collectionView = self}}
     }
     
-    required public init?(coder: NSCoder) {
+    @available(*, unavailable,
+    message: "Loading this view from a nib is unsupported in favor of initializer dependency injection."
+    )
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -176,7 +188,7 @@ open class BECollectionView: UIView {
         
         let view = collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: String(describing: sections.map {$0.layout} [indexPath.section].header!.viewClass),
+            withReuseIdentifier: sections.map {$0.layout} [indexPath.section].header!.identifier,
             for: indexPath)
         return view
     }
@@ -188,7 +200,7 @@ open class BECollectionView: UIView {
         
         let view = collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: String(describing: sections.map {$0.layout} [indexPath.section].footer!.viewClass),
+            withReuseIdentifier: sections.map {$0.layout} [indexPath.section].footer!.identifier,
             for: indexPath)
         
         return view

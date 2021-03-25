@@ -23,12 +23,13 @@ public struct BECollectionViewSectionLayout {
     }
     
     public struct Header {
-        public init(viewClass: UICollectionReusableView.Type = UICollectionReusableView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
+        public init(identifier: String? = nil, viewClass: UICollectionReusableView.Type = UICollectionReusableView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
+            self.identifier = identifier ?? String(describing: viewClass)
             self.viewClass = viewClass
             self.heightDimension = heightDimension
             self.customLayout = customLayout
         }
-        
+        public var identifier: String
         public var viewClass: UICollectionReusableView.Type = UICollectionReusableView.self
         public var heightDimension: NSCollectionLayoutDimension = .estimated(20)
         public var customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil
@@ -43,12 +44,14 @@ public struct BECollectionViewSectionLayout {
     }
     
     public struct Footer {
-        public init(viewClass: UICollectionReusableView.Type = UICollectionReusableView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
+        public init(identifier: String? = nil, viewClass: UICollectionReusableView.Type = UICollectionReusableView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
+            self.identifier = identifier ?? String(describing: viewClass)
             self.viewClass = viewClass
             self.heightDimension = heightDimension
             self.customLayout = customLayout
         }
         
+        public var identifier: String
         public var viewClass: UICollectionReusableView.Type = UICollectionReusableView.self
         public var heightDimension: NSCollectionLayoutDimension = .estimated(20)
         public var customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil
@@ -81,12 +84,12 @@ public struct BECollectionViewSectionLayout {
         
         // register header
         if let header = header {
-            collectionView.register(header.viewClass, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: header.viewClass))
+            collectionView.register(header.viewClass, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: header.identifier)
         }
         
         // register footer
         if let footer = footer {
-            collectionView.register(footer.viewClass, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: String(describing: footer.viewClass))
+            collectionView.register(footer.viewClass, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footer.identifier)
         }
     }
     

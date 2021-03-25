@@ -10,12 +10,14 @@ import RxSwift
 
 open class BECollectionViewSection {
     public weak var collectionView: BECollectionView?
+    public let index: Int
     public let layout: BECollectionViewSectionLayout
     public let viewModel: BEListViewModelType
     public var customFilter: ((AnyHashable) -> Bool)?
     
-    public init(layout: BECollectionViewSectionLayout, viewModel: BEListViewModelType, customFilter: ((AnyHashable) -> Bool)? = nil)
+    public init(index: Int, layout: BECollectionViewSectionLayout, viewModel: BEListViewModelType, customFilter: ((AnyHashable) -> Bool)? = nil)
     {
+        self.index = index
         self.layout = layout
         self.viewModel = viewModel
         self.customFilter = customFilter
@@ -45,6 +47,19 @@ open class BECollectionViewSection {
     
     open func dataDidLoad() {
         
+    }
+    
+    public func headerView() -> UICollectionReusableView? {
+        collectionView?.sectionHeaderView(sectionIndex: index)
+    }
+    
+    public func footerView() -> UICollectionReusableView? {
+        collectionView?.sectionFooterView(sectionIndex: index)
+    }
+    
+    // MARK: - CollectionView
+    public var collectionViewLayout: UICollectionViewLayout? {
+        collectionView?.collectionView.collectionViewLayout
     }
 }
 
