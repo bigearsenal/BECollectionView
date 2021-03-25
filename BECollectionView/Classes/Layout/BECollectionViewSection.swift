@@ -56,6 +56,23 @@ open class BECollectionViewSection {
         return collectionViewItems
     }
     
+    open func configureHeader(indexPath: IndexPath) -> UICollectionReusableView? {
+        let view = collectionView?.collectionView.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: layout.header!.identifier,
+            for: indexPath)
+        return view
+    }
+    
+    open func configureFooter(indexPath: IndexPath) -> UICollectionReusableView? {
+        let view = collectionView?.collectionView.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: layout.footer!.identifier,
+            for: indexPath)
+        
+        return view
+    }
+    
     open func dataDidLoad() {
         
     }

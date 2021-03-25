@@ -173,37 +173,12 @@ open class BECollectionView: UIView {
     
     func configureSupplementaryView(collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
         if kind == UICollectionView.elementKindSectionHeader {
-            return configureHeaderForSectionAtIndexPath(indexPath, inCollectionView: collectionView)
+            return sections[indexPath.section].configureHeader(indexPath: indexPath)
         }
         if kind == UICollectionView.elementKindSectionFooter {
-            return configureFooterForSectionAtIndexPath(indexPath, inCollectionView: collectionView)
+            return sections[indexPath.section].configureFooter(indexPath: indexPath)
         }
         return nil
-    }
-    
-    func configureHeaderForSectionAtIndexPath(_ indexPath: IndexPath, inCollectionView collectionView: UICollectionView) -> UICollectionReusableView? {
-        guard sections.count > indexPath.section else {
-            return nil
-        }
-        
-        let view = collectionView.dequeueReusableSupplementaryView(
-            ofKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: sections.map {$0.layout} [indexPath.section].header!.identifier,
-            for: indexPath)
-        return view
-    }
-    
-    func configureFooterForSectionAtIndexPath(_ indexPath: IndexPath, inCollectionView collectionView: UICollectionView) -> UICollectionReusableView? {
-        guard sections.count > indexPath.section else {
-            return nil
-        }
-        
-        let view = collectionView.dequeueReusableSupplementaryView(
-            ofKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: sections.map {$0.layout} [indexPath.section].footer!.identifier,
-            for: indexPath)
-        
-        return view
     }
     
     // MARK: - Actions
