@@ -13,14 +13,21 @@ open class BECollectionViewSection {
     public let index: Int
     public let layout: BECollectionViewSectionLayout
     public let viewModel: BEListViewModelType
-    public var customFilter: ((AnyHashable) -> Bool)?
+    public let customFilter: ((AnyHashable) -> Bool)?
+    public let limit: (([AnyHashable]) -> [AnyHashable])?
     
-    public init(index: Int, layout: BECollectionViewSectionLayout, viewModel: BEListViewModelType, customFilter: ((AnyHashable) -> Bool)? = nil)
-    {
+    public init(
+        index: Int,
+        layout: BECollectionViewSectionLayout,
+        viewModel: BEListViewModelType,
+        customFilter: ((AnyHashable) -> Bool)? = nil,
+        limit: (([AnyHashable]) -> [AnyHashable])? = nil
+    ) {
         self.index = index
         self.layout = layout
         self.viewModel = viewModel
         self.customFilter = customFilter
+        self.limit = limit
     }
     
     func mapDataToCollectionViewItems() -> [BECollectionViewItem]
@@ -29,6 +36,10 @@ open class BECollectionViewSection {
             
         if let customFilter = customFilter {
             items = items.filter {customFilter($0)}
+        }
+        
+        if let limit = limit {
+            items = limit(items)
         }
         
         var collectionViewItems = items
