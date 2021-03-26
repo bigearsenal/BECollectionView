@@ -30,7 +30,7 @@ open class BECollectionViewSection {
         self.limit = limit
     }
     
-    func mapDataToCollectionViewItems() -> [BECollectionViewItem]
+    open func mapDataToCollectionViewItems() -> [BECollectionViewItem]
     {
         var items = viewModel.convertDataToAnyHashable()
             
