@@ -9,7 +9,7 @@ import Foundation
 
 public struct BECollectionViewItem: Hashable {
     var placeholderIndex: String?
-    var value: AnyHashable?
+    public var value: AnyHashable?
     
     var isPlaceholder: Bool {placeholderIndex != nil}
 }

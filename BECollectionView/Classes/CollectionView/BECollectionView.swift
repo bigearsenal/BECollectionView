@@ -139,35 +139,11 @@ open class BECollectionView: UIView {
     // MARK: - Datasource
     private func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-            self?.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+            self?.sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
         }
                 
         dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
             self?.configureSupplementaryView(collectionView: collectionView, kind: kind, indexPath: indexPath)
-        }
-    }
-    
-    private func configureCell(collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: sections.map {$0.layout} [indexPath.section].cellType), for: indexPath) as? BECollectionViewCell else {
-            fatalError("Must use BECollectionViewCell")
-        }
-        
-        setUpCell(cell: cell, withItem: item.value)
-        
-        if item.isPlaceholder {
-            cell.hideLoading()
-            cell.showLoading()
-        } else {
-            cell.hideLoading()
-        }
-        
-        return cell
-    }
-    
-    open func setUpCell(cell: UICollectionViewCell, withItem item: AnyHashable?) {
-        if let cell = cell as? BECollectionViewCell {
-            cell.setUp(with: item)
         }
     }
     
