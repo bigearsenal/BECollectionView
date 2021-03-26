@@ -202,13 +202,10 @@ open class BECollectionView: UIView {
     }
     
     public func relayout(_ context: UICollectionViewLayoutInvalidationContext? = nil) {
-        let layout = collectionView.collectionViewLayout
         if let context = context {
-            layout.invalidateLayout(with: context)
+            collectionView.collectionViewLayout.invalidateLayout(with: context)
         } else {
-            layout.invalidateLayout()
+            collectionView.collectionViewLayout.invalidateLayout()
         }
-        
-        collectionView.setCollectionViewLayout(layout, animated: true)
     }
 }
