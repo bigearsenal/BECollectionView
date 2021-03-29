@@ -80,11 +80,13 @@ open class BECollectionView: UIView {
     
     open func bind() {
         dataDidChangeObservable()
-            .subscribe(onNext: { [unowned self] (_) in
-                let snapshot = self.mapDataToSnapshot()
-                self.dataSource.apply(snapshot)
-                DispatchQueue.main.async {
-                    self.dataDidLoad()
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] (_) in
+                if let snapshot = self?.mapDataToSnapshot() {
+                    self?.dataSource.apply(snapshot)
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.dataDidLoad()
                 }
             })
             .disposed(by: disposeBag)
