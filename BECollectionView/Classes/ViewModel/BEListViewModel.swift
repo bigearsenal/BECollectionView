@@ -16,6 +16,7 @@ public protocol BEListViewModelType {
     func reload()
     func convertDataToAnyHashable() -> [AnyHashable]
     func fetchNext()
+    func setState(_ state: BEFetcherState, withData data: [AnyHashable]?)
 }
 
 public extension BEListViewModelType {
@@ -91,6 +92,13 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     
     public func overrideData(by newData: [T]) {
         super.handleNewData(newData)
+    }
+    
+    public func setState(_ state: BEFetcherState, withData data: [AnyHashable]? = nil) {
+        self.state.accept(state)
+        if let data = data as? [T] {
+            overrideData(by: data)
+        }
     }
     
     // MARK: - Helper

@@ -91,6 +91,10 @@ open class BECollectionViewSection {
         return cell
     }
     
+    open func reload() {
+        viewModel.reload()
+    }
+    
     open func dataDidLoad() {
         
     }

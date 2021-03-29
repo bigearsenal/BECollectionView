@@ -12,7 +12,7 @@ import RxSwift
 open class BECollectionView: UIView {
     // MARK: - Property
     private let disposeBag = DisposeBag()
-    private let sections: [BECollectionViewSection]
+    public let sections: [BECollectionViewSection]
     public var canRefresh: Bool = true {
         didSet {
             setUpRefreshControl()
@@ -160,7 +160,11 @@ open class BECollectionView: UIView {
     // MARK: - Actions
     @objc open func refresh() {
         collectionView.refreshControl?.endRefreshing()
-        sections.forEach {$0.viewModel.reload()}
+        refreshAllSections()
+    }
+    
+    open func refreshAllSections() {
+        sections.forEach {$0.reload()}
     }
     
     @objc private func collectionViewDidTouch(_ sender: UIGestureRecognizer) {
