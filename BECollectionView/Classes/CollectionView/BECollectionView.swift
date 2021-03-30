@@ -79,12 +79,18 @@ open class BECollectionView: UIView {
     }
     
     open func bind() {
-        dataDidChangeObservable()
+        var observable = dataDidChangeObservable()
+        
+        if SystemVersion.isIOS13() {
+            observable = observable
+                .debounce(.nanoseconds(1), scheduler: MainScheduler.instance)
+        }
+        
+        observable
             .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] (_) in
-                if let snapshot = self?.mapDataToSnapshot() {
-                    self?.dataSource.apply(snapshot)
-                }
+            .drive(onNext: { _ in
+                let snapshot = self.mapDataToSnapshot()
+                self.dataSource.apply(snapshot)
                 DispatchQueue.main.async { [weak self] in
                     self?.dataDidLoad()
                 }

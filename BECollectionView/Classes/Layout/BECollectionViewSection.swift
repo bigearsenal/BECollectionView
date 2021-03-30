@@ -45,12 +45,12 @@ open class BECollectionViewSection {
         var collectionViewItems = items
             .map {BECollectionViewItem(value: $0)}
         switch viewModel.currentState {
-        case .loading:
+        case .loading, .initializing:
             collectionViewItems += [
                 BECollectionViewItem(placeholderIndex: UUID().uuidString),
                 BECollectionViewItem(placeholderIndex: UUID().uuidString)
             ]
-        case .loaded, .error, .initializing:
+        case .loaded, .error:
             break
         }
         return collectionViewItems
