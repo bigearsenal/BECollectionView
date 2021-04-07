@@ -107,4 +107,8 @@ open class BEViewModel<T: Hashable> {
                 }
             }
     }
+    
+    open var stateObservable: Observable<BEFetcherState> {
+        state.asObservable()
+    }
 }

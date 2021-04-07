@@ -50,7 +50,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     }
     
     // MARK: - Actions
-    public override func flush() {
+    open override func flush() {
         offset = 0
         isLastPageLoaded = false
         super.flush()
