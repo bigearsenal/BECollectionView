@@ -91,7 +91,9 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     }
     
     public func overrideData(by newData: [T]) {
-        super.handleNewData(newData)
+        if newData != data {
+            super.handleNewData(newData)
+        }
     }
     
     public func setState(_ state: BEFetcherState, withData data: [AnyHashable]? = nil) {
