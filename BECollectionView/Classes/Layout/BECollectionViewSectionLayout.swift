@@ -8,11 +8,23 @@
 import Foundation
 
 public struct BECollectionViewSectionLayout {
+    // MARK: - Defaults
+    public struct Options {
+        public init(defaultEmptyCellType: UICollectionViewCell.Type) {
+            self.defaultEmptyCellType = defaultEmptyCellType
+        }
+        
+        public var defaultEmptyCellType: UICollectionViewCell.Type
+    }
+    
+    public static var options = Options(defaultEmptyCellType: BECollectionViewBasicEmptyCell.self)
+    
+    // MARK: - Initializers
     public init(
         header: BECollectionViewSectionLayout.Header? = nil,
         footer: BECollectionViewSectionLayout.Footer? = nil,
         cellType: BECollectionViewCell.Type,
-        emptyCellType: UICollectionViewCell.Type = BECollectionViewBasicEmptyCell.self,
+        emptyCellType: UICollectionViewCell.Type = BECollectionViewSectionLayout.options.defaultEmptyCellType,
         interGroupSpacing: CGFloat? = nil,
         orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior? = nil,
         itemHeight: NSCollectionLayoutDimension = NSCollectionLayoutDimension.estimated(100),
@@ -35,8 +47,6 @@ public struct BECollectionViewSectionLayout {
         self.customLayoutForGroupOnSmallScreen = customLayoutForGroupOnSmallScreen
         self.customLayoutForGroupOnLargeScreen = customLayoutForGroupOnLargeScreen
     }
-    
-    
     
     public struct Header {
         public init(identifier: String? = nil, viewClass: UICollectionReusableView.Type = UICollectionReusableView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {
