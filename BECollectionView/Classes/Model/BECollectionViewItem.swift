@@ -10,6 +10,7 @@ import Foundation
 public struct BECollectionViewItem: Hashable {
     var placeholderIndex: String?
     public var value: AnyHashable?
+    var isEmptyCell = false
     
     var isPlaceholder: Bool {placeholderIndex != nil}
 }

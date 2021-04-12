@@ -12,8 +12,8 @@ import BECollectionView
 
 class ViewController: UIViewController, BECollectionViewDelegate {
     lazy var collectionView: BECollectionView = {
-        let section0 = CarsSection(viewModel: CarsViewModel())
-        let section1 = FriendsSection(viewModel: FriendsViewModel())
+        let section0 = CarsSection(index: 0, viewModel: CarsViewModel())
+        let section1 = FriendsSection(index: 1, viewModel: FriendsViewModel())
         let collectionView = BECollectionView(sections: [section0, section1])
         return collectionView
     }()
@@ -25,6 +25,8 @@ class ViewController: UIViewController, BECollectionViewDelegate {
         view.addSubview(collectionView)
         collectionView.autoPinEdgesToSuperviewEdges()
         collectionView.delegate = self
+        
+        collectionView.refresh()
     }
     
     func beCollectionView(collectionView: BECollectionView, didSelect item: AnyHashable) {
