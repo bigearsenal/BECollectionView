@@ -43,7 +43,6 @@ open class BECollectionView: UIView {
         self.sections = sections
         super.init(frame: .zero)
         commonInit()
-        defer {sections.forEach {$0.collectionView = self}}
     }
     
     @available(*, unavailable,
@@ -61,6 +60,7 @@ open class BECollectionView: UIView {
         setUpRefreshControl()
         
         // register cell and configure datasource
+        sections.forEach {$0.collectionView = self}
         sections.map {$0.layout}.forEach {$0.registerCellAndSupplementaryViews(in: collectionView)}
         configureDataSource()
         
@@ -151,18 +151,8 @@ open class BECollectionView: UIView {
         }
                 
         dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-            self?.configureSupplementaryView(collectionView: collectionView, kind: kind, indexPath: indexPath)
+            self?.sections[indexPath.section].configureSupplementaryView(kind: kind, indexPath: indexPath)
         }
-    }
-    
-    func configureSupplementaryView(collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
-        if kind == UICollectionView.elementKindSectionHeader {
-            return sections[indexPath.section].configureHeader(indexPath: indexPath)
-        }
-        if kind == UICollectionView.elementKindSectionFooter {
-            return sections[indexPath.section].configureFooter(indexPath: indexPath)
-        }
-        return nil
     }
     
     // MARK: - Actions

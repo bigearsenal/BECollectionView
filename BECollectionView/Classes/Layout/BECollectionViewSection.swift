@@ -60,6 +60,16 @@ open class BECollectionViewSection {
         return collectionViewItems
     }
     
+    func configureSupplementaryView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
+        if kind == UICollectionView.elementKindSectionHeader {
+            return configureHeader(indexPath: indexPath)
+        }
+        if kind == UICollectionView.elementKindSectionFooter {
+            return configureFooter(indexPath: indexPath)
+        }
+        return nil
+    }
+    
     open func configureHeader(indexPath: IndexPath) -> UICollectionReusableView? {
         let view = collectionView?.collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionHeader,
