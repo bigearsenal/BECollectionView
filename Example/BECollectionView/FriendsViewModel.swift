@@ -14,11 +14,13 @@ class FriendsViewModel: BEListViewModel<Friend> {
     override func createRequest() -> Single<[Friend]> {
         Single<[Friend]>.just(data).delay(.seconds(Int.random(in: 2..<6)), scheduler: MainScheduler.instance)
             .map { _ in
-                [
-                    Friend(name: "Ty", numberOfLegs: 1),
-                    Friend(name: "Phi", numberOfLegs: 2),
-                    Friend(name: "Phid", numberOfLegs: 3)
-                ]
+                Array(
+                    [
+                        Friend(name: "Ty", numberOfLegs: 1),
+                        Friend(name: "Phi", numberOfLegs: 2),
+                        Friend(name: "Phid", numberOfLegs: 3)
+                    ].prefix(Bool.random() ? 0: 3)
+                )
             }
     }
 }

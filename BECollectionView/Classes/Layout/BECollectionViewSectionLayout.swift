@@ -8,10 +8,25 @@
 import Foundation
 
 public struct BECollectionViewSectionLayout {
-    public init(header: BECollectionViewSectionLayout.Header? = nil, footer: BECollectionViewSectionLayout.Footer? = nil, cellType: BECollectionViewCell.Type, interGroupSpacing: CGFloat? = nil, orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior? = nil, itemHeight: NSCollectionLayoutDimension = NSCollectionLayoutDimension.estimated(100), contentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0), horizontalInterItemSpacing: NSCollectionLayoutSpacing = NSCollectionLayoutSpacing.fixed(16), background: UICollectionReusableView.Type? = nil, customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil, customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil) {
+    // MARK: - Initializers
+    public init(
+        header: BECollectionViewSectionLayout.Header? = nil,
+        footer: BECollectionViewSectionLayout.Footer? = nil,
+        cellType: BECollectionViewCell.Type,
+        emptyCellType: UICollectionViewCell.Type? = nil,
+        interGroupSpacing: CGFloat? = nil,
+        orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior? = nil,
+        itemHeight: NSCollectionLayoutDimension = NSCollectionLayoutDimension.estimated(100),
+        contentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0),
+        horizontalInterItemSpacing: NSCollectionLayoutSpacing = NSCollectionLayoutSpacing.fixed(16),
+        background: UICollectionReusableView.Type? = nil,
+        customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil,
+        customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil
+    ) {
         self.header = header
         self.footer = footer
         self.cellType = cellType
+        self.emptyCellType = emptyCellType
         self.interGroupSpacing = interGroupSpacing
         self.orthogonalScrollingBehavior = orthogonalScrollingBehavior
         self.itemHeight = itemHeight
@@ -69,6 +84,7 @@ public struct BECollectionViewSectionLayout {
     public var header: Header?
     public var footer: Footer?
     public var cellType: BECollectionViewCell.Type
+    public var emptyCellType: UICollectionViewCell.Type?
     public var interGroupSpacing: CGFloat?
     public var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior?
     public var itemHeight = NSCollectionLayoutDimension.estimated(100)
@@ -81,6 +97,9 @@ public struct BECollectionViewSectionLayout {
     func registerCellAndSupplementaryViews(in collectionView: UICollectionView) {
         // register cell
         collectionView.register(cellType, forCellWithReuseIdentifier: String(describing: cellType))
+        if let emptyCellType = emptyCellType {
+            collectionView.register(emptyCellType, forCellWithReuseIdentifier: String(describing: emptyCellType))
+        }
         
         // register header
         if let header = header {

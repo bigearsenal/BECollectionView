@@ -10,8 +10,9 @@ import Foundation
 import BECollectionView
 
 class FriendsSection: BECollectionViewSection {
-    init(viewModel: BEListViewModelType) {
+    init(index: Int, viewModel: BEListViewModelType) {
         super.init(
+            index: index,
             layout: BECollectionViewSectionLayout(
                 cellType: FriendCell.self,
                 interGroupSpacing: 16,

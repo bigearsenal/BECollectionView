@@ -50,7 +50,11 @@ open class BECollectionViewSection {
                 BECollectionViewItem(placeholderIndex: UUID().uuidString),
                 BECollectionViewItem(placeholderIndex: UUID().uuidString)
             ]
-        case .loaded, .error:
+        case .loaded:
+            if collectionViewItems.isEmpty, layout.emptyCellType != nil {
+                collectionViewItems = [BECollectionViewItem(isEmptyCell: true)]
+            }
+        case .error:
             break
         }
         return collectionViewItems
@@ -73,22 +77,27 @@ open class BECollectionViewSection {
         return view
     }
     
-    open func configureCell(collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> BECollectionViewCell {
+    open func configureCell(collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: layout.cellType), for: indexPath) as? BECollectionViewCell else {
-            fatalError("Must use BECollectionViewCell")
+        if !item.isEmptyCell,
+           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: layout.cellType), for: indexPath) as? BECollectionViewCell {
+            cell.setUp(with: item.value)
+            
+            if item.isPlaceholder {
+                cell.hideLoading()
+                cell.showLoading()
+            } else {
+                cell.hideLoading()
+            }
+            
+            return cell
         }
         
-        cell.setUp(with: item.value)
-        
-        if item.isPlaceholder {
-            cell.hideLoading()
-            cell.showLoading()
-        } else {
-            cell.hideLoading()
+        if item.isEmptyCell, let emptyCellType = layout.emptyCellType {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: emptyCellType), for: indexPath)
         }
         
-        return cell
+        return UICollectionViewCell()
     }
     
     open func reload() {
