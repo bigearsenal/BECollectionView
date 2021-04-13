@@ -15,6 +15,7 @@ class CarsSection: BECollectionViewSection {
             header: BECollectionViewSectionLayout.Header(viewClass: CarsSectionHeaderView.self),
             footer: BECollectionViewSectionLayout.Footer(viewClass: CarsSectionFooterView.self),
             cellType: CarCell.self,
+            emptyCellType: BECollectionViewBasicEmptyCell.self,
             interGroupSpacing: 16,
             itemHeight: .estimated(17),
             contentInsets: NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16),

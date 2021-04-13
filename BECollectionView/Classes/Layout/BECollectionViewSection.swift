@@ -51,7 +51,7 @@ open class BECollectionViewSection {
                 BECollectionViewItem(placeholderIndex: UUID().uuidString)
             ]
         case .loaded:
-            if collectionViewItems.isEmpty {
+            if collectionViewItems.isEmpty, layout.emptyCellType != nil {
                 collectionViewItems = [BECollectionViewItem(isEmptyCell: true)]
             }
         case .error:
@@ -93,8 +93,8 @@ open class BECollectionViewSection {
             return cell
         }
         
-        if item.isEmptyCell {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: layout.emptyCellType), for: indexPath)
+        if item.isEmptyCell, let emptyCellType = layout.emptyCellType {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: emptyCellType), for: indexPath)
         }
         
         return UICollectionViewCell()
