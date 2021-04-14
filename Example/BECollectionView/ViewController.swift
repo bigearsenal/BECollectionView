@@ -10,13 +10,24 @@ import Foundation
 import UIKit
 import BECollectionView
 
+class MyCollectionView: BECollectionView {
+    init() {
+        super.init(viewModels: [
+            CarsViewModel(),
+            FriendsViewModel()
+        ])
+    }
+    
+    override func mapDataToSections() -> [BECollectionViewSection] {
+        [
+            CarsSection(index: 0, viewModel: viewModels[0]),
+            FriendsSection(index: 1, viewModel: viewModels[1])
+        ]
+    }
+}
+
 class ViewController: UIViewController, BECollectionViewDelegate {
-    lazy var collectionView: BECollectionView = {
-        let section0 = CarsSection(index: 0, viewModel: CarsViewModel())
-        let section1 = FriendsSection(index: 1, viewModel: FriendsViewModel())
-        let collectionView = BECollectionView(sections: [section0, section1])
-        return collectionView
-    }()
+    lazy var collectionView = MyCollectionView()
     
     override func viewDidLoad() {
         super.viewDidLoad()

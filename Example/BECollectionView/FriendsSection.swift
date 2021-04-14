@@ -15,6 +15,7 @@ class FriendsSection: BECollectionViewSection {
             index: index,
             layout: BECollectionViewSectionLayout(
                 cellType: FriendCell.self,
+                emptyCellType: BECollectionViewBasicEmptyCell.self,
                 interGroupSpacing: 16,
                 contentInsets: NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10),
                 horizontalInterItemSpacing: .fixed(16),
