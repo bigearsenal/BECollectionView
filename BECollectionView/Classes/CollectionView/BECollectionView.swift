@@ -188,7 +188,7 @@ open class BECollectionView: UIView {
         }
     }
     
-    func dataDidLoad() {
+    open func dataDidLoad() {
 //        let numberOfSections = dataSource.numberOfSections(in: collectionView)
 //        guard numberOfSections > 0,
 //              let footer = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionFooter, at: IndexPath(row: 0, section: numberOfSections - 1)) as? SectionFooterView
@@ -218,5 +218,20 @@ open class BECollectionView: UIView {
         } else {
             collectionView.collectionViewLayout.invalidateLayout()
         }
+    }
+}
+
+public extension NSDiffableDataSourceSnapshot where SectionIdentifierType: Hashable, ItemIdentifierType == BECollectionViewItem
+{
+    func isSectionEmpty(sectionIdentifier: SectionIdentifierType) -> Bool {
+        let itemsCount = numberOfItems(inSection: sectionIdentifier)
+        if itemsCount == 1,
+           let firstItem = itemIdentifiers(inSection: sectionIdentifier)
+            .first,
+           firstItem.isEmptyCell
+        {
+            return true
+        }
+        return itemsCount == 0
     }
 }
