@@ -94,24 +94,6 @@ public struct BECollectionViewSectionLayout {
     public var customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
     public var customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
     
-    func registerCellAndSupplementaryViews(in collectionView: UICollectionView) {
-        // register cell
-        collectionView.register(cellType, forCellWithReuseIdentifier: String(describing: cellType))
-        if let emptyCellType = emptyCellType {
-            collectionView.register(emptyCellType, forCellWithReuseIdentifier: String(describing: emptyCellType))
-        }
-        
-        // register header
-        if let header = header {
-            collectionView.register(header.viewClass, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: header.identifier)
-        }
-        
-        // register footer
-        if let footer = footer {
-            collectionView.register(footer.viewClass, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footer.identifier)
-        }
-    }
-    
     func layout(environment env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let group: NSCollectionLayoutGroup
         // 1 columns

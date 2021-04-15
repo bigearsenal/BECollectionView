@@ -61,7 +61,7 @@ open class BECollectionView: UIView {
         
         // register cell and configure datasource
         sections.forEach {$0.collectionView = self}
-        sections.map {$0.layout}.forEach {$0.registerCellAndSupplementaryViews(in: collectionView)}
+        sections.forEach {$0.registerCellAndSupplementaryViews()}
         configureDataSource()
         
         // binding
