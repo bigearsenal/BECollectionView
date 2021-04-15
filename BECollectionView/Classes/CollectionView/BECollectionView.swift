@@ -30,6 +30,15 @@ open class BECollectionView: UIView {
         }
     }
     
+    public var keyboardDismissMode: UIScrollView.KeyboardDismissMode {
+        get {
+            collectionView.keyboardDismissMode
+        }
+        set {
+            collectionView.keyboardDismissMode = newValue
+        }
+    }
+    
     // MARK: - Subviews
     public lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: sections.createLayout())
