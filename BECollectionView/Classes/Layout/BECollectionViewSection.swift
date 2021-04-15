@@ -30,6 +30,25 @@ open class BECollectionViewSection {
         self.limit = limit
     }
     
+    func registerCellAndSupplementaryViews() {
+        // register cell
+        collectionView?.collectionView.register(layout.cellType, forCellWithReuseIdentifier: String(describing: layout.cellType))
+        collectionView?.collectionView
+            .register(layout.emptyCellType, forCellWithReuseIdentifier: emptyCellIdentifier)
+        
+        // register header
+        if let header = layout.header?.viewClass {
+            collectionView?.collectionView.register(header, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerIdentifier)
+        }
+        
+        
+        // register footer
+        if let footer = layout.footer?.viewClass {
+            collectionView?.collectionView.register(footer, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerIdentifier)
+        }
+        
+    }
+    
     open func mapDataToCollectionViewItems() -> [BECollectionViewItem]
     {
         var items = viewModel.convertDataToAnyHashable()
@@ -52,7 +71,7 @@ open class BECollectionViewSection {
             ]
         case .loaded:
             if collectionViewItems.isEmpty, layout.emptyCellType != nil {
-                collectionViewItems = [BECollectionViewItem(isEmptyCell: true)]
+                collectionViewItems = [BECollectionViewItem(emptyCellIndex: UUID().uuidString)]
             }
         case .error:
             break
@@ -73,7 +92,7 @@ open class BECollectionViewSection {
     open func configureHeader(indexPath: IndexPath) -> UICollectionReusableView? {
         let view = collectionView?.collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: layout.header!.identifier,
+            withReuseIdentifier: headerIdentifier,
             for: indexPath)
         return view
     }
@@ -81,7 +100,7 @@ open class BECollectionViewSection {
     open func configureFooter(indexPath: IndexPath) -> UICollectionReusableView? {
         let view = collectionView?.collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: layout.footer!.identifier,
+            withReuseIdentifier: footerIdentifier,
             for: indexPath)
         
         return view
@@ -103,8 +122,8 @@ open class BECollectionViewSection {
             return cell
         }
         
-        if item.isEmptyCell, let emptyCellType = layout.emptyCellType {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: emptyCellType), for: indexPath)
+        if item.isEmptyCell {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: emptyCellIdentifier, for: indexPath)
         }
         
         return UICollectionViewCell()
@@ -129,6 +148,19 @@ open class BECollectionViewSection {
     // MARK: - CollectionView
     public var collectionViewLayout: UICollectionViewLayout? {
         collectionView?.collectionView.collectionViewLayout
+    }
+    
+    // MARK: - Helper
+    private var headerIdentifier: String {
+        "Header#\(index)"
+    }
+    
+    private var footerIdentifier: String {
+        "Footer#\(index)"
+    }
+    
+    private var emptyCellIdentifier: String {
+        "EmptyCell#\(index)"
     }
 }
 
