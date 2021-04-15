@@ -11,6 +11,7 @@ import RxSwift
 
 open class BECollectionView: UIView {
     // MARK: - Property
+    private var sections = [BECollectionViewSection]()
     private let disposeBag = DisposeBag()
     public let viewModels: [BEListViewModelType]
     public var canRefresh: Bool = true {
@@ -85,47 +86,36 @@ open class BECollectionView: UIView {
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { _ in
                 // register cell and configure datasource
-                let sections = self.mapDataToSections()
-                sections.forEach {$0.collectionView = self}
-                sections.map {$0.layout}.forEach {$0.registerCellAndSupplementaryViews(in: self.collectionView)}
-                self.collectionView.collectionViewLayout = sections.createLayout()
-                self.configureDataSource(sections: sections)
+                self.sections = self.mapDataToSections()
+                
+                // configure datasource
+                self.configureDataSource()
+                
+                // reset layout
+                self.collectionView.setCollectionViewLayout(self.sections.createLayout(), animated: false)
+                
+                // register cells and supplementary views
+                for index in 0..<self.sections.count {
+                    self.sections[index].collectionView = self
+                }
+                self.sections.forEach {$0.registerCellAndSupplementaryViews()}
                 
                 // map snapshot
-                let snapshot = self.mapDataToSnapshot(sections: sections)
+                let snapshot = self.mapDataToSnapshot(sections: self.sections)
                 self.dataSource.apply(snapshot)
                 DispatchQueue.main.async { [weak self] in
-                    self?.dataDidLoad(sections: sections)
+                    self?.dataDidLoad()
                 }
             })
             .disposed(by: disposeBag)
         
         // TODO: Loadmore
-//        collectionView.rx.didEndDecelerating
-//            .subscribe(onNext: { [unowned self] in
-//                // Load more
-//                guard self.dataSource.numberOfSections(in: self.collectionView) == 1,
-//                      let viewModel = self.sections.first?.viewModel,
-//                      viewModel.isPaginationEnabled
-//                else {
-//                    return
-//                }
-//
-//                if self.collectionView.contentOffset.y > 0 {
-//                    let numberOfSections = self.collectionView.numberOfSections
-//                    guard numberOfSections > 0 else {return}
-//
-//                    guard let indexPath = self.collectionView.indexPathsForVisibleItems.filter({$0.section == numberOfSections - 1}).max(by: {$0.row < $1.row})
-//                    else {
-//                        return
-//                    }
-//
-//                    if indexPath.row >= self.collectionView.numberOfItems(inSection: self.collectionView.numberOfSections - 1) - 5 {
-//                        viewModel.fetchNext()
-//                    }
-//                }
-//            })
-//            .disposed(by: disposeBag)
+        collectionView.rx.didEndDecelerating
+            .subscribe(onNext: { [weak self] in
+                // Load more
+                self?.handleLoadMore()
+            })
+            .disposed(by: disposeBag)
     }
     
     open func dataDidChangeObservable() -> Observable<Void> {
@@ -153,13 +143,13 @@ open class BECollectionView: UIView {
     }
     
     // MARK: - Datasource
-    private func configureDataSource(sections: [BECollectionViewSection]) {
-        dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) {(collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-            sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+    private func configureDataSource() {
+        dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) {[weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+            self?.sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
         }
                 
-        dataSource.supplementaryViewProvider = {(collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-            sections[indexPath.section].configureSupplementaryView(kind: kind, indexPath: indexPath)
+        dataSource.supplementaryViewProvider = {[weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
+            self?.sections[indexPath.section].configureSupplementaryView(kind: kind, indexPath: indexPath)
         }
     }
     
@@ -187,17 +177,7 @@ open class BECollectionView: UIView {
         }
     }
     
-    func dataDidLoad(sections: [BECollectionViewSection]) {
-//        let numberOfSections = dataSource.numberOfSections(in: collectionView)
-//        guard numberOfSections > 0,
-//              let footer = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionFooter, at: IndexPath(row: 0, section: numberOfSections - 1)) as? SectionFooterView
-//        else {
-//            return
-//        }
-//
-//        footer.setUp(state: viewModel.state.value, isListEmpty: viewModel.isListEmpty)
-////        collectionView.collectionViewLayout.invalidateLayout()
-//        footer.setNeedsDisplay()
+    func dataDidLoad() {
         sections.forEach {$0.dataDidLoad()}
         delegate?.beCollectionViewDataDidLoad?(collectionView: self)
     }
@@ -216,6 +196,33 @@ open class BECollectionView: UIView {
             collectionView.collectionViewLayout.invalidateLayout(with: context)
         } else {
             collectionView.collectionViewLayout.invalidateLayout()
+        }
+    }
+    
+    // MARK: - Helper
+    private func handleLoadMore() {
+        // get number of Sections
+        let numberOfSections = dataSource.numberOfSections(in: collectionView)
+        guard numberOfSections == sections.count else {return}
+        
+        // load more in sections
+        for i in 0..<sections.count {
+            // get viewModel
+            let viewModel = sections[i].viewModel
+            if !viewModel.isPaginationEnabled {continue}
+            
+            // detect visible rows
+            guard let indexPath = collectionView
+                    .indexPathsForVisibleItems
+                    .filter({$0.section == i})
+                    .max(by: {$0.row < $1.row})
+            else { continue }
+            
+            // load more if reached last 5 items
+            if indexPath.row >= self.collectionView.numberOfItems(inSection: i) - 5
+            {
+                viewModel.fetchNext()
+            }
         }
     }
 }

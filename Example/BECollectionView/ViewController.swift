@@ -19,10 +19,15 @@ class MyCollectionView: BECollectionView {
     }
     
     override func mapDataToSections() -> [BECollectionViewSection] {
+        Bool.random() ?
         [
             CarsSection(index: 0, viewModel: viewModels[0]),
             FriendsSection(index: 1, viewModel: viewModels[1])
-        ]
+        ] :
+            [
+                FriendsSection(index: 0, viewModel: viewModels[1]),
+                CarsSection(index: 1, viewModel: viewModels[0])
+            ]
     }
 }
 
