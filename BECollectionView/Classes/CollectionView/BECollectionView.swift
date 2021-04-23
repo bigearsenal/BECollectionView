@@ -106,30 +106,10 @@ open class BECollectionView: UIView {
             })
             .disposed(by: disposeBag)
         
-        // TODO: Loadmore
+        // did end decelerating (ex: loadmore)
         collectionView.rx.didEndDecelerating
-            .subscribe(onNext: { [unowned self] in
-                // Load more
-                guard self.dataSource.numberOfSections(in: self.collectionView) == 1,
-                      let viewModel = self.sections.first?.viewModel,
-                      viewModel.isPaginationEnabled
-                else {
-                    return
-                }
-                
-                if self.collectionView.contentOffset.y > 0 {
-                    let numberOfSections = self.collectionView.numberOfSections
-                    guard numberOfSections > 0 else {return}
-
-                    guard let indexPath = self.collectionView.indexPathsForVisibleItems.filter({$0.section == numberOfSections - 1}).max(by: {$0.row < $1.row})
-                    else {
-                        return
-                    }
-
-                    if indexPath.row >= self.collectionView.numberOfItems(inSection: self.collectionView.numberOfSections - 1) - 5 {
-                        viewModel.fetchNext()
-                    }
-                }
+            .subscribe(onNext: { [weak self] in
+                self?.didEndDecelerating()
             })
             .disposed(by: disposeBag)
     }
@@ -201,6 +181,32 @@ open class BECollectionView: UIView {
 //        footer.setNeedsDisplay()
         sections.forEach {$0.dataDidLoad()}
         delegate?.beCollectionViewDataDidLoad?(collectionView: self)
+    }
+    
+    open func didEndDecelerating() {
+        // get indexPaths
+        let visibleIndexPaths = collectionView.indexPathsForVisibleItems
+        
+        // Loadmore
+        let sectionIndexes = Array(Set(visibleIndexPaths.map {$0.section}))
+        
+        for index in sectionIndexes {
+            
+            let section = self.sections[index]
+            let viewModel = section.viewModel
+            
+            let lastVisibleRowIndex = visibleIndexPaths
+                .filter {$0.section == index}
+                .max(by: {$0.row < $1.row})?
+                .row ?? -1
+            
+            if viewModel.isPaginationEnabled,
+               collectionView.contentOffset.y > 0,
+               lastVisibleRowIndex >= collectionView.numberOfItems(inSection: index) - 5
+            {
+                viewModel.fetchNext()
+            }
+        }
     }
     
     // MARK: - Helpers
