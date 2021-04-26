@@ -30,6 +30,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     // MARK: - Properties
     public var isPaginationEnabled: Bool
     public var customFilter: ((T) -> Bool)?
+    public var customSorter: ((T, T) -> Bool)?
     public var isEmpty: Bool {isLastPageLoaded && data.count == 0}
     
     // For pagination
@@ -78,6 +79,9 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
         if let customFilter = customFilter {
             newData = newData.filter {customFilter($0)}
         }
+        if let sorter = self.customSorter {
+            newData = newData.sorted(by: sorter)
+        }
         super.handleNewData(newData)
         
         // get next offset
@@ -92,7 +96,11 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     }
     
     public func overrideData(by newData: [T]) {
+        var newData = newData
         if newData != data {
+            if let sorter = customSorter {
+                newData = newData.sorted(by: sorter)
+            }
             super.handleNewData(newData)
         }
     }
