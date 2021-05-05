@@ -76,6 +76,7 @@ open class BEViewModel<T: Hashable> {
     
     open func handleNewData(_ newData: T) {
         data = newData
+        error = nil
         state.accept(.loaded)
     }
     
