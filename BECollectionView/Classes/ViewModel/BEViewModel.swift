@@ -50,7 +50,7 @@ open class BEViewModel<T: Hashable> {
     // MARK: - Asynchronous request handler
     open func createRequest() -> Single<T> {
         // delay for simulating loading, MUST OVERRIDE
-        Single<T>.just(data).delay(.seconds(2), scheduler: MainScheduler.instance)
+        Single<T>.just(data)
     }
     
     open func shouldRequest() -> Bool {
