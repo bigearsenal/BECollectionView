@@ -47,6 +47,10 @@ open class BEViewModel<T: Hashable> {
         request(reload: true)
     }
     
+    public func cancelRequest() {
+        requestDisposable?.dispose()
+    }
+    
     // MARK: - Asynchronous request handler
     open func createRequest() -> Single<T> {
         // delay for simulating loading, MUST OVERRIDE
@@ -60,7 +64,7 @@ open class BEViewModel<T: Hashable> {
     open func request(reload: Bool = false) {
         if reload {
             // cancel previous request
-            requestDisposable?.dispose()
+            cancelRequest()
         } else if !shouldRequest() {
             // there is an running operation
             return
