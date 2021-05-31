@@ -130,7 +130,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
                 itemsChanged = true
                 var data = self.data
                 data[index] = item
-                handleNewData(data)
+                overrideData(by: data)
             }
             
             return itemsChanged
