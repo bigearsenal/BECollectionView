@@ -119,48 +119,40 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     // MARK: - Helper
     @discardableResult
     open func updateItem(where predicate: (T) -> Bool, transform: (T) -> T?) -> Bool {
-        switch state.value {
-        case .loaded :
-            // modify items
-            var itemsChanged = false
-            if let index = data.firstIndex(where: predicate),
-               let item = transform(data[index]),
-               item != data[index]
-            {
-                itemsChanged = true
-                var data = self.data
-                data[index] = item
-                overrideData(by: data)
-            }
-            
-            return itemsChanged
-        default:
-            return false
+        // modify items
+        var itemsChanged = false
+        if let index = data.firstIndex(where: predicate),
+           let item = transform(data[index]),
+           item != data[index]
+        {
+            itemsChanged = true
+            var data = self.data
+            data[index] = item
+            overrideData(by: data)
         }
+        
+        return itemsChanged
     }
     
     @discardableResult
-    open func insert(_ item: T, where predicate: (T) -> Bool, shouldUpdate: Bool = false) -> Bool
+    open func insert(_ item: T, where predicate: ((T) -> Bool)? = nil, shouldUpdate: Bool = false) -> Bool
     {
-        switch state.value {
-        case .loaded :
-            // check if item exists in data
-            guard let index = data.firstIndex(where: predicate) else {
-                var data = self.data
-                data.append(item)
-                handleNewData(data)
+        var items = data
+        
+        // update mode
+        if let predicate = predicate {
+            if let index = items.firstIndex(where: predicate), shouldUpdate {
+                items[index] = item
+                overrideData(by: items)
                 return true
             }
-            
-            // update item
-            if shouldUpdate && data[index] != item {
-                var data = self.data
-                data[index] = item
-                handleNewData(data)
-                return true
-            }
-        default:
-            break
+        }
+        
+        // insert mode
+        else {
+            items.append(item)
+            overrideData(by: items)
+            return true
         }
         
         return false
@@ -174,7 +166,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
             result = data.remove(at: index)
         }
         if result != nil {
-            handleNewData(data)
+            overrideData(by: data)
         }
         return nil
     }
