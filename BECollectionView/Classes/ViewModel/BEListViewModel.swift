@@ -18,6 +18,8 @@ public protocol BEListViewModelType {
     func fetchNext()
     func setState(_ state: BEFetcherState, withData data: [AnyHashable]?)
     func refreshUI()
+    
+    func getCurrentPage() -> Int?
 }
 
 public extension BEListViewModelType {
@@ -114,6 +116,11 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     
     public func refreshUI() {
         state.accept(state.value)
+    }
+    
+    public func getCurrentPage() -> Int? {
+        guard isPaginationEnabled, limit != 0 else {return nil}
+        return offset / limit
     }
     
     // MARK: - Helper
