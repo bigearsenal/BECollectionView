@@ -77,14 +77,6 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
             isLastPageLoaded = true
         }
         
-        // handle new data
-        if let customFilter = customFilter {
-            newData = newData.filter {customFilter($0)}
-        }
-        if let sorter = self.customSorter {
-            newData = newData.sorted(by: sorter)
-        }
-        
         // map
         let mappedData = map(newData: newData)
         super.handleNewData(mappedData)
@@ -103,17 +95,20 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     public func overrideData(by newData: [T]) {
         var newData = newData
         if newData != data {
-            if let sorter = customSorter {
-                newData = newData.sorted(by: sorter)
-            }
-            
             let mappedData = map(newData: newData)
             super.handleNewData(mappedData)
         }
     }
     
     open func map(newData: [T]) -> [T] {
-        newData
+        var newData = newData
+        if let customFilter = customFilter {
+            newData = newData.filter {customFilter($0)}
+        }
+        if let sorter = self.customSorter {
+            newData = newData.sorted(by: sorter)
+        }
+        return newData
     }
     
     public func setState(_ state: BEFetcherState, withData data: [AnyHashable]? = nil) {
