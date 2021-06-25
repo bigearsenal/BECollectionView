@@ -84,7 +84,10 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
         if let sorter = self.customSorter {
             newData = newData.sorted(by: sorter)
         }
-        super.handleNewData(newData)
+        
+        // map
+        let mappedData = map(newData: newData)
+        super.handleNewData(mappedData)
         
         // get next offset
         offset += limit
@@ -103,8 +106,14 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
             if let sorter = customSorter {
                 newData = newData.sorted(by: sorter)
             }
-            super.handleNewData(newData)
+            
+            let mappedData = map(newData: newData)
+            super.handleNewData(mappedData)
         }
+    }
+    
+    open func map(newData: [T]) -> [T] {
+        newData
     }
     
     public func setState(_ state: BEFetcherState, withData data: [AnyHashable]? = nil) {
