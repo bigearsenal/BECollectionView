@@ -119,7 +119,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     }
     
     public func refreshUI() {
-        state.accept(state.value)
+        overrideData(by: data)
     }
     
     public func getCurrentPage() -> Int? {
