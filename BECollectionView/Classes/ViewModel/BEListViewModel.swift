@@ -93,10 +93,9 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     }
     
     public func overrideData(by newData: [T]) {
-        var newData = newData
+        let newData = map(newData: newData)
         if newData != data {
-            let mappedData = map(newData: newData)
-            super.handleNewData(mappedData)
+            super.handleNewData(newData)
         }
     }
     
