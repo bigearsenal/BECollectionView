@@ -163,27 +163,3 @@ open class BECollectionViewSection {
         "EmptyCell#\(index)"
     }
 }
-
-extension Array where Element == BECollectionViewSection {
-    func createLayout(interSectionSpacing: CGFloat? = nil) -> UICollectionViewLayout {
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        if let interSectionSpacing = interSectionSpacing {
-            config.interSectionSpacing = interSectionSpacing
-        }
-        
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            self.createLayoutForSection(sectionIndex, environment: env)
-        }, configuration: config)
-        
-        for section in self where section.layout.background != nil {
-            layout.register(section.layout.background.self, forDecorationViewOfKind: String(describing: section.layout.background!))
-        }
-        
-        return layout
-    }
-    
-    func createLayoutForSection(_ sectionIndex: Int, environment env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
-        let section = self[sectionIndex]
-        return section.layout.layout(environment: env)
-    }
-}

@@ -41,7 +41,7 @@ open class BECollectionView: UIView {
     
     // MARK: - Subviews
     public lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: sections.createLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(collectionViewDidTouch(_:)))
         collectionView.addGestureRecognizer(tapGesture)
         return collectionView
@@ -134,6 +134,22 @@ open class BECollectionView: UIView {
     }
     
     // MARK: - Datasource
+    open func compositionalLayoutConfiguration() -> UICollectionViewCompositionalLayoutConfiguration {
+        UICollectionViewCompositionalLayoutConfiguration()
+    }
+    
+    private func createLayout() -> UICollectionViewLayout {
+        let config = compositionalLayoutConfiguration()
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            self?.sections[sectionIndex].layout.layout(environment: env)
+        }, configuration: config)
+        
+        for section in sections where section.layout.background != nil {
+            layout.register(section.layout.background.self, forDecorationViewOfKind: String(describing: section.layout.background!))
+        }
+        return layout
+    }
+    
     private func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
             self?.sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
