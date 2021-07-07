@@ -70,11 +70,15 @@ open class BECollectionView: UIView {
         
         // register cell and configure datasource
         sections.forEach {$0.collectionView = self}
-        sections.forEach {$0.registerCellAndSupplementaryViews()}
+        registerCellsAndSupplementaryViews()
         configureDataSource()
         
         // binding
         bind()
+    }
+    
+    open func registerCellsAndSupplementaryViews() {
+        sections.forEach {$0.registerCellAndSupplementaryViews()}
     }
     
     private func setUpRefreshControl() {
