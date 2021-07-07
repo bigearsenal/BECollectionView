@@ -191,7 +191,7 @@ open class BECollectionView: UIView {
             let globalFooter = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: globalFooterSize,
                 elementKind: footerIdentifier,
-                alignment: .top
+                alignment: .bottom
             )
             items.append(globalFooter)
         }

@@ -8,38 +8,6 @@
 
 import Foundation
 import BECollectionView
-import RxSwift
-
-class MyHeaderView: BaseCollectionReusableView {
-    var disposable: Disposable?
-    
-    var viewModel: CarsViewModel? {
-        didSet {
-            guard let viewModel = viewModel else {return}
-            disposable?.dispose()
-            disposable = viewModel.dataObservable
-                .map {$0?.count ?? 0}
-                .map {"\($0) car(s)"}
-                .asDriver(onErrorJustReturn: "")
-                .drive(titleLabel.rx.text)
-        }
-    }
-    
-    lazy var titleLabel: UILabel = {
-        let label = UILabel(forAutoLayout: ())
-        label.textAlignment = .center
-        label.text = "Global header"
-        label.textColor = .white
-        label.font = .boldSystemFont(ofSize: 44)
-        return label
-    }()
-    override func commonInit() {
-        super.commonInit()
-        backgroundColor = .red
-        stackView.addArrangedSubview(titleLabel)
-        titleLabel.autoPinEdgesToSuperviewEdges()
-    }
-}
 
 class MyCollectionView: BECollectionView {
     let headerIdentifier = "GlobalHeader"
@@ -52,7 +20,11 @@ class MyCollectionView: BECollectionView {
                 viewType: MyHeaderView.self,
                 heightDimension: .estimated(44)
             ),
-            sections: [section0, section1]
+            sections: [section0, section1],
+            footer: .init(
+                viewType: MyFooterView.self,
+                heightDimension: .estimated(44)
+            )
         )
     }
     
@@ -60,5 +32,11 @@ class MyCollectionView: BECollectionView {
         let headerView = super.configureHeaderView(kind: kind, indexPath: indexPath) as? MyHeaderView
         headerView?.viewModel = sections.first?.viewModel as? CarsViewModel
         return headerView
+    }
+    
+    override func configureFooterView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
+        let footerView = super.configureHeaderView(kind: kind, indexPath: indexPath) as? MyFooterView
+        footerView?.viewModel = sections.last?.viewModel as? FriendsViewModel
+        return footerView
     }
 }
