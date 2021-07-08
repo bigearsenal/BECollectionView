@@ -89,6 +89,11 @@ open class BECollectionView: UIView {
         bind()
     }
     
+    open override func layoutSubviews() {
+        collectionView.collectionViewLayout.invalidateLayout()
+        super.layoutSubviews()
+    }
+    
     private func registerCellsAndSupplementaryViews() {
         sections.forEach {$0.registerCellAndSupplementaryViews()}
         if let header = header {
