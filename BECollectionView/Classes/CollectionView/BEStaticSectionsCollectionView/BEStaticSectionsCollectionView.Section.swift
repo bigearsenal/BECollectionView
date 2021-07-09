@@ -8,9 +8,6 @@
 import Foundation
 import RxSwift
 
-@available(*, deprecated, renamed: "BEStaticSectionsCollectionView.Section")
-open class BECollectionViewSection {}
-
 extension BEStaticSectionsCollectionView {
     open class Section: BECollectionViewSectionBase {
         public let viewModel: BEListViewModelType

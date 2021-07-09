@@ -9,9 +9,6 @@ import Foundation
 import PureLayout
 import RxSwift
 
-@available(*, deprecated, renamed: "BEStaticSectionCollectionView")
-open class BECollectionView: BEStaticSectionsCollectionView {}
-
 open class BEStaticSectionsCollectionView: BECollectionViewBase {
     // MARK: - Properties
     public let sections: [Section]
