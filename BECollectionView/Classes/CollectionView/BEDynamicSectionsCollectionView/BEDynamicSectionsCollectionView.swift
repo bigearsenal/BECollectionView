@@ -16,7 +16,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
             self.items = items
         }
         
-        let userInfo: AnyHashable
+        public let userInfo: AnyHashable
         var layout: BECollectionViewSectionBase
         let items: [AnyHashable]
     }
@@ -25,6 +25,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     public let viewModel: BEListViewModelType
     private let mapDataToSections: (BEListViewModelType) -> [SectionInfo]
     private let emptySection: BECollectionViewSectionBase
+    public var sections = [SectionInfo]()
     
     // MARK: - Initializer
     public init(
@@ -60,7 +61,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     // MARK: - Action
     open override func reloadData(completion: @escaping () -> Void) {
         // map sections
-        let sections = mapDataToSections(viewModel).map { [weak self] section -> SectionInfo in
+        sections = mapDataToSections(viewModel).map { [weak self] section -> SectionInfo in
             var section = section
             let layout = section.layout
             layout.collectionView = self
@@ -81,17 +82,17 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
             // configure data source
             strongSelf.setUpDataSource(
                 cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-                    let section = sections[safe: indexPath.section]?.layout ?? self?.emptySection
+                    let section = self?.sections[safe: indexPath.section]?.layout ?? self?.emptySection
                     return section?.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
                 },
                 supplementaryViewProvider: { [weak self] collectionView, kind, indexPath in
-                    let section = sections[safe: indexPath.section]?.layout ?? self?.emptySection
+                    let section = self?.sections[safe: indexPath.section]?.layout ?? self?.emptySection
                     return section?.configureSupplementaryView(kind: kind, indexPath: indexPath)
                 }
             )
             
             // map snapshot
-            let snapshot = strongSelf.mapDataToSnapshot(sections: sections)
+            let snapshot = strongSelf.mapDataToSnapshot(sections: strongSelf.sections)
             strongSelf.dataSource.apply(snapshot, animatingDifferences: true, completion: completion)
         }
     }

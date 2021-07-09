@@ -36,7 +36,7 @@ class DynamicCollectionView: BEDynamicSectionsCollectionView {
                 let cars = viewModel.getData(type: Car.self)
                 let dict = Dictionary(grouping: cars, by: {$0.numberOfWheels})
                 return dict.map { key, value in
-                    BEDynamicSectionsCollectionView.SectionInfo(
+                    SectionInfo(
                         userInfo: key,
                         layout: Self.defaultLayout,
                         items: value
@@ -49,5 +49,19 @@ class DynamicCollectionView: BEDynamicSectionsCollectionView {
                 heightDimension: .estimated(53)
             )
         )
+    }
+    
+    override func dataDidLoad() {
+        super.dataDidLoad()
+        if sections.count == 0 {
+            let sectionHeaderView = sectionHeaderView(sectionIndex: 0) as? CarsSectionHeaderView
+            sectionHeaderView?.titleLabel.text = "\(viewModel.currentState)"
+        } else {
+            for (index, section) in sections.enumerated() {
+                let sectionHeaderView = sectionHeaderView(sectionIndex: index) as? CarsSectionHeaderView
+                sectionHeaderView?.titleLabel.text = "Number of wheels = \(section.userInfo)"
+            }
+        }
+        
     }
 }
