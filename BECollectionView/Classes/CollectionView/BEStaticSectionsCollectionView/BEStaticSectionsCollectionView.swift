@@ -43,28 +43,7 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
     }
     
     // MARK: - Binding
-    open override func bind() {
-        super.bind()
-        var observable = dataDidChangeObservable()
-        
-        if SystemVersion.isIOS13() {
-            observable = observable
-                .debounce(.nanoseconds(1), scheduler: MainScheduler.instance)
-        }
-        
-        observable
-            .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { _ in
-                let snapshot = self.mapDataToSnapshot()
-                self.dataSource.apply(snapshot)
-                DispatchQueue.main.async { [weak self] in
-                    self?.dataDidLoad()
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    open func dataDidChangeObservable() -> Observable<Void> {
+    open override func dataDidChangeObservable() -> Observable<Void> {
         Observable<Void>.combineLatest(
             sections.map {$0.viewModel.dataDidChange}
         )
@@ -114,7 +93,12 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
         sections.forEach {$0.reload()}
     }
     
-    open func dataDidLoad() {
+    open override func reloadData(completion: @escaping () -> Void) {
+        let snapshot = mapDataToSnapshot()
+        dataSource.apply(snapshot, animatingDifferences: true, completion: completion)
+    }
+    
+    open override func dataDidLoad() {
 //        let numberOfSections = dataSource.numberOfSections(in: collectionView)
 //        guard numberOfSections > 0,
 //              let footer = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionFooter, at: IndexPath(row: 0, section: numberOfSections - 1)) as? SectionFooterView
@@ -125,8 +109,8 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
 //        footer.setUp(state: viewModel.state.value, isListEmpty: viewModel.isListEmpty)
 ////        collectionView.collectionViewLayout.invalidateLayout()
 //        footer.setNeedsDisplay()
+        super.dataDidLoad()
         sections.forEach {$0.dataDidLoad()}
-        delegate?.beCollectionViewDataDidLoad?(collectionView: self)
     }
     
     open override func didEndDecelerating() {

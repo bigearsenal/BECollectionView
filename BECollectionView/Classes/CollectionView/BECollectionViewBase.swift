@@ -135,12 +135,32 @@ open class BECollectionViewBase: UIView {
     
     // MARK: - Binding
     open func bind() {
+        var observable = dataDidChangeObservable()
+        
+        if SystemVersion.isIOS13() {
+            observable = observable
+                .debounce(.nanoseconds(1), scheduler: MainScheduler.instance)
+        }
+        
+        observable
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] _ in
+                self?.reloadData { [weak self] in
+                    self?.dataDidLoad()
+                }
+            })
+            .disposed(by: disposeBag)
+        
         // did end decelerating (ex: loadmore)
         collectionView.rx.didEndDecelerating
             .subscribe(onNext: { [weak self] in
                 self?.didEndDecelerating()
             })
             .disposed(by: disposeBag)
+    }
+    
+    open func dataDidChangeObservable() -> Observable<Void> {
+        fatalError("Must override")
     }
     
     // MARK: - Layout
@@ -229,6 +249,14 @@ open class BECollectionViewBase: UIView {
     
     open func didEndDecelerating() {
         
+    }
+    
+    open func reloadData(completion: @escaping () -> Void) {
+        
+    }
+    
+    open func dataDidLoad() {
+        delegate?.beCollectionViewDataDidLoad?(collectionView: self)
     }
     
     // MARK: - Helpers
