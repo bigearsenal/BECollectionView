@@ -268,8 +268,6 @@ open class BECollectionView: UIView {
             if let item = item.value {
                 delegate?.beCollectionView?(collectionView: self, didSelect: item)
             }
-        } else {
-            print("collection view was tapped")
         }
     }
     
