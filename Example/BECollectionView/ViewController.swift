@@ -24,7 +24,7 @@ class ViewController: UIViewController, BECollectionViewDelegate {
         collectionView.refresh()
     }
     
-    func beCollectionView(collectionView: BECollectionView, didSelect item: AnyHashable) {
+    func beCollectionView(collectionView: BEStaticSectionsCollectionView, didSelect item: AnyHashable) {
         switch item {
         case let car as Car:
             print(car.name)

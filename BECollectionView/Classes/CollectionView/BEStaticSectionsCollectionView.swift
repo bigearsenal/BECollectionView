@@ -9,15 +9,18 @@ import Foundation
 import PureLayout
 import RxSwift
 
-open class BECollectionView: BECollectionViewBase {
+@available(*, deprecated, renamed: "BEStaticSectionCollectionView")
+open class BECollectionView: BECollectionViewBase {}
+
+open class BEStaticSectionsCollectionView: BECollectionViewBase {
     // MARK: - Properties
-    public let sections: [BECollectionViewSection]
+    public let sections: [Section]
     
     // MARK: - Initializers
     public init(
-        header: BECollectionViewHeaderFootViewLayout? = nil,
-        sections: [BECollectionViewSection],
-        footer: BECollectionViewHeaderFootViewLayout? = nil
+        header: BECollectionViewHeaderFooterViewLayout? = nil,
+        sections: [Section],
+        footer: BECollectionViewHeaderFooterViewLayout? = nil
     ) {
         self.sections = sections
         super.init(header: header, footer: footer)

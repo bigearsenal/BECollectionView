@@ -9,11 +9,11 @@
 import Foundation
 import BECollectionView
 
-class CarsSection: BECollectionViewSection {
+class CarsSection: BEStaticSectionsCollectionView.Section {
     init(index: Int, viewModel: BEListViewModelType) {
-        let layout = BECollectionViewSectionLayout(
-            header: BECollectionViewSectionLayout.Header(viewClass: CarsSectionHeaderView.self),
-            footer: BECollectionViewSectionLayout.Footer(viewClass: CarsSectionFooterView.self),
+        let layout = BEStaticSectionsCollectionView.SectionLayout(
+            header: .init(viewClass: CarsSectionHeaderView.self),
+            footer: .init(viewClass: CarsSectionFooterView.self),
             cellType: CarCell.self,
             emptyCellType: BECollectionViewBasicEmptyCell.self,
             interGroupSpacing: 16,

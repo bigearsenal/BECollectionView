@@ -9,11 +9,11 @@
 import Foundation
 import BECollectionView
 
-class FriendsSection: BECollectionViewSection {
+class FriendsSection: BEStaticSectionsCollectionView.Section {
     init(index: Int, viewModel: BEListViewModelType) {
         super.init(
             index: index,
-            layout: BECollectionViewSectionLayout(
+            layout: BEStaticSectionsCollectionView.SectionLayout(
                 cellType: FriendCell.self,
                 emptyCellType: BECollectionViewBasicEmptyCell.self,
                 interGroupSpacing: 16,

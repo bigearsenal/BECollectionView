@@ -16,8 +16,8 @@ open class BECollectionViewBase: UIView {
     
     // MARK: - Property
     let disposeBag = DisposeBag()
-    public let header: BECollectionViewHeaderFootViewLayout?
-    public let footer: BECollectionViewHeaderFootViewLayout?
+    public let header: BECollectionViewHeaderFooterViewLayout?
+    public let footer: BECollectionViewHeaderFooterViewLayout?
     
     public var canRefresh: Bool = true {
         didSet {
@@ -56,8 +56,8 @@ open class BECollectionViewBase: UIView {
     
     // MARK: - Initializer
     public init(
-        header: BECollectionViewHeaderFootViewLayout? = nil,
-        footer: BECollectionViewHeaderFootViewLayout? = nil
+        header: BECollectionViewHeaderFooterViewLayout? = nil,
+        footer: BECollectionViewHeaderFooterViewLayout? = nil
     ) {
         self.header = header
         self.footer = footer
