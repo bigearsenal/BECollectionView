@@ -17,7 +17,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         }
         
         let userInfo: AnyHashable
-        let layout: BECollectionViewSectionBase
+        var layout: BECollectionViewSectionBase
         let items: [AnyHashable]
     }
     
@@ -45,17 +45,36 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     // MARK: - Action
     open override func reloadData(completion: @escaping () -> Void) {
         // map sections
-        let sections = mapDataToSections(viewModel)
+        let sections = mapDataToSections(viewModel).map { [weak self] section -> SectionInfo in
+            var section = section
+            let layout = section.layout
+            layout.collectionView = self
+            section.layout = layout
+            return section
+        }
         
         // register cells and supplementary views
+        
         sections.forEach {$0.layout.registerCellAndSupplementaryViews()}
         
         // createLayout
         let layout = createLayout(sections: sections.map {$0.layout})
         
+        // reset
+        dataSource.apply(.init())
+        
         // apply layout and snapshot
         collectionView.setCollectionViewLayout(layout, animated: true) { [weak self] flag in
             guard flag, let strongSelf = self else {return}
+            // configure data source
+            strongSelf.dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: strongSelf.collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+                sections[indexPath.section].layout.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+            }
+            strongSelf.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
+                self?.supplementaryViewProvider(kind: kind, indexPath: indexPath)
+            }
+            
+            // map snapshot
             let snapshot = strongSelf.mapDataToSnapshot(sections: sections)
             strongSelf.dataSource.apply(snapshot, animatingDifferences: true, completion: completion)
         }
