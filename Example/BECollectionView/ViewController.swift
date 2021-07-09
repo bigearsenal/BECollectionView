@@ -2,36 +2,31 @@
 //  ViewController.swift
 //  BECollectionView_Example
 //
-//  Created by Chung Tran on 15/03/2021.
+//  Created by Chung Tran on 09/07/2021.
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
 import Foundation
 import UIKit
-import BECollectionView
 
-class ViewController: UIViewController, BECollectionViewDelegate {
-    lazy var collectionView = MyCollectionView()
-    
+class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        collectionView.configureForAutoLayout()
-        view.addSubview(collectionView)
-        collectionView.autoPinEdgesToSuperviewEdges()
-        collectionView.delegate = self
         
-        collectionView.refresh()
-    }
-    
-    func beCollectionView(collectionView: BEStaticSectionsCollectionView, didSelect item: AnyHashable) {
-        switch item {
-        case let car as Car:
-            print(car.name)
-        case let friend as Friend:
-            print(friend.name)
-        default:
-            break
-        }
+        let firstViewController = StaticSectionsViewController(nibName: nil, bundle: nil)
+        firstViewController.tabBarItem = UITabBarItem(title: "Static", image: nil, selectedImage: nil)
+        
+        
+        let secondViewController = DynamicSectionsViewController(nibName: nil, bundle: nil)
+        secondViewController.tabBarItem = UITabBarItem(title: "Dynamic", image: nil, selectedImage: nil)
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [firstViewController, secondViewController]
+        
+//        tabBarController.selectedViewController = secondViewController
+        
+        addChild(tabBarController)
+        view.addSubview(tabBarController.view)
+        tabBarController.didMove(toParent: self)
     }
 }

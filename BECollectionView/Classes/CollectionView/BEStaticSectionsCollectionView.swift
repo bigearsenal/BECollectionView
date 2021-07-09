@@ -10,7 +10,7 @@ import PureLayout
 import RxSwift
 
 @available(*, deprecated, renamed: "BEStaticSectionCollectionView")
-open class BECollectionView: BECollectionViewBase {}
+open class BECollectionView: BEStaticSectionsCollectionView {}
 
 open class BEStaticSectionsCollectionView: BECollectionViewBase {
     // MARK: - Properties
@@ -29,12 +29,17 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
     override func setUp() {
         sections.forEach {$0.collectionView = self}
         super.setUp()
-        configureDataSource()
     }
     
     override func registerCellsAndSupplementaryViews() {
         super.registerCellsAndSupplementaryViews()
         sections.forEach {$0.registerCellAndSupplementaryViews()}
+    }
+    
+    override func initDatasource() {
+        dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+            self?.sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+        }
     }
     
     // MARK: - Binding
@@ -92,16 +97,6 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
     }
     
     // MARK: - Datasource
-    private func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-            self?.sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
-        }
-                
-        dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-            self?.supplementaryViewProvider(kind: kind, indexPath: indexPath)
-        }
-    }
-    
     override func supplementaryViewProvider(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
         if let view = super.supplementaryViewProvider(kind: kind, indexPath: indexPath) {
             return view

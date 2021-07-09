@@ -94,6 +94,10 @@ open class BECollectionViewBase: UIView {
     // MARK: - Set up
     func setUp() {
         registerCellsAndSupplementaryViews()
+        initDatasource()
+        dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
+            self?.supplementaryViewProvider(kind: kind, indexPath: indexPath)
+        }
     }
     
     func registerCellsAndSupplementaryViews() {
@@ -110,6 +114,12 @@ open class BECollectionViewBase: UIView {
                 forSupplementaryViewOfKind: footerIdentifier,
                 withReuseIdentifier: footerIdentifier
             )
+        }
+    }
+    
+    func initDatasource() {
+        dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+            nil
         }
     }
     
@@ -175,7 +185,11 @@ open class BECollectionViewBase: UIView {
     }
     
     func createLayout() -> UICollectionViewLayout {
-        fatalError("Must override")
+        let config = compositionalLayoutConfiguration()
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            nil
+        }, configuration: config)
+        return layout
     }
     
     func supplementaryViewProvider(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {

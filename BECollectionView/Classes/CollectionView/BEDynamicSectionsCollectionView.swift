@@ -7,6 +7,10 @@
 
 import Foundation
 
-class BEDynamicSectionsCollectionView: UIView {
-    
+open class BEDynamicSectionsCollectionView: BECollectionViewBase {
+    override func commonInit() {
+        super.commonInit()
+        let snapshot = NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem>()
+        dataSource.apply(snapshot)
+    }
 }
