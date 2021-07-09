@@ -24,16 +24,19 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     // MARK: - Properties
     public let viewModel: BEListViewModelType
     private let mapDataToSections: (BEListViewModelType) -> [SectionInfo]
+    private let emptySection: BECollectionViewSectionBase
     
     // MARK: - Initializer
     public init(
         header: BECollectionViewHeaderFooterViewLayout? = nil,
         viewModel: BEListViewModelType,
         mapDataToSections: @escaping (BEListViewModelType) -> [SectionInfo],
+        emptySection: BECollectionViewSectionBase,
         footer: BECollectionViewHeaderFooterViewLayout? = nil
     ) {
         self.viewModel = viewModel
         self.mapDataToSections = mapDataToSections
+        self.emptySection = emptySection
         super.init(header: header, footer: footer)
     }
     
@@ -44,10 +47,16 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     
     // MARK: - Set up
     override func setUp() {
+        emptySection.collectionView = self
         super.setUp()
         setUpDataSource { _, _, _ in
             nil
         }
+    }
+    
+    override func registerCellsAndSupplementaryViews() {
+        super.registerCellsAndSupplementaryViews()
+        emptySection.registerCellAndSupplementaryViews()
     }
     
     // MARK: - Action
@@ -75,8 +84,9 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         collectionView.setCollectionViewLayout(layout, animated: true) { [weak self] flag in
             guard flag, let strongSelf = self else {return}
             // configure data source
-            strongSelf.setUpDataSource { (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-                sections[indexPath.section].layout.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+            strongSelf.setUpDataSource { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+                let section = sections[safe: indexPath.section]?.layout ?? self?.emptySection
+                return section?.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
             }
             
             // map snapshot
@@ -87,8 +97,9 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     
     func createLayout(sections: [BECollectionViewSectionBase]) -> UICollectionViewLayout {
         let config = compositionalLayoutConfiguration()
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            sections[sectionIndex].layout.layout(environment: env)
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            let section = sections[safe: sectionIndex] ?? self?.emptySection
+            return section?.layout.layout(environment: env)
         }, configuration: config)
         
         for section in sections where section.layout.background != nil {
@@ -132,5 +143,12 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     open override func refresh() {
         super.refresh()
         viewModel.reload()
+    }
+}
+
+private extension Array {
+    /// Returns the element at the specified index if it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }

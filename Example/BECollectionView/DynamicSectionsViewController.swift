@@ -11,6 +11,20 @@ import UIKit
 import BECollectionView
 
 class DynamicSectionsViewController: UIViewController, BECollectionViewDelegate {
+    private static let defaultLayout = BECollectionViewSectionBase(
+        index: 0,
+        layout: .init(
+            //                            header: <#T##BECollectionViewSectionHeaderLayout?#>,
+            //                            footer: <#T##BECollectionViewSectionFooterLayout?#>,
+            cellType: CarCell.self,
+            emptyCellType: BECollectionViewBasicEmptyCell.self,
+            interGroupSpacing: 16,
+            itemHeight: .estimated(17),
+            contentInsets: NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16),
+            horizontalInterItemSpacing: NSCollectionLayoutSpacing.fixed(16)
+        )
+    )
+    
     lazy var collectionView = BEDynamicSectionsCollectionView(
         header: .init(
             viewType: MyHeaderView.self,
@@ -23,23 +37,12 @@ class DynamicSectionsViewController: UIViewController, BECollectionViewDelegate 
             return dict.map { key, value in
                 BEDynamicSectionsCollectionView.SectionInfo(
                     userInfo: key,
-                    layout: .init(
-                        index: 0,
-                        layout: .init(
-//                            header: <#T##BECollectionViewSectionHeaderLayout?#>,
-//                            footer: <#T##BECollectionViewSectionFooterLayout?#>,
-                            cellType: CarCell.self,
-                            emptyCellType: BECollectionViewBasicEmptyCell.self,
-                            interGroupSpacing: 16,
-                            itemHeight: .estimated(17),
-                            contentInsets: NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16),
-                            horizontalInterItemSpacing: NSCollectionLayoutSpacing.fixed(16)
-                        )
-                    ),
+                    layout: Self.defaultLayout,
                     items: value
                 )
             }
         },
+        emptySection: Self.defaultLayout,
         footer: .init(
             viewType: MyFooterView.self,
             heightDimension: .estimated(44)
