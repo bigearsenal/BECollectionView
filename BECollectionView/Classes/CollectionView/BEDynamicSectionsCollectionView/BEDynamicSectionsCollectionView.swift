@@ -10,6 +10,13 @@ import RxSwift
 
 open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     public struct SectionInfo {
+        public init(userInfo: AnyHashable, layout: BECollectionViewSectionBase, items: [AnyHashable]) {
+            self.userInfo = userInfo
+            self.layout = layout
+            self.items = items
+        }
+        
+        let userInfo: AnyHashable
         let layout: BECollectionViewSectionBase
         let items: [AnyHashable]
     }
@@ -83,13 +90,13 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
                 snapshot.appendSections([0])
                 snapshot.appendItems(items, toSection: 0)
             } else {
-                let sectionsHeaders = sections.indices.map {$0}
+                let sectionsHeaders = sections.map {$0.userInfo}
                 snapshot.appendSections(sectionsHeaders)
                 
-                for (index, section) in sections.enumerated() {
+                for section in sections {
                     let items = section.items
                         .map {BECollectionViewItem(value: $0)}
-                    snapshot.appendItems(items, toSection: index)
+                    snapshot.appendItems(items, toSection: section.userInfo)
                 }
             }
         case .error:
