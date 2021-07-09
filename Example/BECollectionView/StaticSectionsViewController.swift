@@ -11,7 +11,7 @@ import UIKit
 import BECollectionView
 
 class StaticSectionsViewController: UIViewController, BECollectionViewDelegate {
-    lazy var collectionView = MyCollectionView()
+    lazy var collectionView = StaticCollectionView()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -13,7 +13,7 @@ class FriendsSection: BEStaticSectionsCollectionView.Section {
     init(index: Int, viewModel: BEListViewModelType) {
         super.init(
             index: index,
-            layout: BEStaticSectionsCollectionView.SectionLayout(
+            layout: .init(
                 cellType: FriendCell.self,
                 emptyCellType: BECollectionViewBasicEmptyCell.self,
                 interGroupSpacing: 16,

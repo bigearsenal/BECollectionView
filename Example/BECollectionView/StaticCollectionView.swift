@@ -9,7 +9,7 @@
 import Foundation
 import BECollectionView
 
-class MyCollectionView: BEStaticSectionsCollectionView {
+class StaticCollectionView: BEStaticSectionsCollectionView {
     let headerIdentifier = "GlobalHeader"
     
     init() {

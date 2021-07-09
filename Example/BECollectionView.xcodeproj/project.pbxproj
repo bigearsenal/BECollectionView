@@ -13,7 +13,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		B81413651C8BF573CDE80177 /* Pods_BECollectionView_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50922BF257C215EE0BC5FC2F /* Pods_BECollectionView_Tests.framework */; };
-		BC036C2626958DA1005C1BEC /* MyCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2526958DA1005C1BEC /* MyCollectionView.swift */; };
+		BC036C2626958DA1005C1BEC /* StaticCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2526958DA1005C1BEC /* StaticCollectionView.swift */; };
 		BC036C2B26959B41005C1BEC /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2A26959B41005C1BEC /* BaseCollectionReusableView.swift */; };
 		BC036C2D26959B77005C1BEC /* MyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2C26959B77005C1BEC /* MyHeaderView.swift */; };
 		BC036C2F26959BA5005C1BEC /* MyFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2E26959BA5005C1BEC /* MyFooterView.swift */; };
@@ -58,7 +58,7 @@
 		9C2F691269A3B2D3F78239FF /* Pods-BECollectionView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BECollectionView_Tests.debug.xcconfig"; path = "Target Support Files/Pods-BECollectionView_Tests/Pods-BECollectionView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		A415685C34C437B05C5D2620 /* Pods-BECollectionView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BECollectionView_Example.release.xcconfig"; path = "Target Support Files/Pods-BECollectionView_Example/Pods-BECollectionView_Example.release.xcconfig"; sourceTree = "<group>"; };
 		AAEA01EAB0D92300BDF7D389 /* Pods_BECollectionView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BECollectionView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC036C2526958DA1005C1BEC /* MyCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionView.swift; sourceTree = "<group>"; };
+		BC036C2526958DA1005C1BEC /* StaticCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticCollectionView.swift; sourceTree = "<group>"; };
 		BC036C2A26959B41005C1BEC /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		BC036C2C26959B77005C1BEC /* MyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyHeaderView.swift; sourceTree = "<group>"; };
 		BC036C2E26959BA5005C1BEC /* MyFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFooterView.swift; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				BCBCE76425FF9BAD006A5437 /* Models */,
 				BCBCE76F25FF9C6B006A5437 /* ViewModels */,
-				BC036C2926959B1E005C1BEC /* MyCollectionView */,
+				BC036C2926959B1E005C1BEC /* StaticCollectionView */,
 				BCBCE63125FF4DC1006A5437 /* StaticSectionsViewController.swift */,
 				BC036C4526980706005C1BEC /* DynamicSectionsViewController.swift */,
 				BC036C4326980637005C1BEC /* ViewController.swift */,
@@ -184,7 +184,7 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		BC036C2926959B1E005C1BEC /* MyCollectionView */ = {
+		BC036C2926959B1E005C1BEC /* StaticCollectionView */ = {
 			isa = PBXGroup;
 			children = (
 				BC036C2A26959B41005C1BEC /* BaseCollectionReusableView.swift */,
@@ -192,9 +192,9 @@
 				BC036C2E26959BA5005C1BEC /* MyFooterView.swift */,
 				BC2EB25225FFD05D006CE170 /* Sections */,
 				BC2EB1E625FF9E71006CE170 /* Cells */,
-				BC036C2526958DA1005C1BEC /* MyCollectionView.swift */,
+				BC036C2526958DA1005C1BEC /* StaticCollectionView.swift */,
 			);
-			name = MyCollectionView;
+			name = StaticCollectionView;
 			sourceTree = "<group>";
 		};
 		BC2EB1E625FF9E71006CE170 /* Cells */ = {
@@ -445,7 +445,7 @@
 				BC036C4426980637005C1BEC /* ViewController.swift in Sources */,
 				BC2EB25425FFD069006CE170 /* CarsSection.swift in Sources */,
 				BC036C2D26959B77005C1BEC /* MyHeaderView.swift in Sources */,
-				BC036C2626958DA1005C1BEC /* MyCollectionView.swift in Sources */,
+				BC036C2626958DA1005C1BEC /* StaticCollectionView.swift in Sources */,
 				BC2EB1E825FF9E7F006CE170 /* CarCell.swift in Sources */,
 				BC036C2F26959BA5005C1BEC /* MyFooterView.swift in Sources */,
 				BC2EB26026005764006CE170 /* CarsSection+SupplementaryViews.swift in Sources */,

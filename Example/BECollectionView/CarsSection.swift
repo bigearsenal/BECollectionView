@@ -11,17 +11,20 @@ import BECollectionView
 
 class CarsSection: BEStaticSectionsCollectionView.Section {
     init(index: Int, viewModel: BEListViewModelType) {
-        let layout = BEStaticSectionsCollectionView.SectionLayout(
-            header: .init(viewClass: CarsSectionHeaderView.self),
-            footer: .init(viewClass: CarsSectionFooterView.self),
-            cellType: CarCell.self,
-            emptyCellType: BECollectionViewBasicEmptyCell.self,
-            interGroupSpacing: 16,
-            itemHeight: .estimated(17),
-            contentInsets: NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16),
-            horizontalInterItemSpacing: NSCollectionLayoutSpacing.fixed(16)
+        super.init(
+            index: index,
+            layout: .init(
+                header: .init(viewClass: CarsSectionHeaderView.self),
+                footer: .init(viewClass: CarsSectionFooterView.self),
+                cellType: CarCell.self,
+                emptyCellType: BECollectionViewBasicEmptyCell.self,
+                interGroupSpacing: 16,
+                itemHeight: .estimated(17),
+                contentInsets: NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16),
+                horizontalInterItemSpacing: NSCollectionLayoutSpacing.fixed(16)
+            ),
+            viewModel: viewModel
         )
-        super.init(index: index, layout: layout, viewModel: viewModel)
     }
     
     override func dataDidLoad() {
