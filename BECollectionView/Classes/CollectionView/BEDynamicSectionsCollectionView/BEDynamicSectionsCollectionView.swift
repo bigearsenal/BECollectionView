@@ -77,9 +77,6 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         // createLayout
         let layout = createLayout(sections: sections.map {$0.layout})
         
-        // reset
-        dataSource.apply(.init())
-        
         // apply layout and snapshot
         collectionView.setCollectionViewLayout(layout, animated: true) { [weak self] flag in
             guard flag, let strongSelf = self else {return}
@@ -120,10 +117,12 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
             snapshot.appendSections([0])
             snapshot.appendItems(items, toSection: 0)
         case .loaded:
-            if sections.allSatisfy({$0.items.isEmpty}), sections.first?.layout.layout.emptyCellType != nil {
-                let items = [BECollectionViewItem(emptyCellIndex: UUID().uuidString)]
-                snapshot.appendSections([0])
-                snapshot.appendItems(items, toSection: 0)
+            if sections.allSatisfy({$0.items.isEmpty}) {
+                if emptySection.layout.emptyCellType != nil {
+                    let items = [BECollectionViewItem(emptyCellIndex: UUID().uuidString)]
+                    snapshot.appendSections([0])
+                    snapshot.appendItems(items, toSection: 0)
+                }
             } else {
                 let sectionsHeaders = sections.map {$0.userInfo}
                 snapshot.appendSections(sectionsHeaders)
