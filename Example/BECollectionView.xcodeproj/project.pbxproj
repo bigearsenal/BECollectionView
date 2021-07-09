@@ -126,9 +126,9 @@
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				BCBCE76425FF9BAD006A5437 /* Models */,
 				BCBCE76F25FF9C6B006A5437 /* ViewModels */,
-				BC036C2926959B1E005C1BEC /* StaticCollectionView */,
-				BCBCE63125FF4DC1006A5437 /* StaticSectionsViewController.swift */,
-				BC036C4526980706005C1BEC /* DynamicSectionsViewController.swift */,
+				BC036C51269848BA005C1BEC /* Views */,
+				BC036C4F26984875005C1BEC /* StaticSections */,
+				BC036C502698487F005C1BEC /* DynamicSections */,
 				BC036C4326980637005C1BEC /* ViewController.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -187,14 +187,38 @@
 		BC036C2926959B1E005C1BEC /* StaticCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				BC036C2A26959B41005C1BEC /* BaseCollectionReusableView.swift */,
-				BC036C2C26959B77005C1BEC /* MyHeaderView.swift */,
-				BC036C2E26959BA5005C1BEC /* MyFooterView.swift */,
 				BC2EB25225FFD05D006CE170 /* Sections */,
-				BC2EB1E625FF9E71006CE170 /* Cells */,
 				BC036C2526958DA1005C1BEC /* StaticCollectionView.swift */,
 			);
 			name = StaticCollectionView;
+			sourceTree = "<group>";
+		};
+		BC036C4F26984875005C1BEC /* StaticSections */ = {
+			isa = PBXGroup;
+			children = (
+				BC036C2926959B1E005C1BEC /* StaticCollectionView */,
+				BCBCE63125FF4DC1006A5437 /* StaticSectionsViewController.swift */,
+			);
+			name = StaticSections;
+			sourceTree = "<group>";
+		};
+		BC036C502698487F005C1BEC /* DynamicSections */ = {
+			isa = PBXGroup;
+			children = (
+				BC036C4526980706005C1BEC /* DynamicSectionsViewController.swift */,
+			);
+			name = DynamicSections;
+			sourceTree = "<group>";
+		};
+		BC036C51269848BA005C1BEC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BC036C2A26959B41005C1BEC /* BaseCollectionReusableView.swift */,
+				BC036C2C26959B77005C1BEC /* MyHeaderView.swift */,
+				BC036C2E26959BA5005C1BEC /* MyFooterView.swift */,
+				BC2EB1E625FF9E71006CE170 /* Cells */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		BC2EB1E625FF9E71006CE170 /* Cells */ = {
