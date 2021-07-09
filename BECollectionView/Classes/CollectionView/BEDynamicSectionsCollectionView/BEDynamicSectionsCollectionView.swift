@@ -49,9 +49,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     override func setUp() {
         emptySection.collectionView = self
         super.setUp()
-        setUpDataSource { _, _, _ in
-            nil
-        }
+        setUpDataSource(cellProvider: {_,_,_  in nil}, supplementaryViewProvider: nil)
     }
     
     override func registerCellsAndSupplementaryViews() {
@@ -81,10 +79,16 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         collectionView.setCollectionViewLayout(layout, animated: true) { [weak self] flag in
             guard flag, let strongSelf = self else {return}
             // configure data source
-            strongSelf.setUpDataSource { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-                let section = sections[safe: indexPath.section]?.layout ?? self?.emptySection
-                return section?.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
-            }
+            strongSelf.setUpDataSource(
+                cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+                    let section = sections[safe: indexPath.section]?.layout ?? self?.emptySection
+                    return section?.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+                },
+                supplementaryViewProvider: { [weak self] collectionView, kind, indexPath in
+                    let section = sections[safe: indexPath.section]?.layout ?? self?.emptySection
+                    return section?.configureSupplementaryView(kind: kind, indexPath: indexPath)
+                }
+            )
             
             // map snapshot
             let snapshot = strongSelf.mapDataToSnapshot(sections: sections)

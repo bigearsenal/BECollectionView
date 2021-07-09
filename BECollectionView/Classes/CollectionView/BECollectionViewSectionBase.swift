@@ -10,7 +10,7 @@ import Foundation
 open class BECollectionViewSectionBase {
     public weak var collectionView: BECollectionViewBase?
     public let index: Int
-    public let layout: BECollectionViewSectionLayout
+    public var layout: BECollectionViewSectionLayout
     public let customFilter: ((AnyHashable) -> Bool)?
     public let limit: (([AnyHashable]) -> [AnyHashable])?
     

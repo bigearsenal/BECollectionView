@@ -31,10 +31,10 @@ extension StaticCollectionView {
         }
         
         private static func groupLayoutForFriendSection() -> NSCollectionLayoutGroup {
-            let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(80), heightDimension: .estimated(73))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(80), heightDimension: .fractionalHeight(1))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(89))
             
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             group.interItemSpacing = .fixed(16)

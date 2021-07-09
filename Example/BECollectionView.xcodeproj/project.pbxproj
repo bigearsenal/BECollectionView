@@ -15,15 +15,16 @@
 		B81413651C8BF573CDE80177 /* Pods_BECollectionView_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50922BF257C215EE0BC5FC2F /* Pods_BECollectionView_Tests.framework */; };
 		BC036C2626958DA1005C1BEC /* StaticCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2526958DA1005C1BEC /* StaticCollectionView.swift */; };
 		BC036C2B26959B41005C1BEC /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2A26959B41005C1BEC /* BaseCollectionReusableView.swift */; };
-		BC036C2D26959B77005C1BEC /* MyHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2C26959B77005C1BEC /* MyHeaderView.swift */; };
-		BC036C2F26959BA5005C1BEC /* MyFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2E26959BA5005C1BEC /* MyFooterView.swift */; };
+		BC036C2D26959B77005C1BEC /* GlobalHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2C26959B77005C1BEC /* GlobalHeaderView.swift */; };
+		BC036C2F26959BA5005C1BEC /* GlobalFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2E26959BA5005C1BEC /* GlobalFooterView.swift */; };
 		BC036C4426980637005C1BEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C4326980637005C1BEC /* ViewController.swift */; };
 		BC036C4626980706005C1BEC /* DynamicSectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C4526980706005C1BEC /* DynamicSectionsViewController.swift */; };
+		BC036C5326986388005C1BEC /* DynamicCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C5226986388005C1BEC /* DynamicCollectionView.swift */; };
 		BC2EB1E825FF9E7F006CE170 /* CarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB1E725FF9E7F006CE170 /* CarCell.swift */; };
 		BC2EB1EC25FF9F45006CE170 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB1EB25FF9F45006CE170 /* FriendCell.swift */; };
 		BC2EB25425FFD069006CE170 /* CarsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB25325FFD069006CE170 /* CarsSection.swift */; };
 		BC2EB25825FFD092006CE170 /* FriendsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB25725FFD092006CE170 /* FriendsSection.swift */; };
-		BC2EB26026005764006CE170 /* CarsSection+SupplementaryViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB25F26005764006CE170 /* CarsSection+SupplementaryViews.swift */; };
+		BC2EB26026005764006CE170 /* CarsSectionHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2EB25F26005764006CE170 /* CarsSectionHeaderFooterView.swift */; };
 		BC8F68C32609E0E9002FDCCD /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8F68C22609E0E9002FDCCD /* BaseCell.swift */; };
 		BCBCE63225FF4DC1006A5437 /* StaticSectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE63125FF4DC1006A5437 /* StaticSectionsViewController.swift */; };
 		BCBCE76625FF9BBB006A5437 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBCE76525FF9BBB006A5437 /* Car.swift */; };
@@ -60,15 +61,16 @@
 		AAEA01EAB0D92300BDF7D389 /* Pods_BECollectionView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BECollectionView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC036C2526958DA1005C1BEC /* StaticCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticCollectionView.swift; sourceTree = "<group>"; };
 		BC036C2A26959B41005C1BEC /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
-		BC036C2C26959B77005C1BEC /* MyHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyHeaderView.swift; sourceTree = "<group>"; };
-		BC036C2E26959BA5005C1BEC /* MyFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFooterView.swift; sourceTree = "<group>"; };
+		BC036C2C26959B77005C1BEC /* GlobalHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHeaderView.swift; sourceTree = "<group>"; };
+		BC036C2E26959BA5005C1BEC /* GlobalFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFooterView.swift; sourceTree = "<group>"; };
 		BC036C4326980637005C1BEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BC036C4526980706005C1BEC /* DynamicSectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSectionsViewController.swift; sourceTree = "<group>"; };
+		BC036C5226986388005C1BEC /* DynamicCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCollectionView.swift; sourceTree = "<group>"; };
 		BC2EB1E725FF9E7F006CE170 /* CarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCell.swift; sourceTree = "<group>"; };
 		BC2EB1EB25FF9F45006CE170 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
 		BC2EB25325FFD069006CE170 /* CarsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsSection.swift; sourceTree = "<group>"; };
 		BC2EB25725FFD092006CE170 /* FriendsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsSection.swift; sourceTree = "<group>"; };
-		BC2EB25F26005764006CE170 /* CarsSection+SupplementaryViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CarsSection+SupplementaryViews.swift"; sourceTree = "<group>"; };
+		BC2EB25F26005764006CE170 /* CarsSectionHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsSectionHeaderFooterView.swift; sourceTree = "<group>"; };
 		BC8F68C22609E0E9002FDCCD /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		BCBCE63125FF4DC1006A5437 /* StaticSectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticSectionsViewController.swift; sourceTree = "<group>"; };
 		BCBCE76525FF9BBB006A5437 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 		BC036C502698487F005C1BEC /* DynamicSections */ = {
 			isa = PBXGroup;
 			children = (
+				BC036C5226986388005C1BEC /* DynamicCollectionView.swift */,
 				BC036C4526980706005C1BEC /* DynamicSectionsViewController.swift */,
 			);
 			name = DynamicSections;
@@ -214,8 +217,9 @@
 			isa = PBXGroup;
 			children = (
 				BC036C2A26959B41005C1BEC /* BaseCollectionReusableView.swift */,
-				BC036C2C26959B77005C1BEC /* MyHeaderView.swift */,
-				BC036C2E26959BA5005C1BEC /* MyFooterView.swift */,
+				BC036C2C26959B77005C1BEC /* GlobalHeaderView.swift */,
+				BC036C2E26959BA5005C1BEC /* GlobalFooterView.swift */,
+				BC2EB25F26005764006CE170 /* CarsSectionHeaderFooterView.swift */,
 				BC2EB1E625FF9E71006CE170 /* Cells */,
 			);
 			name = Views;
@@ -234,19 +238,10 @@
 		BC2EB25225FFD05D006CE170 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				BC2EB25E26005750006CE170 /* CarsSection */,
+				BC2EB25325FFD069006CE170 /* CarsSection.swift */,
 				BC2EB25725FFD092006CE170 /* FriendsSection.swift */,
 			);
 			name = Sections;
-			sourceTree = "<group>";
-		};
-		BC2EB25E26005750006CE170 /* CarsSection */ = {
-			isa = PBXGroup;
-			children = (
-				BC2EB25325FFD069006CE170 /* CarsSection.swift */,
-				BC2EB25F26005764006CE170 /* CarsSection+SupplementaryViews.swift */,
-			);
-			name = CarsSection;
 			sourceTree = "<group>";
 		};
 		BCBCE76425FF9BAD006A5437 /* Models */ = {
@@ -464,15 +459,16 @@
 				BC2EB25825FFD092006CE170 /* FriendsSection.swift in Sources */,
 				BC8F68C32609E0E9002FDCCD /* BaseCell.swift in Sources */,
 				BC2EB1EC25FF9F45006CE170 /* FriendCell.swift in Sources */,
+				BC036C5326986388005C1BEC /* DynamicCollectionView.swift in Sources */,
 				BCBCE63225FF4DC1006A5437 /* StaticSectionsViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				BC036C4426980637005C1BEC /* ViewController.swift in Sources */,
 				BC2EB25425FFD069006CE170 /* CarsSection.swift in Sources */,
-				BC036C2D26959B77005C1BEC /* MyHeaderView.swift in Sources */,
+				BC036C2D26959B77005C1BEC /* GlobalHeaderView.swift in Sources */,
 				BC036C2626958DA1005C1BEC /* StaticCollectionView.swift in Sources */,
 				BC2EB1E825FF9E7F006CE170 /* CarCell.swift in Sources */,
-				BC036C2F26959BA5005C1BEC /* MyFooterView.swift in Sources */,
-				BC2EB26026005764006CE170 /* CarsSection+SupplementaryViews.swift in Sources */,
+				BC036C2F26959BA5005C1BEC /* GlobalFooterView.swift in Sources */,
+				BC2EB26026005764006CE170 /* CarsSectionHeaderFooterView.swift in Sources */,
 				BCBCE76C25FF9BCE006A5437 /* Friend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

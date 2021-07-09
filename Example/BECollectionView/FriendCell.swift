@@ -10,6 +10,7 @@ import Foundation
 import BECollectionView
 
 class FriendCell: BaseCell {
+    override var padding: UIEdgeInsets {.init(top: 0, left: 0, bottom: 16, right: 0)}
     lazy var imageView = UIImageView()
     lazy var nameLabel = UILabel()
     

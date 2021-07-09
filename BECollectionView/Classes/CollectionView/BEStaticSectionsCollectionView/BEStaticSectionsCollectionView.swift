@@ -29,9 +29,14 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
     override func setUp() {
         sections.forEach {$0.collectionView = self}
         super.setUp()
-        setUpDataSource { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-            self?.sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
-        }
+        setUpDataSource(
+            cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+                self?.sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+            },
+            supplementaryViewProvider: {[weak self] collectionView, kind, indexPath in
+                self?.sections[indexPath.section].configureSupplementaryView(kind: kind, indexPath: indexPath)
+            }
+        )
     }
     
     override func registerCellsAndSupplementaryViews() {
@@ -70,14 +75,6 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
             layout.register(section.layout.background.self, forDecorationViewOfKind: String(describing: section.layout.background!))
         }
         return layout
-    }
-    
-    // MARK: - Datasource
-    override func supplementaryViewProvider(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
-        if let view = super.supplementaryViewProvider(kind: kind, indexPath: indexPath) {
-            return view
-        }
-        return sections[indexPath.section].configureSupplementaryView(kind: kind, indexPath: indexPath)
     }
     
     // MARK: - Actions

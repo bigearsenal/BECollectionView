@@ -113,11 +113,21 @@ open class BECollectionViewBase: UIView {
         }
     }
     
-    func setUpDataSource(cellProvider: @escaping UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>.CellProvider) {
+    func setUpDataSource(
+        cellProvider: @escaping UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>.CellProvider,
+        supplementaryViewProvider: UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>.SupplementaryViewProvider?
+    ) {
         dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView, cellProvider: cellProvider)
         
         dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-            self?.supplementaryViewProvider(kind: kind, indexPath: indexPath)
+            if kind == self?.headerIdentifier {
+                return self?.configureHeaderView(kind: kind, indexPath: indexPath)
+            }
+            if kind == self?.footerIdentifier {
+                return self?.configureFooterView(kind: kind, indexPath: indexPath)
+            }
+            
+            return supplementaryViewProvider?(collectionView, kind, indexPath)
         }
     }
     
@@ -208,16 +218,6 @@ open class BECollectionViewBase: UIView {
             nil
         }, configuration: config)
         return layout
-    }
-    
-    func supplementaryViewProvider(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
-        if kind == headerIdentifier {
-            return configureHeaderView(kind: kind, indexPath: indexPath)
-        }
-        if kind == footerIdentifier {
-            return configureFooterView(kind: kind, indexPath: indexPath)
-        }
-        return nil
     }
     
     open func configureHeaderView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
