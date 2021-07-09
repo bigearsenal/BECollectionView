@@ -9,120 +9,34 @@ import Foundation
 import PureLayout
 import RxSwift
 
-open class BECollectionView: UIView {
-    // MARK: - Constants
-    fileprivate let headerIdentifier = "GlobalHeaderIdentifier"
-    fileprivate let footerIdentifier = "GlobalFooterIdentifier"
-    
-    // MARK: - Property
-    private let disposeBag = DisposeBag()
+open class BECollectionView: BECollectionViewBase {
+    // MARK: - Properties
     public let sections: [BECollectionViewSection]
-    public let header: BECollectionViewHeaderFootViewLayout?
-    public let footer: BECollectionViewHeaderFootViewLayout?
-    public var canRefresh: Bool = true {
-        didSet {
-            setUpRefreshControl()
-        }
-    }
-    public private(set) var dataSource: UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>!
-    public weak var delegate: BECollectionViewDelegate?
     
-    public var contentInset: UIEdgeInsets {
-        get {
-            collectionView.contentInset
-        }
-        set {
-            collectionView.contentInset = newValue
-        }
-    }
-    
-    public var keyboardDismissMode: UIScrollView.KeyboardDismissMode {
-        get {
-            collectionView.keyboardDismissMode
-        }
-        set {
-            collectionView.keyboardDismissMode = newValue
-        }
-    }
-    
-    // MARK: - Subviews
-    public lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(collectionViewDidTouch(_:)))
-        collectionView.addGestureRecognizer(tapGesture)
-        return collectionView
-    }()
-    
-    // MARK: - Initializer
+    // MARK: - Initializers
     public init(
         header: BECollectionViewHeaderFootViewLayout? = nil,
         sections: [BECollectionViewSection],
         footer: BECollectionViewHeaderFootViewLayout? = nil
     ) {
-        self.header = header
         self.sections = sections
-        self.footer = footer
-        super.init(frame: .zero)
-        commonInit()
+        super.init(header: header, footer: footer)
     }
     
-    @available(*, unavailable,
-    message: "Loading this view from a nib is unsupported in favor of initializer dependency injection."
-    )
-    public required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func commonInit() {
-        // add subviews
-        addSubview(collectionView)
-        collectionView.backgroundColor = .clear
-        collectionView.autoPinEdgesToSuperviewEdges()
-        setUpRefreshControl()
-        
-        // register cell and configure datasource
+    override func setUp() {
         sections.forEach {$0.collectionView = self}
-        registerCellsAndSupplementaryViews()
+        super.setUp()
         configureDataSource()
-        
-        // binding
-        bind()
     }
     
-    open override func layoutSubviews() {
-        collectionView.collectionViewLayout.invalidateLayout()
-        super.layoutSubviews()
-    }
-    
-    private func registerCellsAndSupplementaryViews() {
+    override func registerCellsAndSupplementaryViews() {
+        super.registerCellsAndSupplementaryViews()
         sections.forEach {$0.registerCellAndSupplementaryViews()}
-        if let header = header {
-            collectionView.register(
-                header.viewType,
-                forSupplementaryViewOfKind: headerIdentifier,
-                withReuseIdentifier: headerIdentifier
-            )
-        }
-        if let footer = footer {
-            collectionView.register(
-                footer.viewType,
-                forSupplementaryViewOfKind: footerIdentifier,
-                withReuseIdentifier: footerIdentifier
-            )
-        }
     }
     
-    private func setUpRefreshControl() {
-        if canRefresh {
-            let control = UIRefreshControl()
-            control.addTarget(self, action: #selector(refresh), for: .valueChanged)
-            collectionView.refreshControl = control
-        } else {
-            collectionView.refreshControl = nil
-        }
-    }
-    
-    open func bind() {
+    // MARK: - Binding
+    open override func bind() {
+        super.bind()
         var observable = dataDidChangeObservable()
         
         if SystemVersion.isIOS13() {
@@ -138,13 +52,6 @@ open class BECollectionView: UIView {
                 DispatchQueue.main.async { [weak self] in
                     self?.dataDidLoad()
                 }
-            })
-            .disposed(by: disposeBag)
-        
-        // did end decelerating (ex: loadmore)
-        collectionView.rx.didEndDecelerating
-            .subscribe(onNext: { [weak self] in
-                self?.didEndDecelerating()
             })
             .disposed(by: disposeBag)
     }
@@ -168,48 +75,8 @@ open class BECollectionView: UIView {
         return snapshot
     }
     
-    // MARK: - Datasource
-    open func compositionalLayoutConfiguration() -> UICollectionViewCompositionalLayoutConfiguration {
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        
-        // header
-        var items = [NSCollectionLayoutBoundarySupplementaryItem]()
-        if let header = header {
-            let globalHeaderSize = NSCollectionLayoutSize(
-                widthDimension: header.widthDimension,
-                heightDimension: header.heightDimension
-            )
-            let globalHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: globalHeaderSize,
-                elementKind: headerIdentifier,
-                alignment: .top
-            )
-            items.append(globalHeader)
-        }
-        
-        // footer
-        if let footer = footer {
-            let globalFooterSize = NSCollectionLayoutSize(
-                widthDimension: footer.widthDimension,
-                heightDimension: footer.heightDimension
-            )
-            let globalFooter = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: globalFooterSize,
-                elementKind: footerIdentifier,
-                alignment: .bottom
-            )
-            items.append(globalFooter)
-        }
-        
-        // add supplementaryItems
-        if items.count != 0 {
-            config.boundarySupplementaryItems = items
-        }
-        
-        return config
-    }
-    
-    private func createLayout() -> UICollectionViewLayout {
+    // MARK: - Layout
+    override func createLayout() -> UICollectionViewLayout {
         let config = compositionalLayoutConfiguration()
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             self?.sections[sectionIndex].layout.layout(environment: env)
@@ -221,6 +88,7 @@ open class BECollectionView: UIView {
         return layout
     }
     
+    // MARK: - Datasource
     private func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
             self?.sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
@@ -231,44 +99,21 @@ open class BECollectionView: UIView {
         }
     }
     
-    private func supplementaryViewProvider(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
-        if kind == headerIdentifier {
-            return configureHeaderView(kind: kind, indexPath: indexPath)
-        }
-        if kind == footerIdentifier {
-            return configureFooterView(kind: kind, indexPath: indexPath)
+    override func supplementaryViewProvider(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
+        if let view = super.supplementaryViewProvider(kind: kind, indexPath: indexPath) {
+            return view
         }
         return sections[indexPath.section].configureSupplementaryView(kind: kind, indexPath: indexPath)
     }
     
-    open func configureHeaderView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
-        collectionView.dequeueReusableSupplementaryView(ofKind: headerIdentifier, withReuseIdentifier: headerIdentifier, for: indexPath)
-    }
-    
-    open func configureFooterView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
-        collectionView.dequeueReusableSupplementaryView(ofKind: footerIdentifier, withReuseIdentifier: footerIdentifier, for: indexPath)
-    }
-    
     // MARK: - Actions
-    @objc open func refresh() {
-        collectionView.refreshControl?.endRefreshing()
+    open override func refresh() {
+        super.refresh()
         refreshAllSections()
     }
     
     open func refreshAllSections() {
         sections.forEach {$0.reload()}
-    }
-    
-    @objc private func collectionViewDidTouch(_ sender: UIGestureRecognizer) {
-        if let indexPath = collectionView.indexPathForItem(at: sender.location(in: collectionView)) {
-            guard let item = self.dataSource.itemIdentifier(for: indexPath) else {return}
-            if item.isPlaceholder {
-                return
-            }
-            if let item = item.value {
-                delegate?.beCollectionView?(collectionView: self, didSelect: item)
-            }
-        }
     }
     
     open func dataDidLoad() {
@@ -286,7 +131,8 @@ open class BECollectionView: UIView {
         delegate?.beCollectionViewDataDidLoad?(collectionView: self)
     }
     
-    open func didEndDecelerating() {
+    open override func didEndDecelerating() {
+        super.didEndDecelerating()
         // get indexPaths
         let visibleIndexPaths = collectionView.indexPathsForVisibleItems
         
@@ -309,23 +155,6 @@ open class BECollectionView: UIView {
             {
                 viewModel.fetchNext()
             }
-        }
-    }
-    
-    // MARK: - Helpers
-    public func sectionHeaderView(sectionIndex: Int) -> UICollectionReusableView? {
-        collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(row: 0, section: sectionIndex))
-    }
-    
-    public func sectionFooterView(sectionIndex: Int) -> UICollectionReusableView? {
-        collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionFooter, at: IndexPath(row: 0, section: sectionIndex))
-    }
-    
-    public func relayout(_ context: UICollectionViewLayoutInvalidationContext? = nil) {
-        if let context = context {
-            collectionView.collectionViewLayout.invalidateLayout(with: context)
-        } else {
-            collectionView.collectionViewLayout.invalidateLayout()
         }
     }
 }

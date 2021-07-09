@@ -239,6 +239,8 @@
 		B9D081866906B3B897F2804230E10C52 /* SwitchIfEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5157922860B4E33778BD815C3810887B /* SwitchIfEmpty.swift */; };
 		BBC3667355F42D87253146D527D3E7CB /* MainScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AC788BC4EAC5486BAF0D667E63CAAC /* MainScheduler.swift */; };
 		BC036C2826959510005C1BEC /* BECollectionViewHeaderFooterViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C2726959510005C1BEC /* BECollectionViewHeaderFooterViewLayout.swift */; };
+		BC036C3F2697F9C1005C1BEC /* BEDynamicSectionsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C3E2697F9C1005C1BEC /* BEDynamicSectionsCollectionView.swift */; };
+		BC036C4126980258005C1BEC /* BECollectionViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC036C4026980258005C1BEC /* BECollectionViewBase.swift */; };
 		BD1C07465118BD69330178E3EE95B2F8 /* NSControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D541DE5E47904DBF428E9D0015F8FA8 /* NSControl+Rx.swift */; };
 		BD2EC0751239839AF4C66D560D0C0900 /* ConnectableObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B425853EB00D9D68F3D21362EE3B7A1 /* ConnectableObservableType.swift */; };
 		BF1D7CE780F4CD46B1C82136DC4F7C19 /* HistoricalSchedulerTimeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEDE53BC84D4FDDB261C314D79CB6B8 /* HistoricalSchedulerTimeConverter.swift */; };
@@ -676,6 +678,8 @@
 		BB81AAC67F2C95FD36F8B982E793FD63 /* URLSession+Rx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URLSession+Rx.swift"; path = "RxCocoa/Foundation/URLSession+Rx.swift"; sourceTree = "<group>"; };
 		BBCFE252DBC0A83497521E92F9EDDFAE /* Bag.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Bag.swift; path = Platform/DataStructures/Bag.swift; sourceTree = "<group>"; };
 		BC036C2726959510005C1BEC /* BECollectionViewHeaderFooterViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BECollectionViewHeaderFooterViewLayout.swift; sourceTree = "<group>"; };
+		BC036C3E2697F9C1005C1BEC /* BEDynamicSectionsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BEDynamicSectionsCollectionView.swift; sourceTree = "<group>"; };
+		BC036C4026980258005C1BEC /* BECollectionViewBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BECollectionViewBase.swift; sourceTree = "<group>"; };
 		BC432FD48A5932251F1CAFBC4BF74894 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC786D5B81C1EC7523D9DB805A49EE7A /* Merge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Merge.swift; path = RxSwift/Observables/Merge.swift; sourceTree = "<group>"; };
 		BCD3CCD84612150E5741B4DC50ECA8B4 /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1426,7 +1430,9 @@
 		EFEEA6A63EFBBA154A08B823CAE3C488 /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				BC036C4026980258005C1BEC /* BECollectionViewBase.swift */,
 				A1E949C25024EC4AE06A2BF92CFA5E8F /* BECollectionView.swift */,
+				BC036C3E2697F9C1005C1BEC /* BEDynamicSectionsCollectionView.swift */,
 				DE52A6C49CBAD2231878B4530FDA8FA3 /* BECollectionViewDelegate.swift */,
 				56916E95A0652D0E61C499E1F829A5A9 /* SystemVersion.swift */,
 			);
@@ -2123,8 +2129,10 @@
 				C6370A42D323BCC437A15A47B0601D1B /* BECollectionView-dummy.m in Sources */,
 				419B5681ADC72C17ED7199830863CDAB /* BECollectionView.swift in Sources */,
 				9279C46BD840EFDADE3499AAE86CB76B /* BECollectionViewBasicEmptyCell.swift in Sources */,
+				BC036C3F2697F9C1005C1BEC /* BEDynamicSectionsCollectionView.swift in Sources */,
 				AD6E8719AB800C7BCB9A506577260941 /* BECollectionViewCell.swift in Sources */,
 				E456FE8E4B50ABA8E1A59B19DA644D68 /* BECollectionViewDelegate.swift in Sources */,
+				BC036C4126980258005C1BEC /* BECollectionViewBase.swift in Sources */,
 				AAC9251D04371743395B055D557830CD /* BECollectionViewItem.swift in Sources */,
 				BC036C2826959510005C1BEC /* BECollectionViewHeaderFooterViewLayout.swift in Sources */,
 				ED6D0E29BE4E1CFCC1E7DE2BBE005FB9 /* BECollectionViewSection.swift in Sources */,
