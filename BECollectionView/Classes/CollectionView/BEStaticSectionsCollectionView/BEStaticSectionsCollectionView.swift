@@ -29,17 +29,14 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
     override func setUp() {
         sections.forEach {$0.collectionView = self}
         super.setUp()
+        setUpDataSource { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+            self?.sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+        }
     }
     
     override func registerCellsAndSupplementaryViews() {
         super.registerCellsAndSupplementaryViews()
         sections.forEach {$0.registerCellAndSupplementaryViews()}
-    }
-    
-    override func initDatasource() {
-        dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-            self?.sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
-        }
     }
     
     // MARK: - Binding

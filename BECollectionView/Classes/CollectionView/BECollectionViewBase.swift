@@ -94,10 +94,6 @@ open class BECollectionViewBase: UIView {
     // MARK: - Set up
     func setUp() {
         registerCellsAndSupplementaryViews()
-        initDatasource()
-        dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-            self?.supplementaryViewProvider(kind: kind, indexPath: indexPath)
-        }
     }
     
     func registerCellsAndSupplementaryViews() {
@@ -117,9 +113,11 @@ open class BECollectionViewBase: UIView {
         }
     }
     
-    func initDatasource() {
-        dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-            nil
+    func setUpDataSource(cellProvider: @escaping UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>.CellProvider) {
+        dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: collectionView, cellProvider: cellProvider)
+        
+        dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
+            self?.supplementaryViewProvider(kind: kind, indexPath: indexPath)
         }
     }
     

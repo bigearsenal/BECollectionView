@@ -42,6 +42,14 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
             .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
     }
     
+    // MARK: - Set up
+    override func setUp() {
+        super.setUp()
+        setUpDataSource { _, _, _ in
+            nil
+        }
+    }
+    
     // MARK: - Action
     open override func reloadData(completion: @escaping () -> Void) {
         // map sections
@@ -67,11 +75,8 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         collectionView.setCollectionViewLayout(layout, animated: true) { [weak self] flag in
             guard flag, let strongSelf = self else {return}
             // configure data source
-            strongSelf.dataSource = UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>(collectionView: strongSelf.collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+            strongSelf.setUpDataSource { (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
                 sections[indexPath.section].layout.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
-            }
-            strongSelf.dataSource.supplementaryViewProvider = { [weak self] (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-                self?.supplementaryViewProvider(kind: kind, indexPath: indexPath)
             }
             
             // map snapshot
