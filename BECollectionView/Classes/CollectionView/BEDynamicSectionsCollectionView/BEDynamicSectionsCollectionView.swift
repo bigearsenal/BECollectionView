@@ -65,8 +65,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
                 self?.layout.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
             },
             supplementaryViewProvider: { [weak self] collectionView, kind, indexPath in
-                guard let strongSelf = self else {return nil}
-                return strongSelf.layout.configureSupplementaryView(in: collectionView, kind: kind, indexPath: indexPath)
+                self?.configureSupplementaryViews(kind: kind, indexPath: indexPath)
             }
         )
     }
@@ -125,6 +124,25 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
             break
         }
         return snapshot
+    }
+    
+    func configureSupplementaryViews(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
+        let view = layout.configureSupplementaryView(in: collectionView, kind: kind, indexPath: indexPath)
+        if kind == UICollectionView.elementKindSectionHeader {
+            configureSectionHeaderView(view: view, sectionIndex: indexPath.section)
+        }
+        if kind == UICollectionView.elementKindSectionFooter {
+            configureSectionFooterView(view: view, sectionIndex: indexPath.section)
+        }
+        return view
+    }
+    
+    open func configureSectionHeaderView(view: UICollectionReusableView?, sectionIndex: Int) {
+        
+    }
+    
+    open func configureSectionFooterView(view: UICollectionReusableView?, sectionIndex: Int) {
+        
     }
     
     // MARK: - Action
