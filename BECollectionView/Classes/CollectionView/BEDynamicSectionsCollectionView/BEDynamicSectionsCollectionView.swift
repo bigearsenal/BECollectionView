@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 
 open class BEDynamicSectionsCollectionView: BECollectionViewBase {
+    // MARK: - Nested type
     public struct SectionInfo {
         public init(userInfo: AnyHashable, layout: BECollectionViewSectionBase, items: [AnyHashable]) {
             self.userInfo = userInfo
@@ -21,45 +22,69 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         let items: [AnyHashable]
     }
     
-    // MARK: - Properties
+    // MARK: - Dependencies
     public let viewModel: BEListViewModelType
     private let mapDataToSections: (BEListViewModelType) -> [SectionInfo]
-    private let emptySection: BECollectionViewSectionBase
-    public var sections = [SectionInfo]()
+    private let layout: BECollectionViewSectionLayout
+    
+    // MARK: - Properties
+    public private(set) var sections = [SectionInfo]()
     
     // MARK: - Initializer
     public init(
         header: BECollectionViewHeaderFooterViewLayout? = nil,
         viewModel: BEListViewModelType,
         mapDataToSections: @escaping (BEListViewModelType) -> [SectionInfo],
-        emptySection: BECollectionViewSectionBase,
+        layout: BECollectionViewSectionLayout,
         footer: BECollectionViewHeaderFooterViewLayout? = nil
     ) {
         self.viewModel = viewModel
         self.mapDataToSections = mapDataToSections
-        self.emptySection = emptySection
+        self.layout = layout
         super.init(header: header, footer: footer)
     }
     
-    open override func dataDidChangeObservable() -> Observable<Void> {
-        viewModel.dataDidChange.map {_ in ()}
-            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+    override func createLayout() -> UICollectionViewLayout {
+        let config = compositionalLayoutConfiguration()
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            self?.layout.layout(environment: env)
+        }, configuration: config)
+        
+        if let background = self.layout.background {
+            layout.register(background.self, forDecorationViewOfKind: String(describing: background))
+        }
+        
+        return layout
     }
     
     // MARK: - Set up
     override func setUp() {
-        emptySection.collectionView = self
         super.setUp()
-        setUpDataSource(cellProvider: {_,_,_  in nil}, supplementaryViewProvider: nil)
+        setUpDataSource(
+            cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
+                self?.layout.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+            },
+            supplementaryViewProvider: { [weak self] collectionView, kind, indexPath in
+                guard let strongSelf = self else {return nil}
+                return strongSelf.layout.configureSupplementaryView(in: collectionView, kind: kind, indexPath: indexPath)
+            }
+        )
     }
     
     override func registerCellsAndSupplementaryViews() {
         super.registerCellsAndSupplementaryViews()
-        emptySection.registerCellAndSupplementaryViews()
+        layout.registerCellsAndSupplementaryViews(in: collectionView)
     }
     
-    // MARK: - Action
-    open override func reloadData(completion: @escaping () -> Void) {
+    open override func dataDidChangeObservable() -> Observable<Void> {
+        viewModel.dataDidChange.map {_ in ()}
+    }
+    
+    // MARK: - Datasource
+    open override func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
+        // get super
+        var snapshot = super.mapDataToSnapshot()
+        
         // map sections
         sections = mapDataToSections(viewModel).map { [weak self] section -> SectionInfo in
             var section = section
@@ -68,50 +93,18 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
             section.layout = layout
             return section
         }
-        
-        // register cells and supplementary views
-        
         sections.forEach {$0.layout.registerCellAndSupplementaryViews()}
         
-        // createLayout
-        let layout = createLayout(sections: sections.map {$0.layout})
+        // add sections
+        let sectionsHeaders = sections.map {$0.userInfo}
+        snapshot.appendSections(sectionsHeaders)
         
-        // apply layout and snapshot
-        collectionView.setCollectionViewLayout(layout, animated: true) { [weak self] flag in
-            guard flag, let strongSelf = self else {return}
-            // configure data source
-            strongSelf.setUpDataSource(
-                cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-                    let section = self?.sections[safe: indexPath.section]?.layout ?? self?.emptySection
-                    return section?.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
-                },
-                supplementaryViewProvider: { [weak self] collectionView, kind, indexPath in
-                    let section = self?.sections[safe: indexPath.section]?.layout ?? self?.emptySection
-                    return section?.configureSupplementaryView(kind: kind, indexPath: indexPath)
-                }
-            )
-            
-            // map snapshot
-            let snapshot = strongSelf.mapDataToSnapshot(sections: strongSelf.sections)
-            strongSelf.dataSource.apply(snapshot, animatingDifferences: true, completion: completion)
+        // add items into sections
+        for section in sections {
+            let items = section.items
+                .map {BECollectionViewItem(value: $0)}
+            snapshot.appendItems(items, toSection: section.userInfo)
         }
-    }
-    
-    func createLayout(sections: [BECollectionViewSectionBase]) -> UICollectionViewLayout {
-        let config = compositionalLayoutConfiguration()
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            let section = sections[safe: sectionIndex] ?? self?.emptySection
-            return section?.layout.layout(environment: env)
-        }, configuration: config)
-        
-        for section in sections where section.layout.background != nil {
-            layout.register(section.layout.background.self, forDecorationViewOfKind: String(describing: section.layout.background!))
-        }
-        return layout
-    }
-    
-    open func mapDataToSnapshot(sections: [SectionInfo]) -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
-        var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem>()
         
         switch viewModel.currentState {
         case .loading, .initializing:
@@ -119,29 +112,35 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
                 BECollectionViewItem(placeholderIndex: UUID().uuidString),
                 BECollectionViewItem(placeholderIndex: UUID().uuidString)
             ]
-            snapshot.appendSections([0])
-            snapshot.appendItems(items, toSection: 0)
+            snapshot.appendSections(["placeholder"])
+            snapshot.appendItems(items, toSection: "placeholder")
         case .loaded:
             if sections.allSatisfy({$0.items.isEmpty}) {
-                if emptySection.layout.emptyCellType != nil {
-                    let items = [BECollectionViewItem(emptyCellIndex: UUID().uuidString)]
-                    snapshot.appendSections([0])
-                    snapshot.appendItems(items, toSection: 0)
-                }
-            } else {
-                let sectionsHeaders = sections.map {$0.userInfo}
-                snapshot.appendSections(sectionsHeaders)
-                
-                for section in sections {
-                    let items = section.items
-                        .map {BECollectionViewItem(value: $0)}
-                    snapshot.appendItems(items, toSection: section.userInfo)
-                }
+                let items = [BECollectionViewItem(emptyCellIndex: UUID().uuidString)]
+                snapshot = .init()
+                snapshot.appendSections(["empty"])
+                snapshot.appendItems(items, toSection: "empty")
             }
         case .error:
             break
         }
         return snapshot
+    }
+    
+    // MARK: - Action
+    open override func didEndDecelerating() {
+        super.didEndDecelerating()
+        // get indexPaths
+        let visibleIndexPaths = collectionView.indexPathsForVisibleItems
+        
+        // Loadmore
+        guard sections.count > 0 else {return}
+        if visibleIndexPaths.map {$0.section}.max() == sections.count - 1,
+           viewModel.isPaginationEnabled,
+           collectionView.contentOffset.y > 0
+        {
+            viewModel.fetchNext()
+        }
     }
     
     open override func refresh() {

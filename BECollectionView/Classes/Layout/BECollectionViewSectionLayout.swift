@@ -50,6 +50,81 @@ public struct BECollectionViewSectionLayout {
     public var customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
     public var customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
     
+    func registerCellsAndSupplementaryViews(in collectionView: UICollectionView, emptyCellIdentifier: String? = nil, headerIdentifier: String? = nil, footerIdentifier: String? = nil) {
+        // register cell
+        collectionView.register(cellType, forCellWithReuseIdentifier: String(describing: cellType))
+        
+        let emptyCellIdentifier = emptyCellIdentifier ?? String(describing: emptyCellType)
+        collectionView
+            .register(emptyCellType, forCellWithReuseIdentifier: emptyCellIdentifier)
+        
+        // register header
+        if let header = header?.viewClass {
+            let headerIdentifier = headerIdentifier ?? String(describing: header)
+            collectionView.register(header, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerIdentifier)
+        }
+        
+        
+        // register footer
+        if let footer = footer?.viewClass {
+            let footerIdentifier = footerIdentifier ?? String(describing: footer)
+            collectionView.register(footer, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerIdentifier)
+        }
+    }
+    
+    func configureSupplementaryView(in collectionView: UICollectionView, kind: String, indexPath: IndexPath, headerIdentifier: String? = nil, footerIdentifier: String? = nil) -> UICollectionReusableView? {
+        if kind == UICollectionView.elementKindSectionHeader {
+            return configureHeader(in: collectionView, indexPath: indexPath, headerIdentifier: headerIdentifier)
+        }
+        if kind == UICollectionView.elementKindSectionFooter {
+            return configureFooter(in: collectionView, indexPath: indexPath, footerIdentifier: footerIdentifier)
+        }
+        return nil
+    }
+    
+    func configureHeader(in collectionView: UICollectionView, indexPath: IndexPath, headerIdentifier: String? = nil) -> UICollectionReusableView? {
+        let headerIdentifier = headerIdentifier ?? String(describing: header!.viewClass)
+        let view = collectionView.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: headerIdentifier,
+            for: indexPath)
+        return view
+    }
+    
+    func configureFooter(in collectionView: UICollectionView, indexPath: IndexPath, footerIdentifier: String? = nil) -> UICollectionReusableView? {
+        let footerIdentifier = footerIdentifier ?? String(describing: footer!.viewClass)
+        let view = collectionView.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: footerIdentifier,
+            for: indexPath)
+        
+        return view
+    }
+    
+    func configureCell(collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem, emptyCellIdentifier: String? = nil) -> UICollectionViewCell {
+        
+        if !item.isEmptyCell,
+           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: cellType), for: indexPath) as? BECollectionViewCell {
+            cell.setUp(with: item.value)
+            
+            if item.isPlaceholder {
+                cell.hideLoading()
+                cell.showLoading()
+            } else {
+                cell.hideLoading()
+            }
+            
+            return cell
+        }
+        
+        if item.isEmptyCell {
+            let emptyCellIdentifier = emptyCellIdentifier ?? String(describing: emptyCellType)
+            return collectionView.dequeueReusableCell(withReuseIdentifier: emptyCellIdentifier, for: indexPath)
+        }
+        
+        return UICollectionViewCell()
+    }
+    
     func layout(environment env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let group: NSCollectionLayoutGroup
         // 1 columns

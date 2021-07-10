@@ -86,12 +86,20 @@ open class BECollectionViewBase: UIView {
         bind()
     }
     
+    func createLayout() -> UICollectionViewLayout {
+        let config = compositionalLayoutConfiguration()
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            nil
+        }, configuration: config)
+        return layout
+    }
+    
+    // MARK: - Set up
     open override func layoutSubviews() {
         collectionView.collectionViewLayout.invalidateLayout()
         super.layoutSubviews()
     }
     
-    // MARK: - Set up
     func setUp() {
         registerCellsAndSupplementaryViews()
     }
@@ -212,14 +220,6 @@ open class BECollectionViewBase: UIView {
         return config
     }
     
-    func createLayout() -> UICollectionViewLayout {
-        let config = compositionalLayoutConfiguration()
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            nil
-        }, configuration: config)
-        return layout
-    }
-    
     open func configureHeaderView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
         collectionView.dequeueReusableSupplementaryView(ofKind: headerIdentifier, withReuseIdentifier: headerIdentifier, for: indexPath)
     }
@@ -250,7 +250,13 @@ open class BECollectionViewBase: UIView {
     }
     
     open func reloadData(completion: @escaping () -> Void) {
-        
+        let snapshot = mapDataToSnapshot()
+        dataSource.apply(snapshot, animatingDifferences: true, completion: completion)
+    }
+    
+    open func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
+        var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem>()
+        return snapshot
     }
     
     open func dataDidLoad() {

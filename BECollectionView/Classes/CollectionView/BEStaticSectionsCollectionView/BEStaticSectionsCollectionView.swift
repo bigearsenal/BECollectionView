@@ -23,8 +23,20 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
         super.init(header: header, footer: footer)
     }
     
+    override func createLayout() -> UICollectionViewLayout {
+        let config = compositionalLayoutConfiguration()
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            self?.sections[sectionIndex].layout.layout(environment: env)
+        }, configuration: config)
+        
+        for section in sections where section.layout.background != nil {
+            layout.register(section.layout.background.self, forDecorationViewOfKind: String(describing: section.layout.background!))
+        }
+        return layout
+    }
+    
+    // MARK: - Set up
     override func setUp() {
-        sections.forEach {$0.collectionView = self}
         super.setUp()
         setUpDataSource(
             cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
@@ -38,6 +50,7 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
     
     override func registerCellsAndSupplementaryViews() {
         super.registerCellsAndSupplementaryViews()
+        sections.forEach {$0.collectionView = self}
         sections.forEach {$0.registerCellAndSupplementaryViews()}
     }
     
@@ -49,8 +62,8 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
             .map {_ in ()}
     }
     
-    open func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
-        var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem>()
+    open override func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
+        var snapshot = super.mapDataToSnapshot()
         let sectionsHeaders = self.sections.indices.map {$0}
         snapshot.appendSections(sectionsHeaders)
         
@@ -61,19 +74,6 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
         return snapshot
     }
     
-    // MARK: - Layout
-    override func createLayout() -> UICollectionViewLayout {
-        let config = compositionalLayoutConfiguration()
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            self?.sections[sectionIndex].layout.layout(environment: env)
-        }, configuration: config)
-        
-        for section in sections where section.layout.background != nil {
-            layout.register(section.layout.background.self, forDecorationViewOfKind: String(describing: section.layout.background!))
-        }
-        return layout
-    }
-    
     // MARK: - Actions
     open override func refresh() {
         super.refresh()
@@ -82,11 +82,6 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
     
     open func refreshAllSections() {
         sections.forEach {$0.reload()}
-    }
-    
-    open override func reloadData(completion: @escaping () -> Void) {
-        let snapshot = mapDataToSnapshot()
-        dataSource.apply(snapshot, animatingDifferences: true, completion: completion)
     }
     
     open override func dataDidLoad() {
@@ -129,20 +124,5 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
                 viewModel.fetchNext()
             }
         }
-    }
-}
-
-public extension NSDiffableDataSourceSnapshot where SectionIdentifierType: Hashable, ItemIdentifierType == BECollectionViewItem
-{
-    func isSectionEmpty(sectionIdentifier: SectionIdentifierType) -> Bool {
-        let itemsCount = numberOfItems(inSection: sectionIdentifier)
-        if itemsCount == 1,
-           let firstItem = itemIdentifiers(inSection: sectionIdentifier)
-            .first,
-           firstItem.isEmptyCell
-        {
-            return true
-        }
-        return itemsCount == 0
     }
 }
