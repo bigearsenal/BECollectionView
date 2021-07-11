@@ -12,6 +12,7 @@ import BECollectionView
 import ListPlaceholder
 
 class BaseCell: UICollectionViewCell, BECollectionViewCell {
+    var padding: UIEdgeInsets {.zero}
     public lazy var stackView = UIStackView(forAutoLayout: ())
     
     public override init(frame: CGRect) {
@@ -28,7 +29,7 @@ class BaseCell: UICollectionViewCell, BECollectionViewCell {
     
     open func commonInit() {
         contentView.addSubview(stackView)
-        stackView.autoPinEdgesToSuperviewEdges()
+        stackView.autoPinEdgesToSuperviewEdges(with: .zero)
     }
     
     open func setUp(with item: AnyHashable?) {}

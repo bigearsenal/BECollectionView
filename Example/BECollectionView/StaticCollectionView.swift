@@ -9,7 +9,7 @@
 import Foundation
 import BECollectionView
 
-class MyCollectionView: BECollectionView {
+class StaticCollectionView: BEStaticSectionsCollectionView {
     let headerIdentifier = "GlobalHeader"
     
     init() {
@@ -17,25 +17,25 @@ class MyCollectionView: BECollectionView {
         let section1 = FriendsSection(index: 1, viewModel: FriendsViewModel())
         super.init(
             header: .init(
-                viewType: MyHeaderView.self,
-                heightDimension: .estimated(44)
+                viewType: GlobalHeaderView.self,
+                heightDimension: .estimated(53)
             ),
             sections: [section0, section1],
             footer: .init(
-                viewType: MyFooterView.self,
-                heightDimension: .estimated(44)
+                viewType: GlobalFooterView.self,
+                heightDimension: .estimated(53)
             )
         )
     }
     
     override func configureHeaderView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
-        let headerView = super.configureHeaderView(kind: kind, indexPath: indexPath) as? MyHeaderView
+        let headerView = super.configureHeaderView(kind: kind, indexPath: indexPath) as? GlobalHeaderView
         headerView?.viewModel = sections.first?.viewModel as? CarsViewModel
         return headerView
     }
     
     override func configureFooterView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
-        let footerView = super.configureHeaderView(kind: kind, indexPath: indexPath) as? MyFooterView
+        let footerView = super.configureFooterView(kind: kind, indexPath: indexPath) as? GlobalFooterView
         footerView?.viewModel = sections.last?.viewModel as? FriendsViewModel
         return footerView
     }

@@ -14,11 +14,14 @@ class CarsViewModel: BEListViewModel<Car> {
     override func createRequest() -> Single<[Car]> {
         Single<[Car]>.just(data).delay(.seconds(Int.random(in: 2..<5)), scheduler: MainScheduler.instance)
             .map { _ in
-                Array(
-                    [
-                        Car(name: "Ferrari", numberOfWheels: 1),
-                        Car(name: "Lada", numberOfWheels: 4)
-                    ].prefix(Bool.random() ? 2: 0)
+                // generate cars
+                var cars = [Car]()
+                for i in 0..<10 {
+                    cars.append(.init(name: "Car#\(i)", numberOfWheels: Int.random(in: 0..<4)))
+                }
+                
+                return Array(
+                    cars.prefix(Bool.random() ? cars.count: 0)
                 )
             }
     }

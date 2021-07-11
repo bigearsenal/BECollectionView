@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc public protocol BECollectionViewDelegate: class {
-    @objc optional func beCollectionViewDataDidLoad(collectionView: BECollectionView)
-    @objc optional func beCollectionView(collectionView: BECollectionView, didSelect item: AnyHashable)
+@objc public protocol BECollectionViewDelegate: AnyObject {
+    @objc optional func beCollectionViewDataDidLoad(collectionView: BECollectionViewBase)
+    @objc optional func beCollectionView(collectionView: BECollectionViewBase, didSelect item: AnyHashable)
 }
