@@ -62,11 +62,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         super.setUp()
         setUpDataSource(
             cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-                var layout = self?.layout
-                if let customLayout = self?.sections[safe: indexPath.section]?.customLayout {
-                    layout = customLayout
-                }
-                return layout?.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+                self?.configureCell(indexPath: indexPath, item: item)
             },
             supplementaryViewProvider: { [weak self] collectionView, kind, indexPath in
                 self?.configureSupplementaryViews(kind: kind, indexPath: indexPath)
@@ -145,6 +141,14 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     
     open func configureSectionFooterView(view: UICollectionReusableView?, sectionIndex: Int) {
         
+    }
+    
+    open func configureCell(indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? {
+        var layout = self.layout
+        if let customLayout = sections[safe: indexPath.section]?.customLayout {
+            layout = customLayout
+        }
+        return layout.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
     }
     
     // MARK: - Action
