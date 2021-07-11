@@ -12,7 +12,7 @@ import RxSwift
 
 class CarsViewModel: BEListViewModel<Car> {
     override func createRequest() -> Single<[Car]> {
-        Single<[Car]>.just(data).delay(.seconds(Int.random(in: 2..<5)), scheduler: MainScheduler.instance)
+        Single<[Car]>.just(data).delay(.seconds(Int.random(in: 1..<2)), scheduler: MainScheduler.instance)
             .map { _ in
                 // generate cars
                 var cars = [Car]()

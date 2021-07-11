@@ -9,8 +9,14 @@ import Foundation
 import RxSwift
 
 extension BEStaticSectionsCollectionView {
-    open class Section: BECollectionViewSectionBase {
+    open class Section {
+        // MARK: - Properties
+        public weak var collectionView: BECollectionViewBase?
+        public let index: Int
+        public var layout: BECollectionViewSectionLayout
         public let viewModel: BEListViewModelType
+        public let customFilter: ((AnyHashable) -> Bool)?
+        public let limit: (([AnyHashable]) -> [AnyHashable])?
         public init(
             index: Int,
             layout: BECollectionViewSectionLayout,
@@ -18,10 +24,44 @@ extension BEStaticSectionsCollectionView {
             customFilter: ((AnyHashable) -> Bool)? = nil,
             limit: (([AnyHashable]) -> [AnyHashable])? = nil
         ) {
+            self.index = index
+            self.layout = layout
             self.viewModel = viewModel
-            super.init(index: index, layout: layout, customFilter: customFilter, limit: limit)
+            self.customFilter = customFilter
+            self.limit = limit
         }
         
+        // MARK: - Set up
+        func registerCellAndSupplementaryViews() {
+            layout.registerCellsAndSupplementaryViews(in: collectionView!.collectionView, emptyCellIdentifier: emptyCellIdentifier, headerIdentifier: headerIdentifier, footerIdentifier: footerIdentifier)
+        }
+        
+        func configureSupplementaryView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
+            if kind == UICollectionView.elementKindSectionHeader {
+                return configureHeader(indexPath: indexPath)
+            }
+            if kind == UICollectionView.elementKindSectionFooter {
+                return configureFooter(indexPath: indexPath)
+            }
+            return nil
+        }
+        
+        open func configureHeader(indexPath: IndexPath) -> UICollectionReusableView? {
+            let view = layout.configureHeader(in: collectionView!.collectionView, indexPath: indexPath, headerIdentifier: headerIdentifier)
+            return view
+        }
+        
+        open func configureFooter(indexPath: IndexPath) -> UICollectionReusableView? {
+            let view = layout.configureFooter(in: collectionView!.collectionView, indexPath: indexPath, footerIdentifier: footerIdentifier)
+            
+            return view
+        }
+        
+        open func configureCell(collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell {
+            layout.configureCell(collectionView: collectionView, indexPath: indexPath, item: item, emptyCellIdentifier: emptyCellIdentifier)
+        }
+        
+        // MARK: - Datasource
         open func mapDataToCollectionViewItems() -> [BECollectionViewItem]
         {
             var items = viewModel.convertDataToAnyHashable()
@@ -52,12 +92,40 @@ extension BEStaticSectionsCollectionView {
             return collectionViewItems
         }
         
+        // MARK: - Getters
+        public func headerView() -> UICollectionReusableView? {
+            collectionView?.sectionHeaderView(sectionIndex: index)
+        }
+        
+        public func footerView() -> UICollectionReusableView? {
+            collectionView?.sectionFooterView(sectionIndex: index)
+        }
+        
+        // MARK: - Actions
         open func reload() {
             viewModel.reload()
         }
         
         open func dataDidLoad() {
             
+        }
+        
+        // MARK: - CollectionView
+        public var collectionViewLayout: UICollectionViewLayout? {
+            collectionView?.collectionView.collectionViewLayout
+        }
+        
+        // MARK: - Helper
+        private var headerIdentifier: String {
+            "Header#\(index)"
+        }
+        
+        private var footerIdentifier: String {
+            "Footer#\(index)"
+        }
+        
+        private var emptyCellIdentifier: String {
+            "EmptyCell#\(index)"
         }
     }
 }

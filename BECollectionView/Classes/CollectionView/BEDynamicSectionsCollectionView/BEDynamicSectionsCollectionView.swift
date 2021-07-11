@@ -11,14 +11,14 @@ import RxSwift
 open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     // MARK: - Nested type
     public struct SectionInfo {
-        public init(userInfo: AnyHashable, layout: BECollectionViewSectionBase, items: [AnyHashable]) {
+        public init(userInfo: AnyHashable, items: [AnyHashable], customLayout: BECollectionViewSectionLayout? = nil) {
             self.userInfo = userInfo
-            self.layout = layout
+            self.customLayout = customLayout
             self.items = items
         }
         
         public let userInfo: AnyHashable
-        var layout: BECollectionViewSectionBase
+        let customLayout: BECollectionViewSectionLayout?
         let items: [AnyHashable]
     }
     
@@ -62,7 +62,11 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         super.setUp()
         setUpDataSource(
             cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
-                self?.layout.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+                var layout = self?.layout
+                if let customLayout = self?.sections[safe: indexPath.section]?.customLayout {
+                    layout = customLayout
+                }
+                return layout?.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
             },
             supplementaryViewProvider: { [weak self] collectionView, kind, indexPath in
                 self?.configureSupplementaryViews(kind: kind, indexPath: indexPath)
@@ -85,14 +89,8 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         var snapshot = super.mapDataToSnapshot()
         
         // map sections
-        sections = mapDataToSections(viewModel).map { [weak self] section -> SectionInfo in
-            var section = section
-            let layout = section.layout
-            layout.collectionView = self
-            section.layout = layout
-            return section
-        }
-        sections.forEach {$0.layout.registerCellAndSupplementaryViews()}
+        sections = mapDataToSections(viewModel)
+        sections.forEach {$0.customLayout?.registerCellsAndSupplementaryViews(in: collectionView)}
         
         // add sections
         let sectionsHeaders = sections.map {$0.userInfo}
@@ -127,6 +125,10 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     }
     
     func configureSupplementaryViews(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
+        var layout = self.layout
+        if let customLayout = sections[safe: indexPath.section]?.customLayout {
+            layout = customLayout
+        }
         let view = layout.configureSupplementaryView(in: collectionView, kind: kind, indexPath: indexPath)
         if kind == UICollectionView.elementKindSectionHeader {
             configureSectionHeaderView(view: view, sectionIndex: indexPath.section)
@@ -153,7 +155,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         
         // Loadmore
         guard sections.count > 0 else {return}
-        if visibleIndexPaths.map {$0.section}.max() == sections.count - 1,
+        if visibleIndexPaths.map({$0.section}).max() == sections.count - 1,
            viewModel.isPaginationEnabled,
            collectionView.contentOffset.y > 0
         {

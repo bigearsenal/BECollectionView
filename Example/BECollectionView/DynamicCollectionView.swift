@@ -10,21 +10,6 @@ import Foundation
 import BECollectionView
 
 class DynamicCollectionView: BEDynamicSectionsCollectionView {
-    private static let defaultLayout = BECollectionViewSectionBase(
-        index: 0,
-        layout: .init(
-            header: .init(
-                viewClass: CarsSectionHeaderView.self
-            ),
-            cellType: CarCell.self,
-            emptyCellType: BECollectionViewBasicEmptyCell.self,
-            interGroupSpacing: 2,
-            itemHeight: .estimated(17),
-            contentInsets: NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16),
-            horizontalInterItemSpacing: NSCollectionLayoutSpacing.fixed(16)
-        )
-    )
-    
     init() {
         super.init(
             header: .init(
@@ -35,15 +20,25 @@ class DynamicCollectionView: BEDynamicSectionsCollectionView {
             mapDataToSections: { viewModel in
                 let cars = viewModel.getData(type: Car.self)
                 let dict = Dictionary(grouping: cars, by: {$0.numberOfWheels})
-                return dict.map { key, value in
-                    SectionInfo(
-                        userInfo: key,
-                        layout: Self.defaultLayout,
-                        items: value
-                    )
-                }
+                return dict.keys.sorted()
+                    .map {key in
+                        SectionInfo(
+                            userInfo: key,
+                            items: dict[key]!
+                        )
+                    }
             },
-            emptySection: Self.defaultLayout,
+            layout: .init(
+                header: .init(
+                    viewClass: CarsSectionHeaderView.self
+                ),
+                cellType: CarCell.self,
+                emptyCellType: BECollectionViewBasicEmptyCell.self,
+                interGroupSpacing: 2,
+                itemHeight: .estimated(17),
+                contentInsets: NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16),
+                horizontalInterItemSpacing: NSCollectionLayoutSpacing.fixed(16)
+            ),
             footer: .init(
                 viewType: GlobalFooterView.self,
                 heightDimension: .estimated(53)
@@ -51,17 +46,12 @@ class DynamicCollectionView: BEDynamicSectionsCollectionView {
         )
     }
     
-    override func dataDidLoad() {
-        super.dataDidLoad()
-        if sections.count == 0 {
-            let sectionHeaderView = sectionHeaderView(sectionIndex: 0) as? CarsSectionHeaderView
-            sectionHeaderView?.titleLabel.text = "\(viewModel.currentState)"
-        } else {
-            for (index, section) in sections.enumerated() {
-                let sectionHeaderView = sectionHeaderView(sectionIndex: index) as? CarsSectionHeaderView
-                sectionHeaderView?.titleLabel.text = "Number of wheels = \(section.userInfo)"
-            }
+    override func configureSectionHeaderView(view: UICollectionReusableView?, sectionIndex: Int) {
+        let view = view as? CarsSectionHeaderView
+        guard sectionIndex < sections.count else {
+            view?.titleLabel.text = "\(viewModel.currentState)"
+            return
         }
-        
+        view?.titleLabel.text = "Number of wheels = \(sections[sectionIndex].userInfo)"
     }
 }
