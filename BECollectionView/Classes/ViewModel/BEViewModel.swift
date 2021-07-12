@@ -12,7 +12,7 @@ import RxCocoa
 open class BEViewModel<T: Hashable> {
     // MARK: - Properties
     let initialData: T
-    private var requestDisposable: Disposable?
+    var requestDisposable: Disposable?
     public private(set) var data: T
     public private(set) var error: Error?
     public var currentState: BEFetcherState {

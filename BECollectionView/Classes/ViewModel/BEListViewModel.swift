@@ -121,6 +121,26 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
         overrideData(by: data)
     }
     
+    open func updateFirstPage(onSuccessFilterNewData: (([T]) -> [T])? = nil) {
+        var originalOffset = offset
+        offset = 0
+        
+        requestDisposable?.dispose()
+        
+        requestDisposable = createRequest()
+            .subscribe(onSuccess: { newData in
+                let onSuccess = onSuccessFilterNewData ?? {newData in
+                    newData.filter {!self.data.contains($0)}
+                }
+                var data = self.data
+                data = onSuccess(newData) + data
+                self.overrideData(by: data)
+            }, onFailure: { error in
+                // TODO: - Handle error when updating first page
+            })
+        offset = originalOffset
+    }
+    
     public func getCurrentPage() -> Int? {
         guard isPaginationEnabled, limit != 0 else {return nil}
         return offset / limit
