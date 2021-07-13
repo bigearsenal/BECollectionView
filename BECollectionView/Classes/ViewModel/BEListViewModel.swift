@@ -122,7 +122,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     }
     
     open func updateFirstPage(onSuccessFilterNewData: (([T]) -> [T])? = nil) {
-        var originalOffset = offset
+        let originalOffset = offset
         offset = 0
         
         requestDisposable?.dispose()
