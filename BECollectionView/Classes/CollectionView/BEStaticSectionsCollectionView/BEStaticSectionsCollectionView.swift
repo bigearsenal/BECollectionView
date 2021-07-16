@@ -64,7 +64,7 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
     
     open override func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
         var snapshot = super.mapDataToSnapshot()
-        let sectionsHeaders = self.sections.indices.map {$0}
+        let sectionsHeaders = self.sections.indices.map {sectionIdentifier(sectionIndex: $0)}
         snapshot.appendSections(sectionsHeaders)
         
         for (index, section) in sections.enumerated() {
@@ -72,6 +72,10 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
             snapshot.appendItems(items, toSection: sectionsHeaders[index])
         }
         return snapshot
+    }
+    
+    open func sectionIdentifier(sectionIndex: Int) -> AnyHashable {
+        sectionIndex
     }
     
     // MARK: - Actions
