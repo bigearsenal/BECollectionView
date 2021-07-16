@@ -78,10 +78,9 @@ extension BEStaticSectionsCollectionView {
                 .map {BECollectionViewItem(value: $0)}
             switch viewModel.currentState {
             case .loading, .initializing:
-                collectionViewItems += [
-                    BECollectionViewItem(placeholderIndex: UUID().uuidString),
-                    BECollectionViewItem(placeholderIndex: UUID().uuidString)
-                ]
+                for i in 0..<layout.numberOfLoadingCells {
+                    collectionViewItems.append(BECollectionViewItem(placeholderIndex: UUID().uuidString))
+                }
             case .loaded:
                 if collectionViewItems.isEmpty, layout.emptyCellType != nil {
                     collectionViewItems = [BECollectionViewItem(emptyCellIndex: UUID().uuidString)]

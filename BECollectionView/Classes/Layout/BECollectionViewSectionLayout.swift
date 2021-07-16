@@ -14,6 +14,7 @@ public struct BECollectionViewSectionLayout {
         footer: BECollectionViewSectionFooterLayout? = nil,
         cellType: BECollectionViewCell.Type,
         emptyCellType: UICollectionViewCell.Type? = nil,
+        numberOfLoadingCells: Int = 2,
         interGroupSpacing: CGFloat? = nil,
         orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior? = nil,
         itemHeight: NSCollectionLayoutDimension = NSCollectionLayoutDimension.estimated(100),
@@ -27,6 +28,7 @@ public struct BECollectionViewSectionLayout {
         self.footer = footer
         self.cellType = cellType
         self.emptyCellType = emptyCellType
+        self.numberOfLoadingCells = numberOfLoadingCells
         self.interGroupSpacing = interGroupSpacing
         self.orthogonalScrollingBehavior = orthogonalScrollingBehavior
         self.itemHeight = itemHeight
@@ -41,6 +43,7 @@ public struct BECollectionViewSectionLayout {
     public var footer: BECollectionViewSectionFooterLayout?
     public var cellType: BECollectionViewCell.Type
     public var emptyCellType: UICollectionViewCell.Type?
+    public let numberOfLoadingCells: Int
     public var interGroupSpacing: CGFloat?
     public var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior?
     public var itemHeight = NSCollectionLayoutDimension.estimated(100)

@@ -101,10 +101,10 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         
         switch viewModel.currentState {
         case .loading, .initializing:
-            let items = [
-                BECollectionViewItem(placeholderIndex: UUID().uuidString),
-                BECollectionViewItem(placeholderIndex: UUID().uuidString)
-            ]
+            var items = [BECollectionViewItem]()
+            for i in 0..<layout.numberOfLoadingCells {
+                items.append(BECollectionViewItem(placeholderIndex: UUID().uuidString))
+            }
             snapshot.appendSections(["placeholder"])
             snapshot.appendItems(items, toSection: "placeholder")
         case .loaded:
