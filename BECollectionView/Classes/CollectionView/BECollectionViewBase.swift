@@ -11,8 +11,8 @@ import RxSwift
 
 open class BECollectionViewBase: UIView {
     // MARK: - Constants
-    fileprivate let headerIdentifier = "GlobalHeaderIdentifier"
-    fileprivate let footerIdentifier = "GlobalFooterIdentifier"
+    private let headerIdentifier = "GlobalHeaderIdentifier"
+    private let footerIdentifier = "GlobalFooterIdentifier"
     
     // MARK: - Property
     let disposeBag = DisposeBag()
@@ -27,6 +27,17 @@ open class BECollectionViewBase: UIView {
     
     public internal(set) var dataSource: UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>!
     public weak var delegate: BECollectionViewDelegate?
+
+    private let scrollDelegateAdapter = BECollectionViewScrollDelegateAdapter()
+
+    public var scrollDelegate: UIScrollViewDelegate? {
+        get {
+            scrollDelegateAdapter.realScrollDelegate
+        }
+        set {
+            scrollDelegateAdapter.realScrollDelegate = newValue
+        }
+    }
     
     public var contentInset: UIEdgeInsets {
         get {
@@ -76,6 +87,7 @@ open class BECollectionViewBase: UIView {
         // add subviews
         addSubview(collectionView)
         collectionView.backgroundColor = .clear
+        collectionView.delegate = scrollDelegateAdapter
         collectionView.autoPinEdgesToSuperviewEdges()
         setUpRefreshControl()
         
