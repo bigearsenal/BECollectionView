@@ -246,15 +246,16 @@ open class BECollectionViewBase: UIView {
     }
     
     @objc private func collectionViewDidTouch(_ sender: UIGestureRecognizer) {
-        if let indexPath = collectionView.indexPathForItem(at: sender.location(in: collectionView)) {
-            guard let item = self.dataSource.itemIdentifier(for: indexPath) else {return}
-            if item.isPlaceholder {
-                return
-            }
-            if let item = item.value {
-                delegate?.beCollectionView?(collectionView: self, didSelect: item)
-            }
+        guard
+            let indexPath = collectionView.indexPathForItem(at: sender.location(in: collectionView)),
+            let item = dataSource.itemIdentifier(for: indexPath),
+            !item.isPlaceholder,
+            let value = item.value
+        else {
+            return
         }
+
+        delegate?.beCollectionView?(collectionView: self, didSelect: value)
     }
     
     open func didEndDecelerating() {

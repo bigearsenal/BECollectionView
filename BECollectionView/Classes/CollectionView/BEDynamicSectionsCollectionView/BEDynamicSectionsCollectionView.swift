@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-open class BEDynamicSectionsCollectionView: BECollectionViewBase {
+open class BEDynamicSectionsCollectionView<ViewModel: BEListViewModelType>: BECollectionViewBase {
     // MARK: - Nested type
     public struct SectionInfo {
         public init(userInfo: AnyHashable, items: [AnyHashable], customLayout: BECollectionViewSectionLayout? = nil) {
@@ -23,7 +23,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     }
     
     // MARK: - Dependencies
-    public let viewModel: BEListViewModelType
+    public let viewModel: ViewModel
     private let mapDataToSections: (BEListViewModelType) -> [SectionInfo]
     private let layout: BECollectionViewSectionLayout
     
@@ -33,7 +33,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     // MARK: - Initializer
     public init(
         header: BECollectionViewHeaderFooterViewLayout? = nil,
-        viewModel: BEListViewModelType,
+        viewModel: ViewModel,
         mapDataToSections: @escaping (BEListViewModelType) -> [SectionInfo],
         layout: BECollectionViewSectionLayout,
         footer: BECollectionViewHeaderFooterViewLayout? = nil
