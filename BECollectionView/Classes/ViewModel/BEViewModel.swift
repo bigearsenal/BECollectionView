@@ -70,12 +70,15 @@ open class BEViewModel<T: Hashable> {
             return
         }
         state.accept(.loading)
-        requestDisposable = createRequest()
-            .subscribe(onSuccess: {newData in
-                self.handleNewData(newData)
-            }, onFailure: {error in
-                self.handleError(error)
-            })
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.requestDisposable = self.createRequest()
+                .observe(on: MainScheduler.instance)
+                .subscribe(onSuccess: {newData in
+                    self.handleNewData(newData)
+                }, onFailure: {error in
+                    self.handleError(error)
+                })
+        }
     }
     
     open func handleNewData(_ newData: T) {
