@@ -37,10 +37,18 @@ open class NBENewDynamicSectionsCollectionView: BEDynamicSectionsCollectionView 
     }
     
     open override func configureSectionHeaderView(view: UICollectionReusableView?, sectionIndex: Int) {
+        guard sectionIndex < sections.count else {
+            view?.isHidden = true
+            return
+        }
         headerBuilder?(view, sections[sectionIndex])
     }
     
     open override func configureSectionFooterView(view: UICollectionReusableView?, sectionIndex: Int) {
+        guard sectionIndex < sections.count else {
+            view?.isHidden = true
+            return
+        }
         footerBuilder?(view, sections[sectionIndex])
     }
     
