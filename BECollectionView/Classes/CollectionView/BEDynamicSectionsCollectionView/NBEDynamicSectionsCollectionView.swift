@@ -43,5 +43,10 @@ open class NBENewDynamicSectionsCollectionView: BEDynamicSectionsCollectionView 
     open override func configureSectionFooterView(view: UICollectionReusableView?, sectionIndex: Int) {
         footerBuilder?(view, sections[sectionIndex])
     }
+    
+    public func withDelegate(_ delegate: BECollectionViewDelegate) -> Self {
+        self.delegate = delegate
+        return self
+    }
 }
 
