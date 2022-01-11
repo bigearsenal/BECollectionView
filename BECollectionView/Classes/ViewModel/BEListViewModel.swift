@@ -128,9 +128,10 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
         requestDisposable?.dispose()
         
         requestDisposable = createRequest()
-            .subscribe(onSuccess: { newData in
-                let onSuccess = onSuccessFilterNewData ?? {newData in
-                    newData.filter {!self.data.contains($0)}
+            .subscribe(onSuccess: { [weak self] newData in
+                guard let self = self else {return}
+                let onSuccess = onSuccessFilterNewData ?? {[weak self] newData in
+                    newData.filter {!(self?.data.contains($0) == true)}
                 }
                 var data = self.data
                 data = onSuccess(newData) + data

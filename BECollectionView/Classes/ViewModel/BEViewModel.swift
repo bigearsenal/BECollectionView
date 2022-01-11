@@ -71,10 +71,10 @@ open class BEViewModel<T: Hashable> {
         }
         state.accept(.loading)
         requestDisposable = createRequest()
-            .subscribe(onSuccess: {newData in
-                self.handleNewData(newData)
-            }, onFailure: {error in
-                self.handleError(error)
+            .subscribe(onSuccess: {[weak self] newData in
+                self?.handleNewData(newData)
+            }, onFailure: {[weak self] error in
+                self?.handleError(error)
             })
     }
     
