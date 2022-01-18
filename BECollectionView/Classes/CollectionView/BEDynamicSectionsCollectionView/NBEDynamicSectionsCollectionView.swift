@@ -9,8 +9,8 @@ import Foundation
 import RxSwift
 
 open class NBENewDynamicSectionsCollectionView: BEDynamicSectionsCollectionView {
-    public typealias HeaderBuilder = (_ view: UICollectionReusableView?, _ sectionInfo: BEDynamicSectionsCollectionView.SectionInfo) -> Void
-    public typealias FooterBuilder = (_ view: UICollectionReusableView?, _ sectionInfo: BEDynamicSectionsCollectionView.SectionInfo) -> Void
+    public typealias HeaderBuilder = (_ view: UICollectionReusableView?, _ sectionInfo: BEDynamicSectionsCollectionView.SectionInfo?) -> Void
+    public typealias FooterBuilder = (_ view: UICollectionReusableView?, _ sectionInfo: BEDynamicSectionsCollectionView.SectionInfo?) -> Void
     
     private let headerBuilder: HeaderBuilder?
     private let footerBuilder: FooterBuilder?
@@ -37,11 +37,19 @@ open class NBENewDynamicSectionsCollectionView: BEDynamicSectionsCollectionView 
     }
     
     open override func configureSectionHeaderView(view: UICollectionReusableView?, sectionIndex: Int) {
-        headerBuilder?(view, sections[sectionIndex])
+        if sectionIndex < sections.count {
+            headerBuilder?(view, sections[sectionIndex])
+        } else {
+            headerBuilder?(view, nil)
+        }
     }
     
     open override func configureSectionFooterView(view: UICollectionReusableView?, sectionIndex: Int) {
-        footerBuilder?(view, sections[sectionIndex])
+        if sectionIndex < sections.count {
+            footerBuilder?(view, sections[sectionIndex])
+        } else {
+            footerBuilder?(view, nil)
+        }
     }
     
     public func withDelegate(_ delegate: BECollectionViewDelegate) -> Self {
