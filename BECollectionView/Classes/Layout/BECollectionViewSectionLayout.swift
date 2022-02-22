@@ -19,6 +19,7 @@ public struct BECollectionViewSectionLayout {
         orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior? = nil,
         itemHeight: NSCollectionLayoutDimension = NSCollectionLayoutDimension.estimated(100),
         contentInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0),
+        sectionInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0),
         horizontalInterItemSpacing: NSCollectionLayoutSpacing = NSCollectionLayoutSpacing.fixed(16),
         background: UICollectionReusableView.Type? = nil,
         customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)? = nil,
@@ -33,6 +34,7 @@ public struct BECollectionViewSectionLayout {
         self.orthogonalScrollingBehavior = orthogonalScrollingBehavior
         self.itemHeight = itemHeight
         self.contentInsets = contentInsets
+        self.sectionInsets = sectionInsets
         self.horizontalInterItemSpacing = horizontalInterItemSpacing
         self.background = background
         self.customLayoutForGroupOnSmallScreen = customLayoutForGroupOnSmallScreen
@@ -48,6 +50,7 @@ public struct BECollectionViewSectionLayout {
     public var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior?
     public var itemHeight = NSCollectionLayoutDimension.estimated(100)
     public var contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+    public var sectionInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
     public var horizontalInterItemSpacing = NSCollectionLayoutSpacing.fixed(16)
     public var background: UICollectionReusableView.Type?
     public var customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
@@ -141,6 +144,7 @@ public struct BECollectionViewSectionLayout {
         group.contentInsets = contentInsets
         
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = sectionInsets
         
         // supplementary items
         var supplementaryItems = [NSCollectionLayoutBoundarySupplementaryItem]()
