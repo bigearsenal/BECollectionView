@@ -44,6 +44,8 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         super.init(header: header, footer: footer)
     }
     
+    
+    
     override func createLayout() -> UICollectionViewLayout {
         let config = compositionalLayoutConfiguration()
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -72,6 +74,9 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     
     override func registerCellsAndSupplementaryViews() {
         super.registerCellsAndSupplementaryViews()
+        
+        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Empty")
+        
         layout.registerCellsAndSupplementaryViews(in: collectionView)
     }
     
@@ -127,6 +132,9 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         }
         let view = layout.configureSupplementaryView(in: collectionView, kind: kind, indexPath: indexPath)
         if kind == UICollectionView.elementKindSectionHeader {
+            if indexPath.section >= sections.count {
+                return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Empty", for: indexPath)
+            }
             configureSectionHeaderView(view: view, sectionIndex: indexPath.section)
         }
         if kind == UICollectionView.elementKindSectionFooter {
