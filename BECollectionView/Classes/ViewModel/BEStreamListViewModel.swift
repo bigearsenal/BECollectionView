@@ -69,7 +69,7 @@ open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]>, BEListVie
             }, onCompleted: { [weak self] in
                 guard let self = self else { return }
                 if !self.isPaginationEnabled || self.cache.count < self.limit {
-                   self.isLastPageLoaded = true
+                    self.isLastPageLoaded = true
                 }
                 self.offset += self.limit
                 self.state.accept(.loaded)
@@ -79,10 +79,10 @@ open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]>, BEListVie
     override open func handleData(_ newItems: [T]) {
         cache.append(contentsOf: newItems)
         var newData = join(newItems)
-        
+
         let mappedData = map(newData: newData)
         super.handleData(mappedData)
-        
+
         state.accept(.loading)
     }
 
@@ -110,6 +110,7 @@ open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]>, BEListVie
 
     public func refreshUI() {
         overrideData(by: data)
+        state.accept(state.value)
     }
 
     public func getCurrentPage() -> Int? {
