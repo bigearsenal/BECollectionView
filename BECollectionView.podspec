@@ -31,7 +31,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '13.0'
   s.swift_version = '5.0'
 
-  s.source_files = 'BECollectionView/Sources/**/*'
+  s.source_files = 'Sources/BECollectionView/**/*'
   
   # s.resource_bundles = {
   #   'BECollectionView' => ['BECollectionView/Assets/*.png']
