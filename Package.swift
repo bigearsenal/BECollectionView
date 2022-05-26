@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/PureLayout/PureLayout", from: "3.1.9"),
+        .package(url: "https://github.com/PureLayout/PureLayout", from: "3.1.8"),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.5.0")
     ],
     targets: [
