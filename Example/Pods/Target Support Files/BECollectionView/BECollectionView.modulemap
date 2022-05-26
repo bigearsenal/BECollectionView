@@ -1,6 +1,0 @@
-framework module BECollectionView {
-  umbrella header "BECollectionView-umbrella.h"
-
-  export *
-  module * { export * }
-}
