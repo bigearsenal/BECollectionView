@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public class BECollectionViewBasicEmptyCell: UICollectionViewCell {
     public lazy var label: UILabel = {

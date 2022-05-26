@@ -267,7 +267,7 @@ open class BECollectionViewBase: UIView {
     }
     
     open func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
-        var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem>()
+        let snapshot = NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem>()
         return snapshot
     }
     

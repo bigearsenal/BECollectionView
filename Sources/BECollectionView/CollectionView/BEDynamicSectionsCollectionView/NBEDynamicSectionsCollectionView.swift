@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
 open class NBENewDynamicSectionsCollectionView: BEDynamicSectionsCollectionView {
     public typealias HeaderBuilder = (_ view: UICollectionReusableView?, _ sectionInfo: BEDynamicSectionsCollectionView.SectionInfo?) -> Void

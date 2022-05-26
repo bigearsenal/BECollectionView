@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
 extension BEStaticSectionsCollectionView {
     open class Section {
@@ -78,7 +79,7 @@ extension BEStaticSectionsCollectionView {
                 .map {BECollectionViewItem(value: $0)}
             switch viewModel.currentState {
             case .loading, .initializing:
-                for i in 0..<layout.numberOfLoadingCells {
+                for _ in 0..<layout.numberOfLoadingCells {
                     collectionViewItems.append(BECollectionViewItem(placeholderIndex: UUID().uuidString))
                 }
             case .loaded:

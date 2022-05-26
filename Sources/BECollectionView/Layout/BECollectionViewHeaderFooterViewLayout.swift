@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public struct BECollectionViewHeaderFooterViewLayout {
     public init(viewType: UICollectionReusableView.Type, widthDimension: NSCollectionLayoutDimension = .fractionalWidth(1), heightDimension: NSCollectionLayoutDimension, pinToVisibleBounds: Bool = false) {

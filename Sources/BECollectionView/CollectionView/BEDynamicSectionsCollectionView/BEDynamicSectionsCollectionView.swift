@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import UIKit
 
 open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     // MARK: - Nested type
@@ -107,7 +108,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         switch viewModel.currentState {
         case .loading, .initializing:
             var items = [BECollectionViewItem]()
-            for i in 0..<layout.numberOfLoadingCells {
+            for _ in 0..<layout.numberOfLoadingCells {
                 items.append(BECollectionViewItem(placeholderIndex: UUID().uuidString))
             }
             snapshot.appendSections(["placeholder"])

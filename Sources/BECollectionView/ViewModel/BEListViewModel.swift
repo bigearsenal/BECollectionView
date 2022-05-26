@@ -70,7 +70,7 @@ open class BEListViewModel<T: Hashable>: BEViewModel<[T]>, BEListViewModelType {
     }
     
     open override func handleNewData(_ newItems: [T]) {
-        var newData = self.join(newItems)
+        let newData = self.join(newItems)
         
         // resign state
         if !isPaginationEnabled || newItems.count < limit {

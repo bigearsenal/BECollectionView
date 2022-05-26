@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public struct BECollectionViewSectionHeaderLayout {
     public init(identifier: String? = nil, viewClass: UICollectionReusableView.Type = UICollectionReusableView.self, heightDimension: NSCollectionLayoutDimension = .estimated(20), customLayout: NSCollectionLayoutBoundarySupplementaryItem? = nil) {

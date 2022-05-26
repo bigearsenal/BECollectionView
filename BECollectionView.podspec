@@ -31,7 +31,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '13.0'
   s.swift_version = '5.0'
 
-  s.source_files = 'BECollectionView/Classes/**/*'
+  s.source_files = 'BECollectionView/Sources/**/*'
   
   # s.resource_bundles = {
   #   'BECollectionView' => ['BECollectionView/Assets/*.png']
@@ -39,6 +39,6 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'RxCocoa'
-  s.dependency 'PureLayout'
+  s.dependency 'RxCocoa', '~> 6.5.0'
+  s.dependency 'PureLayout', '~> 3.1.9'
 end

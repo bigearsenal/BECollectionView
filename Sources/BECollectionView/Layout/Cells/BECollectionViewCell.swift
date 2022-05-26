@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol BECollectionViewCell: UICollectionViewCell {
     func setUp(with item: AnyHashable?)
