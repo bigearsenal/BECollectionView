@@ -40,11 +40,19 @@ open class BECollectionView: UICollectionView {
     // MARK: - Initializer
     public init(
         header: BECollectionViewHeaderFooterViewLayout? = nil,
-        footer: BECollectionViewHeaderFooterViewLayout? = nil
+        footer: BECollectionViewHeaderFooterViewLayout? = nil,
+        layout: UICollectionViewLayout? = nil
     ) {
         self.header = header
         self.footer = footer
-        super.init(frame: .zero, collectionViewLayout: Self.createLayout())
+        var layout = layout
+        if layout == nil {
+            let config = Self.compositionalLayoutConfiguration()
+            layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+                nil
+            }, configuration: config)
+        }
+        super.init(frame: .zero, collectionViewLayout: layout!)
         commonInit()
     }
     
@@ -135,7 +143,7 @@ open class BECollectionView: UICollectionView {
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 self?.reloadData { [weak self] in
-                    self?.dataDidLoadHandler?()
+                    self?.dataDidLoad()
                 }
             }
             .store(in: &subscriptions)
@@ -153,14 +161,6 @@ open class BECollectionView: UICollectionView {
     }
     
     // MARK: - Layout
-    private class func createLayout() -> UICollectionViewLayout {
-        let config = compositionalLayoutConfiguration()
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            nil
-        }, configuration: config)
-        return layout
-    }
-    
     open class func compositionalLayoutConfiguration(
         header: BECollectionViewHeaderFooterViewLayout? = nil,
         footer: BECollectionViewHeaderFooterViewLayout? = nil
@@ -227,6 +227,10 @@ open class BECollectionView: UICollectionView {
     open func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
         let snapshot = NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem>()
         return snapshot
+    }
+    
+    open func dataDidLoad() {
+        dataDidLoadHandler?()
     }
     
     // MARK: - Helpers
