@@ -37,8 +37,7 @@ let package = Package(
                 "BECollectionView_Core",
                 "PureLayout",
                 "RxSwift",
-                .product(name: "RxCocoa", package: "RxSwift"),
-                "CombineCocoa"
+                .product(name: "RxCocoa", package: "RxSwift")
             ]),
         .testTarget(
             name: "BECollectionViewTests",
