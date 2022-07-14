@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import CombineCocoa
 import UIKit
 
 open class BECollectionView: UICollectionView {
@@ -139,11 +140,11 @@ open class BECollectionView: UICollectionView {
             .store(in: &subscriptions)
         
         // did end decelerating (ex: loadmore)
-        collectionView.rx.didEndDecelerating
-            .subscribe(onNext: { [weak self] in
+        didEndDeceleratingPublisher
+            .sink { [weak self] in
                 self?.didEndDecelerating()
-            })
-            .disposed(by: disposeBag)
+            }
+            .store(in: &subscriptions)
     }
     
     open func dataDidChangePublisher() -> AnyPublisher<Void, Never> {
@@ -219,6 +220,8 @@ open class BECollectionView: UICollectionView {
         let snapshot = mapDataToSnapshot()
         diffableDataSource.apply(snapshot, animatingDifferences: true, completion: completion)
     }
+    
+    open func didEndDecelerating() {}
     
     open func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
         let snapshot = NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem>()
