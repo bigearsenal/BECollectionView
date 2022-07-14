@@ -48,11 +48,24 @@ open class BEStaticSectionsCollectionView: BECollectionView {
     
     // MARK: - Binding
     open override func dataDidChangePublisher() -> AnyPublisher<Void, Never> {
-        fatalError("Implementing")
-//        Observable<Void>.combineLatest(
-//            sections.map {$0.viewModel.dataDidChange}
-//        )
-//            .map {_ in ()}
+        guard sections.count > 0 else {
+            return Just(())
+                .eraseToAnyPublisher()
+        }
+        
+        var publisher = sections[0].viewModel.dataDidChange
+        
+        if sections.count == 1 {
+            return publisher
+        }
+        
+        for i in 1..<sections.count {
+            publisher = publisher.combineLatest(sections[i].viewModel.dataDidChange)
+                .map {_ in ()}
+                .eraseToAnyPublisher()
+        }
+        
+        return publisher
     }
     
     open override func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {

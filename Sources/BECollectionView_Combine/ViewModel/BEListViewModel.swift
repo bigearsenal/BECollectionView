@@ -15,3 +15,11 @@ public protocol BEListViewModelType {
     
 //    func getCurrentPage() -> Int?
 }
+
+public extension BEListViewModelType {
+    func getData<T: Hashable>(type: T.Type) -> [T] {
+        convertDataToAnyHashable().compactMap {$0 as? T}
+    }
+}
+
+
