@@ -7,10 +7,8 @@
 
 import Foundation
 
-import Foundation
-
-struct SystemVersion {
-    static func isIOS13() -> Bool {
+public struct SystemVersion {
+    public static func isIOS13() -> Bool {
         let os = ProcessInfo().operatingSystemVersion
         switch (os.majorVersion, os.minorVersion, os.patchVersion) {
         case (let x, _, _) where x == 13:

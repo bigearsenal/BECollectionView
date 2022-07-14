@@ -16,8 +16,8 @@ public struct BECollectionViewHeaderFooterViewLayout {
         self.pinToVisibleBounds = pinToVisibleBounds
     }
     
-    let viewType: UICollectionReusableView.Type
-    let widthDimension: NSCollectionLayoutDimension
-    let heightDimension: NSCollectionLayoutDimension
-    let pinToVisibleBounds: Bool
+    public let viewType: UICollectionReusableView.Type
+    public let widthDimension: NSCollectionLayoutDimension
+    public let heightDimension: NSCollectionLayoutDimension
+    public let pinToVisibleBounds: Bool
 }

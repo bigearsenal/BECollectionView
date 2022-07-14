@@ -10,7 +10,7 @@ import UIKit
 
 public class BECollectionViewBasicEmptyCell: UICollectionViewCell {
     public lazy var label: UILabel = {
-        let label = UILabel(forAutoLayout: ())
+        let label = UILabel()
         label.text = NSLocalizedString("Not found", comment: "")
         label.textColor = .secondaryLabel
         label.textAlignment = .center
@@ -29,6 +29,11 @@ public class BECollectionViewBasicEmptyCell: UICollectionViewCell {
     
     open func commonInit() {
         contentView.addSubview(label)
-        label.autoPinEdgesToSuperviewEdges(with: .init(top: 16, left: 16, bottom: 16, right: 16))
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            label.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16)
+        ])
     }
 }

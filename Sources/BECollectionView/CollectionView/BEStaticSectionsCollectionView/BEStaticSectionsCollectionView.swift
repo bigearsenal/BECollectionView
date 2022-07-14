@@ -8,6 +8,7 @@
 import Foundation
 import PureLayout
 import RxSwift
+import BECollectionView_Core
 
 open class BEStaticSectionsCollectionView: BECollectionViewBase {
     // MARK: - Properties

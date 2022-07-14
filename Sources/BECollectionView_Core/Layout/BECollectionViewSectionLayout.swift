@@ -57,7 +57,7 @@ public struct BECollectionViewSectionLayout {
     public var customLayoutForGroupOnSmallScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
     public var customLayoutForGroupOnLargeScreen: ((NSCollectionLayoutEnvironment) -> NSCollectionLayoutGroup)?
     
-    func registerCellsAndSupplementaryViews(in collectionView: UICollectionView, emptyCellIdentifier: String? = nil, headerIdentifier: String? = nil, footerIdentifier: String? = nil) {
+    public func registerCellsAndSupplementaryViews(in collectionView: UICollectionView, emptyCellIdentifier: String? = nil, headerIdentifier: String? = nil, footerIdentifier: String? = nil) {
         // register cell
         collectionView.register(cellType, forCellWithReuseIdentifier: String(describing: cellType))
         
@@ -79,7 +79,7 @@ public struct BECollectionViewSectionLayout {
         }
     }
     
-    func configureSupplementaryView(in collectionView: UICollectionView, kind: String, indexPath: IndexPath, headerIdentifier: String? = nil, footerIdentifier: String? = nil) -> UICollectionReusableView? {
+    public func configureSupplementaryView(in collectionView: UICollectionView, kind: String, indexPath: IndexPath, headerIdentifier: String? = nil, footerIdentifier: String? = nil) -> UICollectionReusableView? {
         if kind == UICollectionView.elementKindSectionHeader {
             return configureHeader(in: collectionView, indexPath: indexPath, headerIdentifier: headerIdentifier)
         }
@@ -89,7 +89,7 @@ public struct BECollectionViewSectionLayout {
         return nil
     }
     
-    func configureHeader(in collectionView: UICollectionView, indexPath: IndexPath, headerIdentifier: String? = nil) -> UICollectionReusableView? {
+    public func configureHeader(in collectionView: UICollectionView, indexPath: IndexPath, headerIdentifier: String? = nil) -> UICollectionReusableView? {
         let headerIdentifier = headerIdentifier ?? String(describing: header!.viewClass)
         let view = collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionHeader,
@@ -98,7 +98,7 @@ public struct BECollectionViewSectionLayout {
         return view
     }
     
-    func configureFooter(in collectionView: UICollectionView, indexPath: IndexPath, footerIdentifier: String? = nil) -> UICollectionReusableView? {
+    public func configureFooter(in collectionView: UICollectionView, indexPath: IndexPath, footerIdentifier: String? = nil) -> UICollectionReusableView? {
         let footerIdentifier = footerIdentifier ?? String(describing: footer!.viewClass)
         let view = collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionFooter,
@@ -108,7 +108,7 @@ public struct BECollectionViewSectionLayout {
         return view
     }
     
-    func configureCell(collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem, emptyCellIdentifier: String? = nil) -> UICollectionViewCell {
+    public func configureCell(collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem, emptyCellIdentifier: String? = nil) -> UICollectionViewCell {
         
         if !item.isEmptyCell,
            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: cellType), for: indexPath) as? BECollectionViewCell {
@@ -132,7 +132,7 @@ public struct BECollectionViewSectionLayout {
         return UICollectionViewCell()
     }
     
-    func layout(environment env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
+    public func layout(environment env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let group: NSCollectionLayoutGroup
         // 1 columns
         if env.container.contentSize.width < 536 {

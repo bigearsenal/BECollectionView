@@ -2,6 +2,7 @@ import Foundation
 import Combine
 import CombineCocoa
 import UIKit
+import BECollectionView_Core
 
 open class BECollectionView: UICollectionView {
     // MARK: - Constants

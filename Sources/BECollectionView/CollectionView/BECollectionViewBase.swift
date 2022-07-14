@@ -9,6 +9,7 @@ import Foundation
 import PureLayout
 import RxSwift
 import UIKit
+import BECollectionView_Core
 
 open class BECollectionViewBase: UIView {
     // MARK: - Constants

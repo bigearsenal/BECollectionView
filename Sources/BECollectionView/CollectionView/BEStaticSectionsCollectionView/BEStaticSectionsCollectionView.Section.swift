@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import UIKit
+import BECollectionView_Core
 
 extension BEStaticSectionsCollectionView {
     open class Section {
