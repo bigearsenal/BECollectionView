@@ -8,6 +8,7 @@
 
 import Foundation
 import BECollectionView
+import BECollectionView_Core
 import UIKit
 
 extension StaticCollectionView {

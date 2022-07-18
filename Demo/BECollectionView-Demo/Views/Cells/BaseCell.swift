@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import BECollectionView
 import ListPlaceholder
+import BECollectionView_Core
 
 class BaseCell: UICollectionViewCell, BECollectionViewCell {
     var padding: UIEdgeInsets {.zero}
