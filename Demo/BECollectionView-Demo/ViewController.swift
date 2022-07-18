@@ -13,15 +13,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let firstViewController = StaticSectionsViewController(nibName: nil, bundle: nil)
-        firstViewController.tabBarItem = UITabBarItem(title: "Static", image: nil, selectedImage: nil)
+        let firstViewController = RxSwiftViewController(nibName: nil, bundle: nil)
+        firstViewController.tabBarItem = UITabBarItem(title: "RxSwift", image: .init(named: "RxSwift"), selectedImage: nil)
         
         
-        let secondViewController = DynamicSectionsViewController(nibName: nil, bundle: nil)
-        secondViewController.tabBarItem = UITabBarItem(title: "Dynamic", image: nil, selectedImage: nil)
+        let secondViewController = RxSwiftDynamicSectionsViewController(nibName: nil, bundle: nil)
+        secondViewController.tabBarItem = UITabBarItem(title: "Combine", image: .init(named: "Combine"), selectedImage: nil)
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [firstViewController, secondViewController]
+        tabBarController.viewControllers = [
+            UINavigationController(rootViewController: firstViewController),
+            secondViewController
+        ]
         
 //        tabBarController.selectedViewController = secondViewController
         

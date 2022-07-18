@@ -11,14 +11,14 @@ import BECollectionView
 import BECollectionView_Core
 import UIKit
 
-class DynamicCollectionView: BEDynamicSectionsCollectionView {
+class RxSwiftDynamicCollectionView: BEDynamicSectionsCollectionView {
     init() {
         super.init(
             header: .init(
                 viewType: GlobalHeaderView.self,
                 heightDimension: .estimated(53)
             ),
-            viewModel: CarsViewModel(),
+            viewModel: RxSwiftCarsViewModel(),
             mapDataToSections: { viewModel in
                 let cars = viewModel.getData(type: Car.self)
                 let dict = Dictionary(grouping: cars, by: {$0.numberOfWheels})

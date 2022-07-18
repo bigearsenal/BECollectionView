@@ -10,7 +10,7 @@ import Foundation
 import BECollectionView
 import RxSwift
 
-class CarsViewModel: BEListViewModel<Car> {
+class RxSwiftCarsViewModel: BEListViewModel<Car> {
     override func createRequest() -> Single<[Car]> {
         Single<[Car]>.just(data).delay(.seconds(Int.random(in: 1..<2)), scheduler: MainScheduler.instance)
             .map { _ in

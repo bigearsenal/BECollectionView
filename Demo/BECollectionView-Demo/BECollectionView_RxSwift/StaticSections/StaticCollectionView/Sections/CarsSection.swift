@@ -11,7 +11,7 @@ import BECollectionView
 import BECollectionView_Core
 import UIKit
 
-extension StaticCollectionView {
+extension RxSwiftStaticCollectionView {
     class CarsSection: BEStaticSectionsCollectionView.Section {
         init(index: Int, viewModel: BEListViewModelType) {
             super.init(

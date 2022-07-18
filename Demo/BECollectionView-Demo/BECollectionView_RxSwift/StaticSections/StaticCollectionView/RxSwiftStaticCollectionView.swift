@@ -10,12 +10,12 @@ import Foundation
 import BECollectionView
 import UIKit
 
-class StaticCollectionView: BEStaticSectionsCollectionView {
+class RxSwiftStaticCollectionView: BEStaticSectionsCollectionView {
     let headerIdentifier = "GlobalHeader"
     
     init() {
-        let section0 = CarsSection(index: 0, viewModel: CarsViewModel())
-        let section1 = FriendsSection(index: 1, viewModel: FriendsViewModel())
+        let section0 = CarsSection(index: 0, viewModel: RxSwiftCarsViewModel())
+        let section1 = FriendsSection(index: 1, viewModel: RxSwiftFriendsViewModel())
         super.init(
             header: .init(
                 viewType: GlobalHeaderView.self,
@@ -31,13 +31,13 @@ class StaticCollectionView: BEStaticSectionsCollectionView {
     
     override func configureHeaderView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
         let headerView = super.configureHeaderView(kind: kind, indexPath: indexPath) as? GlobalHeaderView
-        headerView?.viewModel = sections.first?.viewModel as? CarsViewModel
+        headerView?.rxViewModel = sections.first?.viewModel as? RxSwiftCarsViewModel
         return headerView
     }
     
     override func configureFooterView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
         let footerView = super.configureFooterView(kind: kind, indexPath: indexPath) as? GlobalFooterView
-        footerView?.viewModel = sections.last?.viewModel as? FriendsViewModel
+        footerView?.rxViewModel = sections.last?.viewModel as? RxSwiftFriendsViewModel
         return footerView
     }
 }

@@ -13,9 +13,9 @@ import UIKit
 class GlobalHeaderView: BaseCollectionReusableView {
     var disposable: Disposable?
     
-    var viewModel: CarsViewModel? {
+    var rxViewModel: RxSwiftCarsViewModel? {
         didSet {
-            guard let viewModel = viewModel else {return}
+            guard let viewModel = rxViewModel else {return}
             disposable?.dispose()
             disposable = viewModel.dataObservable
                 .map {$0?.count ?? 0}

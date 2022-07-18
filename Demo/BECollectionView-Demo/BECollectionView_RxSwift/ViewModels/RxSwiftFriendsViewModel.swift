@@ -10,7 +10,7 @@ import Foundation
 import BECollectionView
 import RxSwift
 
-class FriendsViewModel: BEListViewModel<Friend> {
+class RxSwiftFriendsViewModel: BEListViewModel<Friend> {
     override func createRequest() -> Single<[Friend]> {
         Single<[Friend]>.just(data).delay(.seconds(Int.random(in: 2..<6)), scheduler: MainScheduler.instance)
             .map { _ in

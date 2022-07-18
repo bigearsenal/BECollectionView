@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  DynamicSectionsViewController.swift
 //  BECollectionView_Example
 //
-//  Created by Chung Tran on 15/03/2021.
+//  Created by Chung Tran on 09/07/2021.
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
@@ -10,11 +10,12 @@ import Foundation
 import UIKit
 import BECollectionView
 
-class StaticSectionsViewController: UIViewController, BECollectionViewDelegate {
-    lazy var collectionView = StaticCollectionView()
+class RxSwiftDynamicSectionsViewController: UIViewController, BECollectionViewDelegate {
+    lazy var collectionView = RxSwiftDynamicCollectionView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "CollectionView with dynamic sections"
         view.backgroundColor = .white
         collectionView.configureForAutoLayout()
         view.addSubview(collectionView)

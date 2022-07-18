@@ -11,7 +11,7 @@ import BECollectionView
 import BECollectionView_Core
 import UIKit
 
-extension StaticCollectionView {
+extension RxSwiftStaticCollectionView {
     class FriendsSection: BEStaticSectionsCollectionView.Section {
         init(index: Int, viewModel: BEListViewModelType) {
             super.init(
