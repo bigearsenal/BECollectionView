@@ -2,9 +2,9 @@ import Foundation
 import Combine
 import BECollectionView_Core
 
-public protocol BEListViewModelType {
+public protocol BECollectionViewModelType {
     var dataDidChange: AnyPublisher<Void, Never> {get}
-    var currentState: BEFetcherState {get}
+    var state: BEFetcherState {get}
     var isPaginationEnabled: Bool {get}
     
     func reload()
@@ -16,7 +16,7 @@ public protocol BEListViewModelType {
 //    func getCurrentPage() -> Int?
 }
 
-public extension BEListViewModelType {
+public extension BECollectionViewModelType {
     func getData<T: Hashable>(type: T.Type) -> [T] {
         convertDataToAnyHashable().compactMap {$0 as? T}
     }

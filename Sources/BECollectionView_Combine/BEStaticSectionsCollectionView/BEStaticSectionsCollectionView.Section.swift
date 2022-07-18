@@ -15,13 +15,13 @@ extension BEStaticSectionsCollectionView {
         public weak var collectionView: BECollectionView?
         public let index: Int
         public var layout: BECollectionViewSectionLayout
-        public let viewModel: BEListViewModelType
+        public let viewModel: BECollectionViewModelType
         public let customFilter: ((AnyHashable) -> Bool)?
         public let limit: (([AnyHashable]) -> [AnyHashable])?
         public init(
             index: Int,
             layout: BECollectionViewSectionLayout,
-            viewModel: BEListViewModelType,
+            viewModel: BECollectionViewModelType,
             customFilter: ((AnyHashable) -> Bool)? = nil,
             limit: (([AnyHashable]) -> [AnyHashable])? = nil
         ) {
@@ -77,7 +77,7 @@ extension BEStaticSectionsCollectionView {
             
             var collectionViewItems = items
                 .map {BECollectionViewItem(value: $0)}
-            switch viewModel.currentState {
+            switch viewModel.state {
             case .loading, .initializing:
                 for _ in 0..<layout.numberOfLoadingCells {
                     collectionViewItems.append(BECollectionViewItem(placeholderIndex: UUID().uuidString))
