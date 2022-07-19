@@ -37,7 +37,7 @@ class CombineViewController: UIViewController {
     }
     
     @objc private func dynamicButtonDidTouch() {
-        let vc = RxSwiftDynamicSectionsViewController()
+        let vc = CombineDynamicSectionsViewController()
         show(vc, sender: nil)
     }
 }
