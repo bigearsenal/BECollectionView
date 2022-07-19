@@ -11,7 +11,7 @@ About `BECollectionView`:
 
 - Creating `ListView` (`UITableView`, `UICollectionView`) in `UIKit` is a painful task which requires a lot of efforts. You firstly has to layout the `ListView`, create `Cell`, register it, bind data to data source and set up delegate. This type of actions is tedious and have to be repeated time to time.
 
-- Plus, in this application we don't use UITableView at all, as its layout is not good for iPhone in landscape mode, and again, it requires a lot of efforts. So I provide a solution named `BECollectionView` (with an embeded UICollectionView) that you can use easily without digging into UIKit's tableView's implementation and get rid of setting dataSource, delegate, registerCell, binding, ... by yourself. You can use it in a replacement for `UITableView` and `UICollectionView`.
+- Plus, Using `UITableView` for larger screen sometimes is a bad idea, as its layout is not good for iPhone in landscape mode, and again, it requires a lot of efforts. So `BECollectionView` (with an embeded UICollectionView) is introduced to ease the process of creating "`ListView`" in `UIKit` by hiding most of settings of `UITableView`, `UICollectionView` (dataSource, delegate, registerCell, binding, ... ) and provide easy data-driven way to handle your `ListView`. `BECollectionView` can be use as a replacement of `UITableView` and `UICollectionView`.
 
 - `BECollectionView` was born with the aim is to simplify the process of creating `ListView` by hiding the detail of `UIKit` `ListView`'s implemetation as much as posible, so you can concentrate on bussiness logic. After a few configurations, you got features like Pull to refresh, loading animation, add, remove, replace cells animation,... for free. The only thing that you need to care about is the flow of data.
 
@@ -24,7 +24,9 @@ Open Demo project from `Demo` folder.
 
 With a simple Model T, a BECollectionViewModel<T>, a BECollectionViewCell, use can create a data-driven UICollectionView easily with default behaviors like pull-to-refresh, reloading, refreshing, selecting...
 
-Example:
+![Example of working BECollectionView](https://user-images.githubusercontent.com/6975538/179670090-cc837993-36d1-4b3d-89b3-d1077aff62b3.gif)
+
+Code:
 ```swift
 // Model: Car.swift
 struct Car: Hashable {
