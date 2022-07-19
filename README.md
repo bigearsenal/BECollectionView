@@ -1,15 +1,104 @@
 # BECollectionView
 
-[![CI Status](https://img.shields.io/travis/Chung Tran/BECollectionView.svg?style=flat)](https://travis-ci.org/Chung Tran/BECollectionView)
+[![CI Status](https://img.shields.io/travis/bigearsenal/BECollectionView.svg?style=flat)](https://travis-ci.org/bigearsenal/BECollectionView)
 [![Version](https://img.shields.io/cocoapods/v/BECollectionView.svg?style=flat)](https://cocoapods.org/pods/BECollectionView)
 [![License](https://img.shields.io/cocoapods/l/BECollectionView.svg?style=flat)](https://cocoapods.org/pods/BECollectionView)
 [![Platform](https://img.shields.io/cocoapods/p/BECollectionView.svg?style=flat)](https://cocoapods.org/pods/BECollectionView)
+
+## Features
+Support both `RxSwift` and `Combine + SwiftConcurrency`
 
 ## Example
 
 Open Demo project from `Demo` folder.
 
+With a simple Model T, a BECollectionViewModel<T>, a BECollectionViewCell, use can create a data-driven UICollectionView easily with default behaviors like pull-to-refresh, reloading, refreshing, selecting...
+```swift
+// Model: Car.swift
+struct Car: Hashable {
+    var name: String
+    var numberOfWheels: Int
+}
+
+// ViewModel: CarsViewModel
+import BECollectionView_Combine
+
+class CarsViewModel: BECollectionViewModel<Car> {
+    override func createRequest() async throws -> [Car] {
+        try await Task.sleep(nanoseconds: 2_000_000_000) // Simulate loading
+        try Task.checkCancellation()
+        return (0...Int.random(in: 1..<9)).map {.init(name: "Car#\($0)", numberOfWheels: Int.random(in: 1..<4))}
+    }
+}
+
+// Cell: CarCell.swift
+import BECollectionView_Core
+
+class CarCell: UICollectionViewCell, BECollectionViewCell {
+    var padding: UIEdgeInsets {.zero}
+    public lazy var stackView = UIStackView(forAutoLayout: ())
+    lazy var titleLabel = UILabel(forAutoLayout: ())
+    lazy var descriptionLabel = UILabel(forAutoLayout: ())
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    @available(*, unavailable,
+    message: "Loading this view from a nib is unsupported in favor of initializer dependency injection."
+    )
+    public required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    open func commonInit() {
+        contentView.addSubview(stackView)
+        stackView.autoPinEdgesToSuperviewEdges(with: .zero)
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(descriptionLabel)
+    }
+    
+    open func setUp(with item: AnyHashable?) {
+        guard let car = item as? Car else {
+            titleLabel.text = "<placeholder>"
+            descriptionLabel.text = "<placeholder>"
+            return
+        }
+        titleLabel.text = car.name
+        descriptionLabel.text = "\(car.numberOfWheels)"
+    }
+    
+    func hideLoading() {
+        stackView.hideLoader()
+    }
+    
+    func showLoading() {
+        stackView.showLoader()
+    }
+}
+
+// ViewController.swift
+BEStaticSectionsCollectionView(
+    header: .init(
+        viewType: GlobalHeaderView.self,
+        heightDimension: .estimated(53)
+    ),
+    sections: [
+        CarsSection(index: 0, viewModel: CombineCarsViewModel()),
+        FriendsSection(index: 1, viewModel: CombineFriendsViewModel())
+    ],
+    footer: .init(
+        viewType: GlobalFooterView.self,
+        heightDimension: .estimated(53)
+    )
+)
+```
+
 ## Requirements
+- iOS >= 13
 
 ## Installation
 
@@ -119,6 +208,8 @@ class RecipientsListViewModel: BEListViewModel<Recipient> {
 No need to explain, this class is required to have `setUp(with:)` to handling data presentation, `hideLoading()` and `showLoading()` for handling loading state.
 
 ```swift
+import BECollectionView_Core
+
 class RecipientCell: UICollectionViewCell, BECollectionViewCell {
     private let recipientView = RecipientView()
     
