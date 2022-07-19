@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import BECollectionView_Combine
 
-class CombineStaticSectionsViewController: UIViewController {
+class CombineStaticSectionsViewController: UIViewController, BECollectionViewDelegate {
     lazy var collectionView = CombineStaticSectionsCollectionView()
     
     override func viewDidLoad() {
@@ -19,19 +19,19 @@ class CombineStaticSectionsViewController: UIViewController {
         collectionView.configureForAutoLayout()
         view.addSubview(collectionView)
         collectionView.autoPinEdgesToSuperviewEdges()
-//        collectionView.delegate = self
+        collectionView.delegate = self
         
         collectionView.refresh()
     }
     
-//    func beCollectionView(collectionView: BECollectionViewBase, didSelect item: AnyHashable) {
-//        switch item {
-//        case let car as Car:
-//            print(car.name)
-//        case let friend as Friend:
-//            print(friend.name)
-//        default:
-//            break
-//        }
-//    }
+    func beCollectionView(collectionView: BECollectionViewBase, didSelect item: AnyHashable) {
+        switch item {
+        case let car as Car:
+            print(car.name)
+        case let friend as Friend:
+            print(friend.name)
+        default:
+            break
+        }
+    }
 }

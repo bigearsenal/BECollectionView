@@ -2,6 +2,9 @@ import Foundation
 import RxSwift
 import BECollectionView_Core
 
+public typealias BECollectionViewDelegate = BECollectionView_Core.BECollectionViewDelegate
+public typealias BECollectionViewBase = BECollectionView_Core.BECollectionViewBase
+
 open class BECollectionViewBaseRx: BECollectionViewBase {
     let disposeBag = DisposeBag()
     
