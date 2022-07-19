@@ -1,8 +1,11 @@
-//
-//  File.swift
-//  
-//
-//  Created by Chung Tran on 19/07/2022.
-//
+import BECollectionView_Core
 
-import Foundation
+public typealias BECollectionViewDelegate = BECollectionView_Core.BECollectionViewDelegate
+public typealias BECollectionViewBase = BECollectionView_Core.BECollectionViewBase
+public typealias BECollectionViewCell = BECollectionView_Core.BECollectionViewCell
+public typealias BECollectionViewSectionLayout = BECollectionView_Core.BECollectionViewSectionLayout
+public typealias BECollectionViewItem = BECollectionView_Core.BECollectionViewItem
+public typealias BEFetcherState = BECollectionView_Core.BEFetcherState
+public typealias BECollectionViewSectionHeaderLayout = BECollectionView_Core.BECollectionViewSectionHeaderLayout
+public typealias BECollectionViewSectionFooterLayout = BECollectionView_Core.BECollectionViewSectionFooterLayout
+public typealias BECollectionViewHeaderFooterViewLayout = BECollectionView_Core.BECollectionViewHeaderFooterViewLayout
