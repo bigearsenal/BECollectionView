@@ -119,8 +119,14 @@ BEStaticSectionsCollectionView(
 BECollectionView is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
+For working with RxSwift
 ```ruby
-pod 'BECollectionView', :git => 'https://github.com/bigearsenal/BECollectionView.git', :branch => 'main'
+pod 'BECollectionView', :git => 'https://github.com/bigearsenal/BECollectionView.git', :branch => 'master'
+```
+
+For working with Combine + Swift Concurrency
+```ruby
+pod 'BECollectionView_Combine', :git => 'https://github.com/bigearsenal/BECollectionView.git', :branch => 'master'
 ```
 
 ## How to implement `BECollectionView`
