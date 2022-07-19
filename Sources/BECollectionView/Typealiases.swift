@@ -1,0 +1,8 @@
+import BECollectionView_Core
+
+public typealias BECollectionViewDelegate = BECollectionView_Core.BECollectionViewDelegate
+public typealias BECollectionViewBase = BECollectionView_Core.BECollectionViewBase
+public typealias BECollectionViewCell = BECollectionView_Core.BECollectionViewCell
+public typealias BECollectionViewSectionLayout = BECollectionView_Core.BECollectionViewSectionLayout
+public typealias BECollectionViewItem = BECollectionView_Core.BECollectionViewItem
+public typealias BEFetcherState = BECollectionView_Core.BEFetcherState

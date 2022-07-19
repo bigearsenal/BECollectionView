@@ -3,9 +3,6 @@ import Combine
 import CombineCocoa
 import BECollectionView_Core
 
-public typealias BECollectionViewDelegate = BECollectionView_Core.BECollectionViewDelegate
-public typealias BECollectionViewBase = BECollectionView_Core.BECollectionViewBase
-
 open class BECollectionViewBaseCombine: BECollectionViewBase {
     private var subscriptions = [AnyCancellable]()
     
