@@ -42,6 +42,9 @@
 		3B61C18E288654550066F419 /* CombineStaticSectionsCollectionView.CarsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61C18D288654550066F419 /* CombineStaticSectionsCollectionView.CarsSection.swift */; };
 		3B61C190288654640066F419 /* CombineStaticSectionsCollectionView.FriendsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61C18F288654640066F419 /* CombineStaticSectionsCollectionView.FriendsSection.swift */; };
 		3B61C192288655DA0066F419 /* CombineStaticSectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61C191288655DA0066F419 /* CombineStaticSectionsViewController.swift */; };
+		3B61C194288667370066F419 /* CombineDynamicSectionsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61C193288667370066F419 /* CombineDynamicSectionsCollectionView.swift */; };
+		3B61C1972886678E0066F419 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 3B61C1962886678E0066F419 /* PureLayout */; };
+		3B61C199288667F50066F419 /* CombineDynamicSectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61C198288667F50066F419 /* CombineDynamicSectionsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +102,8 @@
 		3B61C18D288654550066F419 /* CombineStaticSectionsCollectionView.CarsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineStaticSectionsCollectionView.CarsSection.swift; sourceTree = "<group>"; };
 		3B61C18F288654640066F419 /* CombineStaticSectionsCollectionView.FriendsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineStaticSectionsCollectionView.FriendsSection.swift; sourceTree = "<group>"; };
 		3B61C191288655DA0066F419 /* CombineStaticSectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineStaticSectionsViewController.swift; sourceTree = "<group>"; };
+		3B61C193288667370066F419 /* CombineDynamicSectionsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineDynamicSectionsCollectionView.swift; sourceTree = "<group>"; };
+		3B61C198288667F50066F419 /* CombineDynamicSectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineDynamicSectionsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B61C1972886678E0066F419 /* PureLayout in Frameworks */,
 				3B61C18428851F1B0066F419 /* BECollectionView_Combine in Frameworks */,
 				3B4FA4A7283F2D3A002B13CF /* ListPlaceholder in Frameworks */,
 				3B4FA417283F2A82002B13CF /* BECollectionView in Frameworks */,
@@ -318,6 +324,8 @@
 		3B61C1862885479D0066F419 /* DynamicSections */ = {
 			isa = PBXGroup;
 			children = (
+				3B61C193288667370066F419 /* CombineDynamicSectionsCollectionView.swift */,
+				3B61C198288667F50066F419 /* CombineDynamicSectionsViewController.swift */,
 			);
 			path = DynamicSections;
 			sourceTree = "<group>";
@@ -360,6 +368,7 @@
 				3B4FA416283F2A82002B13CF /* BECollectionView */,
 				3B4FA4A6283F2D3A002B13CF /* ListPlaceholder */,
 				3B61C18328851F1B0066F419 /* BECollectionView_Combine */,
+				3B61C1962886678E0066F419 /* PureLayout */,
 			);
 			productName = "BECollectionView-Demo";
 			productReference = 3B4FA3E0283F2A4A002B13CF /* BECollectionView-Demo.app */;
@@ -435,6 +444,7 @@
 			mainGroup = 3B4FA3D7283F2A4A002B13CF;
 			packageReferences = (
 				3B4FA4A5283F2D3A002B13CF /* XCRemoteSwiftPackageReference "ListPlaceholder" */,
+				3B61C1952886678E0066F419 /* XCRemoteSwiftPackageReference "PureLayout" */,
 			);
 			productRefGroup = 3B4FA3E1283F2A4A002B13CF /* Products */;
 			projectDirPath = "";
@@ -479,7 +489,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B4FA491283F2C19002B13CF /* FriendCell.swift in Sources */,
+				3B61C199288667F50066F419 /* CombineDynamicSectionsViewController.swift in Sources */,
 				3B4FA4A4283F2C94002B13CF /* ViewController.swift in Sources */,
+				3B61C194288667370066F419 /* CombineDynamicSectionsCollectionView.swift in Sources */,
 				3B4FA47C283F2BC8002B13CF /* Friend.swift in Sources */,
 				3B4FA489283F2C00002B13CF /* GlobalFooterView.swift in Sources */,
 				3B61C17B28851E740066F419 /* CombineViewController.swift in Sources */,
@@ -840,6 +852,14 @@
 				kind = branch;
 			};
 		};
+		3B61C1952886678E0066F419 /* XCRemoteSwiftPackageReference "PureLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PureLayout/PureLayout";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -855,6 +875,11 @@
 		3B61C18328851F1B0066F419 /* BECollectionView_Combine */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BECollectionView_Combine;
+		};
+		3B61C1962886678E0066F419 /* PureLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B61C1952886678E0066F419 /* XCRemoteSwiftPackageReference "PureLayout" */;
+			productName = PureLayout;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

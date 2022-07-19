@@ -1,18 +1,17 @@
 //
-//  DynamicSectionsViewController.swift
-//  BECollectionView_Example
+//  CombineDynamicSectionsViewController.swift
+//  BECollectionView-Demo
 //
-//  Created by Chung Tran on 09/07/2021.
-//  Copyright © 2021 CocoaPods. All rights reserved.
+//  Created by Chung Tran on 19/07/2022.
 //
 
 import Foundation
 import UIKit
 import PureLayout
-import BECollectionView
+import BECollectionView_Combine
 
-class RxSwiftDynamicSectionsViewController: UIViewController, BECollectionViewDelegate {
-    lazy var collectionView = RxSwiftDynamicCollectionView()
+class CombineDynamicSectionsViewController: UIViewController, BECollectionViewDelegate {
+    lazy var collectionView = CombineDynamicCollectionView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
