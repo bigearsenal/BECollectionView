@@ -1,7 +1,8 @@
 Pod::Spec.new do |s|
-  s.name             = 'BECollectionView'
+  s.name             = 'BECollectionView_Combine'
   s.version          = '1.0.0'
-  s.summary          = 'An easy data-driven CollectionView with RxSwift.'
+  s.summary          = 'An easy data-driven CollectionView with Combine.'
+
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
                        DESC
@@ -16,7 +17,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '13.0'
   s.swift_version = '5.0'
 
-  s.source_files = 'Sources/BECollectionView/**/*'
+  s.source_files = 'Sources/BECollectionView_Combine/**/*'
   
   # s.resource_bundles = {
   #   'BECollectionView' => ['BECollectionView/Assets/*.png']
@@ -24,6 +25,6 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'RxCocoa', '~> 6.5.0'
   s.dependency 'BECollectionView_Core'
+  s.dependency 'CombineCocoa', '~> 0.2.1'
 end
