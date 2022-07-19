@@ -24,7 +24,7 @@ Open Demo project from `Demo` folder.
 
 With a simple Model T, a BECollectionViewModel<T>, a BECollectionViewCell, you can create a data-driven UICollectionView easily with default behaviors like pull-to-refresh, reloading, refreshing, selecting...
 
-![Example of working BECollectionView](https://user-images.githubusercontent.com/6975538/179670090-cc837993-36d1-4b3d-89b3-d1077aff62b3.gif)
+![Example of working BECollectionView](https://user-images.githubusercontent.com/6975538/179670361-6a8f85ac-d25b-4dba-8f3a-6a4c45589125.gif)
 
 Code:
 ```swift
