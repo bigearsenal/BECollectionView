@@ -5,14 +5,26 @@
 [![License](https://img.shields.io/cocoapods/l/BECollectionView.svg?style=flat)](https://cocoapods.org/pods/BECollectionView)
 [![Platform](https://img.shields.io/cocoapods/p/BECollectionView.svg?style=flat)](https://cocoapods.org/pods/BECollectionView)
 
+## Introduction
+
+About `BECollectionView`:
+
+- Creating `ListView` (`UITableView`, `UICollectionView`) in `UIKit` is a painful task which requires a lot of efforts. You firstly has to layout the `ListView`, create `Cell`, register it, bind data to data source and set up delegate. This type of actions is tedious and have to be repeated time to time.
+
+- Plus, in this application we don't use UITableView at all, as its layout is not good for iPhone in landscape mode, and again, it requires a lot of efforts. So I provide a solution named `BECollectionView` (with an embeded UICollectionView) that you can use easily without digging into UIKit's tableView's implementation and get rid of setting dataSource, delegate, registerCell, binding, ... by yourself. You can use it in a replacement for `UITableView` and `UICollectionView`.
+
+- `BECollectionView` was born with the aim is to simplify the process of creating `ListView` by hiding the detail of `UIKit` `ListView`'s implemetation as much as posible, so you can concentrate on bussiness logic. After a few configurations, you got features like Pull to refresh, loading animation, add, remove, replace cells animation,... for free. The only thing that you need to care about is the flow of data.
+
 ## Features
 Support both `RxSwift` and `Combine + SwiftConcurrency`
 
-## Example
+## Quick start
 
 Open Demo project from `Demo` folder.
 
 With a simple Model T, a BECollectionViewModel<T>, a BECollectionViewCell, use can create a data-driven UICollectionView easily with default behaviors like pull-to-refresh, reloading, refreshing, selecting...
+
+Example:
 ```swift
 // Model: Car.swift
 struct Car: Hashable {
@@ -108,16 +120,6 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod 'BECollectionView', :git => 'https://github.com/bigearsenal/BECollectionView.git', :branch => 'main'
 ```
-
-## Introduction
-
-About `BECollectionView`:
-
-- Creating `ListView` (`UITableView`, `UICollectionView`) in `UIKit` is a painful task which requires a lot of efforts. You firstly has to layout the `ListView`, create `Cell`, register it, bind data to data source and set up delegate. This type of actions is tedious and have to be repeated time to time.
-
-- Plus, in this application we don't use UITableView at all, as its layout is not good for iPhone in landscape mode, and again, it requires a lot of efforts. So I provide a solution named `BECollectionView` (with an embeded UICollectionView) that you can use easily without digging into UIKit's tableView's implementation and get rid of setting dataSource, delegate, registerCell, binding, ... by yourself. You can use it in a replacement for `UITableView` and `UICollectionView`.
-
-- `BECollectionView` was born with the aim is to simplify the process of creating `ListView` by hiding the detail of `UIKit` `ListView`'s implemetation as much as posible, so you can concentrate on bussiness logic. After a few configurations, you got features like Pull to refresh, loading animation, add, remove, replace cells animation,... for free. The only thing that you need to care about is the flow of data.
 
 ## How to implement `BECollectionView`
 
