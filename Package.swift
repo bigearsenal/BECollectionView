@@ -22,7 +22,6 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/PureLayout/PureLayout", from: "3.1.8"),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.5.0"),
         .package(url: "https://github.com/CombineCommunity/CombineCocoa.git", from: "0.2.1")
     ],
@@ -35,7 +34,6 @@ let package = Package(
             name: "BECollectionView",
             dependencies: [
                 "BECollectionView_Core",
-                "PureLayout",
                 "RxSwift",
                 .product(name: "RxCocoa", package: "RxSwift")
             ]),

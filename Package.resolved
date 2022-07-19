@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "PureLayout",
-        "repositoryURL": "https://github.com/PureLayout/PureLayout",
-        "state": {
-          "branch": null,
-          "revision": "5561683c96dc49b023c1299bfe4f6fbeed5f8199",
-          "version": "3.1.9"
-        }
-      },
-      {
         "package": "RxSwift",
         "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
         "state": {
