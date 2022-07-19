@@ -150,13 +150,13 @@ Example: Combine + SwiftConcurrency
 ```swift
 import BECollectionView_Combine
 
-class RecipientsListViewModel: BEListViewModel<Recipient> {
+class RecipientsListViewModel: BECollectionViewModel<Recipient> {
     // MARK: - Dependencies
     @Injected private var nameService: NameServiceType
     @Injected private var addressFormatter: AddressFormatterType
     
     // MARK: - Properties
-    var name: String = ""
+    @Published var name: String = ""
     
     // MARK: - Methods
     /// The only methods that is REQUIRED to be inheritted
@@ -188,7 +188,7 @@ class RecipientsListViewModel: BEListViewModel<Recipient> {
     var name: String = ""
     
     // MARK: - Methods
-    /// The only methods that MUST be inheritted
+    /// The only methods that is REQUIRED to be inheritted
     override func createRequest() -> Single<[Recipient]> {
         guard !name.isEmpty else {return .just([])}
         return nameService
