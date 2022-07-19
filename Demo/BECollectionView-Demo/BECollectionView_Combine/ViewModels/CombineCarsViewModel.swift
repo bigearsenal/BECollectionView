@@ -11,16 +11,8 @@ import BECollectionView_Combine
 
 class CombineCarsViewModel: BECollectionViewModel<Car> {
     override func createRequest() async throws -> [Car] {
-        await Task {
-            // generate cars
-            var cars = [Car]()
-            for i in 0..<10 {
-                cars.append(.init(name: "Car#\(i)", numberOfWheels: Int.random(in: 0..<4)))
-            }
-
-            return Array(
-                cars.prefix(Bool.random() ? cars.count: 0)
-            )
-        }.value
+        try await Task.sleep(nanoseconds: 2_000_000_000) // Simulate loading
+        try Task.checkCancellation()
+        return (0...Int.random(in: 1..<9)).map {.init(name: "Car#\($0)", numberOfWheels: Int.random(in: 1..<4))}
     }
 }

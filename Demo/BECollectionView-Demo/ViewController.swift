@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [
             UINavigationController(rootViewController: firstViewController),
-            secondViewController
+            UINavigationController(rootViewController: secondViewController)
         ]
         
 //        tabBarController.selectedViewController = secondViewController
