@@ -26,5 +26,5 @@ TODO: Add long description of the pod here.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'BECollectionView_Core'
-  s.dependency 'CombineCocoa', '~> 0.2.1'
+  s.dependency 'CombineCocoa', '~> 0.4.0'
 end
