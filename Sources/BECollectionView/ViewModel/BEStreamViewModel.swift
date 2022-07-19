@@ -8,6 +8,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import BECollectionView_Core
 
 open class BEStreamViewModel<Item: Hashable> {
     // MARK: - Properties

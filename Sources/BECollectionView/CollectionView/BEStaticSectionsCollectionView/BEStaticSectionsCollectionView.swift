@@ -6,10 +6,11 @@
 //
 
 import Foundation
-import PureLayout
+import UIKit
 import RxSwift
+import BECollectionView_Core
 
-open class BEStaticSectionsCollectionView: BECollectionViewBase {
+open class BEStaticSectionsCollectionView: BECollectionViewBaseRx {
     // MARK: - Properties
     public let sections: [Section]
     
@@ -23,7 +24,7 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
         super.init(header: header, footer: footer)
     }
     
-    override func createLayout() -> UICollectionViewLayout {
+    open override func createLayout() -> UICollectionViewLayout {
         let config = compositionalLayoutConfiguration()
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             self?.sections[sectionIndex].layout.layout(environment: env)
@@ -36,7 +37,7 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
     }
     
     // MARK: - Set up
-    override func setUp() {
+    open override func setUp() {
         super.setUp()
         setUpDataSource(
             cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
@@ -48,7 +49,7 @@ open class BEStaticSectionsCollectionView: BECollectionViewBase {
         )
     }
     
-    override func registerCellsAndSupplementaryViews() {
+    open override func registerCellsAndSupplementaryViews() {
         super.registerCellsAndSupplementaryViews()
         sections.forEach {$0.collectionView = self}
         sections.forEach {$0.registerCellAndSupplementaryViews()}

@@ -4,27 +4,50 @@
 import PackageDescription
 
 let package = Package(
-    name: "BECollectioniView",
+    name: "BECollectionView",
     platforms: [.iOS(.v13)],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
+        .library(
+            name: "BECollectionView_Core",
+            targets: ["BECollectionView_Core"]
+        ),
         .library(
             name: "BECollectionView",
-            targets: ["BECollectionView"]),
+            targets: ["BECollectionView"]
+        ),
+        .library(
+            name: "BECollectionView_Combine",
+            targets: ["BECollectionView_Combine"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/PureLayout/PureLayout", from: "3.1.8"),
-        .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.5.0")
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.5.0"),
+        .package(url: "https://github.com/CombineCommunity/CombineCocoa.git", from: "0.2.1")
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .target(
+            name: "BECollectionView_Core"
+        ),
+        // BECollectionView+RxSwift
         .target(
             name: "BECollectionView",
-            dependencies: ["PureLayout", "RxSwift", .product(name: "RxCocoa", package: "RxSwift")]),
+            dependencies: [
+                "BECollectionView_Core",
+                "RxSwift",
+                .product(name: "RxCocoa", package: "RxSwift")
+            ]),
         .testTarget(
             name: "BECollectionViewTests",
-            dependencies: ["BECollectionView"]),
+            dependencies: ["BECollectionView"]
+        ),
+        // BECollectionView+Combine
+        .target(
+            name: "BECollectionView_Combine",
+            dependencies: [
+                "BECollectionView_Core",
+                "CombineCocoa"
+            ]
+        )
     ]
 )

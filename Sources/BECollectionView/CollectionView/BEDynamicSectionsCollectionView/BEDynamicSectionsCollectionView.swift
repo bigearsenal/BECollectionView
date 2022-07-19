@@ -8,8 +8,9 @@
 import Foundation
 import RxSwift
 import UIKit
+import BECollectionView_Core
 
-open class BEDynamicSectionsCollectionView: BECollectionViewBase {
+open class BEDynamicSectionsCollectionView: BECollectionViewBaseRx {
     // MARK: - Nested type
     public struct SectionInfo {
         public init(userInfo: AnyHashable, items: [AnyHashable], customLayout: BECollectionViewSectionLayout? = nil) {
@@ -47,7 +48,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     
     
     
-    override func createLayout() -> UICollectionViewLayout {
+    open override func createLayout() -> UICollectionViewLayout {
         let config = compositionalLayoutConfiguration()
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             self?.layout.layout(environment: env)
@@ -61,7 +62,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
     }
     
     // MARK: - Set up
-    override func setUp() {
+    open override func setUp() {
         super.setUp()
         setUpDataSource(
             cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
@@ -73,7 +74,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBase {
         )
     }
     
-    override func registerCellsAndSupplementaryViews() {
+    open override func registerCellsAndSupplementaryViews() {
         super.registerCellsAndSupplementaryViews()
         
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Empty")

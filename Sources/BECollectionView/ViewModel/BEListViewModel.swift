@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import BECollectionView_Core
 
 public protocol BEListViewModelType {
     var dataDidChange: Observable<Void> {get}
