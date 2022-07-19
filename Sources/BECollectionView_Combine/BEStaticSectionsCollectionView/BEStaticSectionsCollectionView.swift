@@ -1,9 +1,9 @@
 import Foundation
 import Combine
-import BECollectionView_Core
 import UIKit
+import BECollectionView_Core
 
-open class BEStaticSectionsCollectionView: BECollectionView {
+open class BEStaticSectionsCollectionView: BECollectionViewBaseCombine {
     // MARK: - Properties
     public let sections: [Section]
     
@@ -14,21 +14,23 @@ open class BEStaticSectionsCollectionView: BECollectionView {
         footer: BECollectionViewHeaderFooterViewLayout? = nil
     ) {
         self.sections = sections
-        
-        let config = Self.compositionalLayoutConfiguration()
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            sections[sectionIndex].layout.layout(environment: env)
+        super.init(header: header, footer: footer)
+    }
+    
+    open override func createLayout() -> UICollectionViewLayout {
+        let config = compositionalLayoutConfiguration()
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { [weak self] (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            self?.sections[sectionIndex].layout.layout(environment: env)
         }, configuration: config)
         
         for section in sections where section.layout.background != nil {
             layout.register(section.layout.background.self, forDecorationViewOfKind: String(describing: section.layout.background!))
         }
-        
-        super.init(header: header, footer: footer, layout: layout)
+        return layout
     }
     
     // MARK: - Set up
-    override func setUp() {
+    open override func setUp() {
         super.setUp()
         setUpDataSource(
             cellProvider: { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, item: BECollectionViewItem) -> UICollectionViewCell? in
@@ -40,7 +42,7 @@ open class BEStaticSectionsCollectionView: BECollectionView {
         )
     }
     
-    override func registerCellsAndSupplementaryViews() {
+    open override func registerCellsAndSupplementaryViews() {
         super.registerCellsAndSupplementaryViews()
         sections.forEach {$0.collectionView = self}
         sections.forEach {$0.registerCellAndSupplementaryViews()}
@@ -112,7 +114,7 @@ open class BEStaticSectionsCollectionView: BECollectionView {
     open override func didEndDecelerating() {
         super.didEndDecelerating()
         // get indexPaths
-        let visibleIndexPaths = indexPathsForVisibleItems
+        let visibleIndexPaths = collectionView.indexPathsForVisibleItems
         
         // Loadmore
         let sectionIndexes = Array(Set(visibleIndexPaths.map {$0.section}))
@@ -128,8 +130,8 @@ open class BEStaticSectionsCollectionView: BECollectionView {
                 .row ?? -1
             
             if viewModel.isPaginationEnabled,
-               contentOffset.y > 0,
-               lastVisibleRowIndex >= numberOfItems(inSection: index) - 5
+               collectionView.contentOffset.y > 0,
+               lastVisibleRowIndex >= collectionView.numberOfItems(inSection: index) - 5
             {
                 viewModel.fetchNext()
             }

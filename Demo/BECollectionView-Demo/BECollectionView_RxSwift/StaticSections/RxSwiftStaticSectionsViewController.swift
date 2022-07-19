@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import BECollectionView
+import BECollectionView_Core
 
 class RxSwiftStaticSectionsViewController: UIViewController, BECollectionViewDelegate {
     lazy var collectionView = RxSwiftStaticCollectionView()

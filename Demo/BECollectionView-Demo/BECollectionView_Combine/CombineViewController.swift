@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import BECollectionView_Core
 
-class RxSwiftViewController: UIViewController, BECollectionViewDelegate {
+class CombineViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -32,7 +32,7 @@ class RxSwiftViewController: UIViewController, BECollectionViewDelegate {
     }
     
     @objc private func staticButtonDidTouch() {
-        let vc = RxSwiftStaticSectionsViewController()
+        let vc = CombineStaticSectionsViewController()
         show(vc, sender: nil)
     }
     

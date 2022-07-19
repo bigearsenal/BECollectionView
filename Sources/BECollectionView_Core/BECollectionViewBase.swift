@@ -6,10 +6,7 @@
 //
 
 import Foundation
-import PureLayout
-import RxSwift
 import UIKit
-import BECollectionView_Core
 
 open class BECollectionViewBase: UIView {
     // MARK: - Constants
@@ -17,7 +14,6 @@ open class BECollectionViewBase: UIView {
     private let footerIdentifier = "GlobalFooterIdentifier"
     
     // MARK: - Property
-    let disposeBag = DisposeBag()
     public let header: BECollectionViewHeaderFooterViewLayout?
     public let footer: BECollectionViewHeaderFooterViewLayout?
     
@@ -85,22 +81,25 @@ open class BECollectionViewBase: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func commonInit() {
+    open func commonInit() {
         // add subviews
         addSubview(collectionView)
         collectionView.backgroundColor = .clear
         collectionView.delegate = scrollDelegateAdapter
-        collectionView.autoPinEdgesToSuperviewEdges()
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
+            collectionView.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
         setUpRefreshControl()
         
         // register cell and configure datasource
         setUp()
-        
-        // binding
-        bind()
     }
     
-    func createLayout() -> UICollectionViewLayout {
+    open func createLayout() -> UICollectionViewLayout {
         let config = compositionalLayoutConfiguration()
         let layout = UICollectionViewCompositionalLayout(sectionProvider: { (sectionIndex: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             nil
@@ -114,11 +113,11 @@ open class BECollectionViewBase: UIView {
         super.layoutSubviews()
     }
     
-    func setUp() {
+    open func setUp() {
         registerCellsAndSupplementaryViews()
     }
     
-    func registerCellsAndSupplementaryViews() {
+    open func registerCellsAndSupplementaryViews() {
         if let header = header {
             collectionView.register(
                 header.viewType,
@@ -135,7 +134,7 @@ open class BECollectionViewBase: UIView {
         }
     }
     
-    func setUpDataSource(
+    public func setUpDataSource(
         cellProvider: @escaping UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>.CellProvider,
         supplementaryViewProvider: UICollectionViewDiffableDataSource<AnyHashable, BECollectionViewItem>.SupplementaryViewProvider?
     ) {
@@ -161,36 +160,6 @@ open class BECollectionViewBase: UIView {
         } else {
             collectionView.refreshControl = nil
         }
-    }
-    
-    // MARK: - Binding
-    open func bind() {
-        var observable = dataDidChangeObservable()
-        
-        if SystemVersion.isIOS13() {
-            observable = observable
-                .debounce(.nanoseconds(1), scheduler: MainScheduler.instance)
-        }
-        
-        observable
-            .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] _ in
-                self?.reloadData { [weak self] in
-                    self?.dataDidLoad()
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        // did end decelerating (ex: loadmore)
-        collectionView.rx.didEndDecelerating
-            .subscribe(onNext: { [weak self] in
-                self?.didEndDecelerating()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    open func dataDidChangeObservable() -> Observable<Void> {
-        fatalError("Must override")
     }
     
     // MARK: - Layout
@@ -257,10 +226,6 @@ open class BECollectionViewBase: UIView {
                 delegate?.beCollectionView?(collectionView: self, didSelect: item)
             }
         }
-    }
-    
-    open func didEndDecelerating() {
-        
     }
     
     open func reloadData(completion: @escaping () -> Void) {

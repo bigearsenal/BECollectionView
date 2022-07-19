@@ -12,7 +12,7 @@ import BECollectionView_Core
 extension BEStaticSectionsCollectionView {
     open class Section {
         // MARK: - Properties
-        public weak var collectionView: BECollectionView?
+        public weak var collectionView: BECollectionViewBase?
         public let index: Int
         public var layout: BECollectionViewSectionLayout
         public let viewModel: BECollectionViewModelType
@@ -34,7 +34,7 @@ extension BEStaticSectionsCollectionView {
         
         // MARK: - Set up
         func registerCellAndSupplementaryViews() {
-            layout.registerCellsAndSupplementaryViews(in: collectionView!, emptyCellIdentifier: emptyCellIdentifier, headerIdentifier: headerIdentifier, footerIdentifier: footerIdentifier)
+            layout.registerCellsAndSupplementaryViews(in: collectionView!.collectionView, emptyCellIdentifier: emptyCellIdentifier, headerIdentifier: headerIdentifier, footerIdentifier: footerIdentifier)
         }
         
         func configureSupplementaryView(kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
@@ -48,12 +48,12 @@ extension BEStaticSectionsCollectionView {
         }
         
         open func configureHeader(indexPath: IndexPath) -> UICollectionReusableView? {
-            let view = layout.configureHeader(in: collectionView!, indexPath: indexPath, headerIdentifier: headerIdentifier)
+            let view = layout.configureHeader(in: collectionView!.collectionView, indexPath: indexPath, headerIdentifier: headerIdentifier)
             return view
         }
         
         open func configureFooter(indexPath: IndexPath) -> UICollectionReusableView? {
-            let view = layout.configureFooter(in: collectionView!, indexPath: indexPath, footerIdentifier: footerIdentifier)
+            let view = layout.configureFooter(in: collectionView!.collectionView, indexPath: indexPath, footerIdentifier: footerIdentifier)
             
             return view
         }
@@ -112,7 +112,7 @@ extension BEStaticSectionsCollectionView {
         
         // MARK: - CollectionView
         public var collectionViewLayout: UICollectionViewLayout? {
-            collectionView?.collectionViewLayout
+            collectionView?.collectionView.collectionViewLayout
         }
         
         // MARK: - Helper

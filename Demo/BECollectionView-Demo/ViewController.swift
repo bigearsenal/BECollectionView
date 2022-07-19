@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         firstViewController.tabBarItem = UITabBarItem(title: "RxSwift", image: .init(named: "RxSwift"), selectedImage: nil)
         
         
-        let secondViewController = RxSwiftDynamicSectionsViewController(nibName: nil, bundle: nil)
+        let secondViewController = CombineViewController(nibName: nil, bundle: nil)
         secondViewController.tabBarItem = UITabBarItem(title: "Combine", image: .init(named: "Combine"), selectedImage: nil)
         
         let tabBarController = UITabBarController()

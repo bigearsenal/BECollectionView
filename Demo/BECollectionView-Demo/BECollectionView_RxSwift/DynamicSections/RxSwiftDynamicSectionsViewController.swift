@@ -8,7 +8,8 @@
 
 import Foundation
 import UIKit
-import BECollectionView
+import PureLayout
+import BECollectionView_Core
 
 class RxSwiftDynamicSectionsViewController: UIViewController, BECollectionViewDelegate {
     lazy var collectionView = RxSwiftDynamicCollectionView()
