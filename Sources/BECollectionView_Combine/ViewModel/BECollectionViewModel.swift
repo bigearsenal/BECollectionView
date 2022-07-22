@@ -120,6 +120,11 @@ open class BECollectionViewModel<T: Hashable>: BEViewModel<[T]>, BECollectionVie
     }
     
     // MARK: - Helper
+    public func batchUpdate(closure: ([Wallet]) -> [Wallet]) {
+        let wallets = closure(getWallets())
+        overrideData(by: wallets)
+    }
+    
     @discardableResult
     open func updateItem(where predicate: (T) -> Bool, transform: (T) -> T?) -> Bool {
         // modify items
