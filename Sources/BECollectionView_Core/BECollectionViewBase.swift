@@ -16,6 +16,7 @@ open class BECollectionViewBase: UIView {
     // MARK: - Property
     public let header: BECollectionViewHeaderFooterViewLayout?
     public let footer: BECollectionViewHeaderFooterViewLayout?
+    public var isAnimationDisabled: Bool = false
     
     public var canRefresh: Bool = true {
         didSet {
@@ -230,7 +231,7 @@ open class BECollectionViewBase: UIView {
     
     open func reloadData(completion: @escaping () -> Void) {
         let snapshot = mapDataToSnapshot()
-        dataSource.apply(snapshot, animatingDifferences: true, completion: completion)
+        dataSource.apply(snapshot, animatingDifferences: !isAnimationDisabled, completion: completion)
     }
     
     open func mapDataToSnapshot() -> NSDiffableDataSourceSnapshot<AnyHashable, BECollectionViewItem> {
