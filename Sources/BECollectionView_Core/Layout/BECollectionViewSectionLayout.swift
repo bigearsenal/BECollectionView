@@ -152,7 +152,6 @@ public struct BECollectionViewSectionLayout {
             for: indexPath
         )
         view.isHidden = isLastCell
-        print("isLastCell \(isLastCell)")
         return view
     }
     
