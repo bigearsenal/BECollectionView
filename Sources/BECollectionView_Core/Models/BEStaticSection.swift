@@ -51,7 +51,7 @@ open class BEStaticSection {
     }
     
     open func configureSeparator(indexPath: IndexPath, separatorElementKind: String) -> UICollectionReusableView? {
-        layout.configureSeparator(collectionView: collectionView!.collectionView, indexPath: indexPath, separatorElementKind: separatorElementKind)
+        layout.configureSeparator(collectionView: collectionView!.collectionView, indexPath: indexPath, isLastCell: convertDataToAnyHashable().count - 1 == indexPath.row, separatorElementKind: separatorElementKind)
     }
     
     // MARK: - Datasource

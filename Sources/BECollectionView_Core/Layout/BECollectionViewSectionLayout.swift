@@ -89,7 +89,7 @@ public struct BECollectionViewSectionLayout {
         }
     }
     
-    public func configureSupplementaryView(in collectionView: UICollectionView, kind: String, indexPath: IndexPath, headerIdentifier: String? = nil, footerIdentifier: String? = nil, separatorIdentifier: String? = nil) -> UICollectionReusableView? {
+    public func configureSupplementaryView(in collectionView: UICollectionView, kind: String, indexPath: IndexPath, isLastCell: Bool, headerIdentifier: String? = nil, footerIdentifier: String? = nil, separatorIdentifier: String? = nil) -> UICollectionReusableView? {
         if kind == UICollectionView.elementKindSectionHeader {
             return configureHeader(in: collectionView, indexPath: indexPath, headerIdentifier: headerIdentifier)
         }
@@ -97,7 +97,7 @@ public struct BECollectionViewSectionLayout {
             return configureFooter(in: collectionView, indexPath: indexPath, footerIdentifier: footerIdentifier)
         }
         if kind.starts(with: BECollectionViewSeparatorLayout.elementKindPrefix) {
-            return configureSeparator(collectionView: collectionView, indexPath: indexPath, separatorElementKind: kind)
+            return configureSeparator(collectionView: collectionView, indexPath: indexPath, isLastCell: isLastCell, separatorElementKind: kind)
         }
         return nil
     }
@@ -144,13 +144,15 @@ public struct BECollectionViewSectionLayout {
         return UICollectionViewCell()
     }
     
-    public func configureSeparator(collectionView: UICollectionView, indexPath: IndexPath, separatorIdentifier: String? = nil, separatorElementKind: String? = nil) -> UICollectionReusableView? {
+    public func configureSeparator(collectionView: UICollectionView, indexPath: IndexPath, isLastCell: Bool, separatorIdentifier: String? = nil, separatorElementKind: String? = nil) -> UICollectionReusableView? {
         let separatorIdentifier = separatorIdentifier ?? String(describing: separator!.viewClass)
         let view = collectionView.dequeueReusableSupplementaryView(
             ofKind: separatorElementKind ?? BECollectionViewSeparatorLayout.elementKindPrefix,
             withReuseIdentifier: separatorIdentifier,
             for: indexPath
         )
+        view.isHidden = isLastCell
+        print("isLastCell \(isLastCell)")
         return view
     }
     
