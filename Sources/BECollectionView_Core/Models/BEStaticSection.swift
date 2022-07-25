@@ -32,7 +32,7 @@ open class BEStaticSection {
         if kind == UICollectionView.elementKindSectionFooter {
             return configureFooter(indexPath: indexPath)
         }
-        if kind.starts(with: BECollectionViewSeparatorLayout.elementKind) {
+        if kind.starts(with: BECollectionViewSeparatorLayout.elementKindPrefix) {
             return configureSeparator(indexPath: indexPath, separatorElementKind: kind)
         }
         return nil

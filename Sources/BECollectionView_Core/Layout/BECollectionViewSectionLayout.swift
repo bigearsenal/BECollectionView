@@ -84,8 +84,8 @@ public struct BECollectionViewSectionLayout {
         // register separator
         if let separator = separator?.viewClass {
             let separatorIdentifier = separatorIdentifier ?? String(describing: separator)
-            collectionView.register(separator, forSupplementaryViewOfKind: BECollectionViewSeparatorLayout.elementKind + "Left", withReuseIdentifier: separatorIdentifier)
-            collectionView.register(separator, forSupplementaryViewOfKind: BECollectionViewSeparatorLayout.elementKind + "Right", withReuseIdentifier: separatorIdentifier)
+            collectionView.register(separator, forSupplementaryViewOfKind: BECollectionViewSeparatorLayout.elementKindPrefix + "Left", withReuseIdentifier: separatorIdentifier)
+            collectionView.register(separator, forSupplementaryViewOfKind: BECollectionViewSeparatorLayout.elementKindPrefix + "Right", withReuseIdentifier: separatorIdentifier)
         }
     }
     
@@ -96,7 +96,7 @@ public struct BECollectionViewSectionLayout {
         if kind == UICollectionView.elementKindSectionFooter {
             return configureFooter(in: collectionView, indexPath: indexPath, footerIdentifier: footerIdentifier)
         }
-        if kind.starts(with: BECollectionViewSeparatorLayout.elementKind) {
+        if kind.starts(with: BECollectionViewSeparatorLayout.elementKindPrefix) {
             return configureSeparator(collectionView: collectionView, indexPath: indexPath, separatorElementKind: kind)
         }
         return nil
@@ -147,7 +147,7 @@ public struct BECollectionViewSectionLayout {
     public func configureSeparator(collectionView: UICollectionView, indexPath: IndexPath, separatorIdentifier: String? = nil, separatorElementKind: String? = nil) -> UICollectionReusableView? {
         let separatorIdentifier = separatorIdentifier ?? String(describing: separator!.viewClass)
         let view = collectionView.dequeueReusableSupplementaryView(
-            ofKind: separatorElementKind ?? BECollectionViewSeparatorLayout.elementKind,
+            ofKind: separatorElementKind ?? BECollectionViewSeparatorLayout.elementKindPrefix,
             withReuseIdentifier: separatorIdentifier,
             for: indexPath
         )
