@@ -125,7 +125,7 @@ open class BEDynamicSectionsCollectionView: BECollectionViewBaseCombine {
         if let customLayout = sections[safe: indexPath.section]?.customLayout {
             layout = customLayout
         }
-        let view = layout.configureSupplementaryView(in: collectionView, kind: kind, indexPath: indexPath)
+        let view = layout.configureSupplementaryView(in: collectionView, kind: kind, indexPath: indexPath, isLastCell: viewModel.convertDataToAnyHashable().count - 1 == indexPath.row)
         if kind == UICollectionView.elementKindSectionHeader {
             if indexPath.section >= sections.count {
                 return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Empty", for: indexPath)

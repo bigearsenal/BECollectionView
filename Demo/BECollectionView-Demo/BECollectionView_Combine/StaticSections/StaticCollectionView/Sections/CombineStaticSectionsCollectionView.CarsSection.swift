@@ -21,6 +21,7 @@ extension CombineStaticSectionsCollectionView {
                     cellType: CarCell.self,
                     emptyCellType: BECollectionViewBasicEmptyCell.self,
                     interGroupSpacing: 16,
+                    separator: .init(viewClass: BECollectionViewDefaultSeparatorView.self),
                     itemHeight: .estimated(17),
                     contentInsets: NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16),
                     horizontalInterItemSpacing: NSCollectionLayoutSpacing.fixed(16)
