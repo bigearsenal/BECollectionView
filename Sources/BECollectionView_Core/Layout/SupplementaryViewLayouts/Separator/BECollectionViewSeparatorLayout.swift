@@ -20,11 +20,12 @@ public struct BECollectionViewSeparatorLayout {
     public let viewClass: UICollectionReusableView.Type
     public let heightDimension: NSCollectionLayoutDimension
     public let customLayout: NSCollectionLayoutBoundarySupplementaryItem?
-    public var layout: NSCollectionLayoutSupplementaryItem {
+    
+    public func createLayout(elementKindSuffix: String = "") -> NSCollectionLayoutSupplementaryItem {
         if let layout = customLayout {return layout}
         
         let separatorAnchor = NSCollectionLayoutAnchor(edges: .bottom, absoluteOffset: CGPoint(x: 0, y: 1))
         let separatorSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: heightDimension)
-        return NSCollectionLayoutSupplementaryItem(layoutSize: separatorSize, elementKind: Self.elementKind, containerAnchor: separatorAnchor)
+        return NSCollectionLayoutSupplementaryItem(layoutSize: separatorSize, elementKind: Self.elementKind + elementKindSuffix, containerAnchor: separatorAnchor)
     }
 }

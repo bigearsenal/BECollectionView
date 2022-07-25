@@ -33,6 +33,7 @@ public struct BECollectionViewSectionLayout {
         self.emptyCellType = emptyCellType
         self.numberOfLoadingCells = numberOfLoadingCells
         self.interGroupSpacing = interGroupSpacing
+        self.separator = separator
         self.orthogonalScrollingBehavior = orthogonalScrollingBehavior
         self.itemHeight = itemHeight
         self.contentInsets = contentInsets
@@ -83,7 +84,8 @@ public struct BECollectionViewSectionLayout {
         // register separator
         if let separator = separator?.viewClass {
             let separatorIdentifier = separatorIdentifier ?? String(describing: separator)
-            collectionView.register(separator, forSupplementaryViewOfKind: BECollectionViewSeparatorLayout.elementKind, withReuseIdentifier: separatorIdentifier)
+            collectionView.register(separator, forSupplementaryViewOfKind: BECollectionViewSeparatorLayout.elementKind + "Left", withReuseIdentifier: separatorIdentifier)
+            collectionView.register(separator, forSupplementaryViewOfKind: BECollectionViewSeparatorLayout.elementKind + "Right", withReuseIdentifier: separatorIdentifier)
         }
     }
     
@@ -94,8 +96,8 @@ public struct BECollectionViewSectionLayout {
         if kind == UICollectionView.elementKindSectionFooter {
             return configureFooter(in: collectionView, indexPath: indexPath, footerIdentifier: footerIdentifier)
         }
-        if kind == BECollectionViewSeparatorLayout.elementKind {
-            return configureSeparator(collectionView: collectionView, indexPath: indexPath, separatorIdentifier: separatorIdentifier)
+        if kind.starts(with: BECollectionViewSeparatorLayout.elementKind) {
+            return configureSeparator(collectionView: collectionView, indexPath: indexPath, separatorElementKind: kind)
         }
         return nil
     }
@@ -142,10 +144,10 @@ public struct BECollectionViewSectionLayout {
         return UICollectionViewCell()
     }
     
-    public func configureSeparator(collectionView: UICollectionView, indexPath: IndexPath, separatorIdentifier: String? = nil) -> UICollectionReusableView? {
+    public func configureSeparator(collectionView: UICollectionView, indexPath: IndexPath, separatorIdentifier: String? = nil, separatorElementKind: String? = nil) -> UICollectionReusableView? {
         let separatorIdentifier = separatorIdentifier ?? String(describing: separator!.viewClass)
         let view = collectionView.dequeueReusableSupplementaryView(
-            ofKind: BECollectionViewSeparatorLayout.elementKind,
+            ofKind: separatorElementKind ?? BECollectionViewSeparatorLayout.elementKind,
             withReuseIdentifier: separatorIdentifier,
             for: indexPath
         )
@@ -211,7 +213,7 @@ public struct BECollectionViewSectionLayout {
         }
         
         var supplementaryItems = [NSCollectionLayoutSupplementaryItem]()
-        if let separatorLayout = separator?.layout {
+        if let separatorLayout = separator?.createLayout(elementKindSuffix: "Left") {
             supplementaryItems.append(separatorLayout)
         }
         
@@ -229,9 +231,19 @@ public struct BECollectionViewSectionLayout {
         }
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: itemHeight)
         
-        let leadingItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        var leadingSupplementaryItems = [NSCollectionLayoutSupplementaryItem]()
+        if let separatorLayout = separator?.createLayout(elementKindSuffix: "Left") {
+            leadingSupplementaryItems.append(separatorLayout)
+        }
         
-        let trailingItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        let leadingItem = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: leadingSupplementaryItems)
+        
+        var trailingSupplementaryItems = [NSCollectionLayoutSupplementaryItem]()
+        if let separatorLayout = separator?.createLayout(elementKindSuffix: "Right") {
+            trailingSupplementaryItems.append(separatorLayout)
+        }
+        
+        let trailingItem = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: trailingSupplementaryItems)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .absolute((env.container.contentSize.width - horizontalInterItemSpacing.spacing - contentInsets.leading - contentInsets.trailing)/2), heightDimension: itemSize.heightDimension)
         
