@@ -16,7 +16,7 @@ open class BECollectionViewBase: UIView {
     // MARK: - Property
     public let header: BECollectionViewHeaderFooterViewLayout?
     public let footer: BECollectionViewHeaderFooterViewLayout?
-    public var isAnimationDisabled: Bool = false
+    private var isAnimationDisabled: Bool = false
     
     public var canRefresh: Bool = true {
         didSet {
@@ -257,6 +257,14 @@ open class BECollectionViewBase: UIView {
             collectionView.collectionViewLayout.invalidateLayout(with: context)
         } else {
             collectionView.collectionViewLayout.invalidateLayout()
+        }
+    }
+    
+    public func updateWithoutAnimations(_ block: (() -> Void)) {
+        isAnimationDisabled = true
+        block()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) { [weak self] in
+            self?.isAnimationDisabled = false
         }
     }
 }
