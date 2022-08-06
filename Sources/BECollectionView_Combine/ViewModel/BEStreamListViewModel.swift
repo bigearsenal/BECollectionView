@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RxSwift
 import BECollectionView_Core
 
 open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]>, BECollectionViewModelType {
