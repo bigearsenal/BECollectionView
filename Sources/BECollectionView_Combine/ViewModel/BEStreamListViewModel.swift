@@ -61,22 +61,27 @@ open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]>, BECollect
 
         state = .loading
         cache = []
-        task = next()
-            .sink(receiveCompletion: { [weak self] completion in
-                guard let self = self else { return }
-                switch completion {
-                case .finished:
-                    if !self.isPaginationEnabled || self.cache.count < self.limit {
-                        self.isLastPageLoaded = true
-                    }
-                    self.offset += self.limit
-                    self.state = .loaded
-                case .failure(let error):
-                    self.handleError(error)
+        
+        task = Task {
+            do {
+                try Task.checkCancellation()
+                let stream = next()
+                for try await newData in stream {
+                    try Task.checkCancellation()
+                    self.handleData(newData)
                 }
-            }, receiveValue: { [weak self] newData in
-                self?.handleData(newData)
-            })
+                if !self.isPaginationEnabled || self.cache.count < self.limit {
+                    self.isLastPageLoaded = true
+                }
+                self.offset += self.limit
+                self.state = .loaded
+            } catch {
+                if error is CancellationError {
+                    return
+                }
+                self.handleError(error)
+            }
+        }
     }
 
     override open func handleData(_ newItems: [T]) {
