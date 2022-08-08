@@ -16,7 +16,7 @@ open class BEStreamViewModel<Item: Hashable>: ObservableObject {
     let initialData: Item
 
     /// Current request
-    var task: AnyCancellable?
+    var task: Task<Void, Never>?
 
     /// Current data
     @Published public private(set) var data: Item
@@ -59,9 +59,9 @@ open class BEStreamViewModel<Item: Hashable>: ObservableObject {
     }
 
     /// Fetch next item
-    open func next() -> AnyPublisher<Item, Error> {
+    open func next() -> AsyncThrowingStream<Item, Error> {
         // delay for simulating loading, MUST OVERRIDE
-        Just(data).setFailureType(to: Error.self).eraseToAnyPublisher()
+        fatalError()
     }
 
     open func fetch(force: Bool = false) {
@@ -75,17 +75,22 @@ open class BEStreamViewModel<Item: Hashable>: ObservableObject {
         
         state = .loading
         
-        task = next()
-            .sink(receiveCompletion: { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.state = .loaded
-                case .failure(let error):
-                    self?.handleError(error)
+        task = Task {
+            do {
+                try Task.checkCancellation()
+                let stream = next()
+                for try await newData in stream {
+                    try Task.checkCancellation()
+                    self.handleData(newData)
                 }
-            }, receiveValue: { [weak self] newData in
-                self?.handleData(newData)
-            })
+                self.state = .loaded
+            } catch {
+                if error is CancellationError {
+                    return
+                }
+                self.handleError(error)
+            }
+        }
     }
 
     /// processes incoming data
