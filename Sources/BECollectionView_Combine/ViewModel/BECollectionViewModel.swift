@@ -183,7 +183,7 @@ open class BECollectionViewModel<T: Hashable>: BEViewModel<[T]>, BECollectionVie
         data as [AnyHashable]
     }
     
-    public var dataDidChange: AnyPublisher<Void, Never> {
+    open var dataDidChange: AnyPublisher<Void, Never> {
         $data.map {_ in ()}.eraseToAnyPublisher()
     }
 }
