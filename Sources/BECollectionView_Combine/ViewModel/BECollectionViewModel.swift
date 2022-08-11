@@ -248,6 +248,9 @@ open class BEViewModel<T: Hashable>: ObservableObject {
                 let newData = try await createRequest()
                 handleNewData(newData)
             } catch {
+                if error is CancellationError {
+                    return
+                }
                 handleError(error)
             }
         }
