@@ -214,6 +214,7 @@ open class BEViewModel<T: Hashable>: ObservableObject {
     open func flush() {
         data = initialData
         state = .initializing
+        error = nil
     }
     
     open func reload() {
@@ -240,6 +241,7 @@ open class BEViewModel<T: Hashable>: ObservableObject {
         }
         
         state = .loading
+        error = nil
         
         task = Task {
             do {
