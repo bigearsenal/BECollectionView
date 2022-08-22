@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import BECollectionView_Core
 
-open class BEStreamViewModel<Item: Hashable> {
+open class BERxStreamViewModel<Item: Hashable> {
     // MARK: - Properties
 
     let initialData: Item

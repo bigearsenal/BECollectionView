@@ -1,8 +1,15 @@
-import Foundation
-import Combine
-import BECollectionView_Core
+//
+//  BEListViewModel.swift
+//  BECollectionView
+//
+//  Created by Chung Tran on 15/03/2021.
+//
 
-open class BECollectionViewModel<T: Hashable>: BEViewModel<[T]>, BECollectionViewModelType {
+import Foundation
+import RxSwift
+import BECollectionView
+
+open class BERxListViewModel<T: Hashable>: BERxViewModel<[T]>, BEListViewModelType {
     // MARK: - Properties
     public var isPaginationEnabled: Bool
     public var customFilter: ((T) -> Bool)?
@@ -85,7 +92,7 @@ open class BECollectionViewModel<T: Hashable>: BEViewModel<[T]>, BECollectionVie
     }
     
     public func setState(_ state: BEFetcherState, withData data: [AnyHashable]? = nil) {
-        self.state = state
+        self.state.accept(state)
         if let data = data as? [T] {
             overrideData(by: data)
         }
@@ -99,18 +106,20 @@ open class BECollectionViewModel<T: Hashable>: BEViewModel<[T]>, BECollectionVie
         let originalOffset = offset
         offset = 0
         
-        task?.cancel()
+        requestDisposable?.dispose()
         
-        task = Task {
-            let onSuccess = onSuccessFilterNewData ?? {[weak self] newData in
-                newData.filter {!(self?.data.contains($0) == true)}
-            }
-            var data = self.data
-            let newData = try await self.createRequest()
-            data = onSuccess(newData) + data
-            self.overrideData(by: data)
-        }
-        
+        requestDisposable = createRequest()
+            .subscribe(onSuccess: { [weak self] newData in
+                guard let self = self else {return}
+                let onSuccess = onSuccessFilterNewData ?? {[weak self] newData in
+                    newData.filter {!(self?.data.contains($0) == true)}
+                }
+                var data = self.data
+                data = onSuccess(newData) + data
+                self.overrideData(by: data)
+            }, onFailure: { error in
+                // TODO: - Handle error when updating first page
+            })
         offset = originalOffset
     }
     
@@ -120,11 +129,6 @@ open class BECollectionViewModel<T: Hashable>: BEViewModel<[T]>, BECollectionVie
     }
     
     // MARK: - Helper
-    public func batchUpdate(closure: ([T]) -> [T]) {
-        let newData = closure(data)
-        overrideData(by: newData)
-    }
-    
     @discardableResult
     open func updateItem(where predicate: (T) -> Bool, transform: (T) -> T?) -> Bool {
         // modify items
@@ -181,89 +185,5 @@ open class BECollectionViewModel<T: Hashable>: BEViewModel<[T]>, BECollectionVie
     
     public func convertDataToAnyHashable() -> [AnyHashable] {
         data as [AnyHashable]
-    }
-    
-    open var dataDidChange: AnyPublisher<Void, Never> {
-        $data.map {_ in ()}.eraseToAnyPublisher()
-    }
-}
-
-@MainActor
-open class BEViewModel<T: Hashable>: ObservableObject {
-    // MARK: - Properties
-    public let initialData: T
-    
-    public var task: Task<Void, Error>?
-    
-    @Published public var data: T
-    @Published public var state: BEFetcherState = .initializing
-    @Published public var error: Error?
-    
-    // MARK: - Subject
-    
-    // MARK: - Initializer
-    public init(initialData: T) {
-        self.initialData = initialData
-        data = initialData
-        bind()
-    }
-    
-    open func bind() {}
-    
-    // MARK: - Actions
-    open func flush() {
-        data = initialData
-        state = .initializing
-        error = nil
-    }
-    
-    open func reload() {
-        flush()
-        request(reload: true)
-    }
-    
-    // MARK: - Asynchronous request handler
-    open func createRequest() async throws -> T {
-        fatalError("Must override")
-    }
-    
-    open func shouldRequest() -> Bool {
-        state == .loading
-    }
-    
-    open func request(reload: Bool = false) {
-        if reload {
-            // cancel previous request
-            task?.cancel()
-        } else if !shouldRequest() {
-            // there is an running operation
-            return
-        }
-        
-        state = .loading
-        error = nil
-        
-        task = Task {
-            do {
-                let newData = try await createRequest()
-                handleNewData(newData)
-            } catch {
-                if error is CancellationError {
-                    return
-                }
-                handleError(error)
-            }
-        }
-    }
-    
-    open func handleNewData(_ newData: T) {
-        data = newData
-        error = nil
-        state = .loaded
-    }
-    
-    open func handleError(_ error: Error) {
-        self.error = error
-        state = .error
     }
 }

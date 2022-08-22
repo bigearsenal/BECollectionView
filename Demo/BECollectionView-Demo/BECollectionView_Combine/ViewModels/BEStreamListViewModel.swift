@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import RxSwift
-import BECollectionView_Core
+import BECollectionView_Combine
 
-open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]>, BEListViewModelType {
+open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]>, BECollectionViewModelType {
     // MARK: - Properties
 
     public var isPaginationEnabled: Bool
@@ -60,21 +59,29 @@ open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]>, BEListVie
             return
         }
 
-        state.accept(.loading)
+        state = .loading
         cache = []
-        requestDisposable = next()
-            .subscribe(onNext: { [weak self] newData in
-                self?.handleData(newData)
-            }, onError: { [weak self] error in
-                self?.handleError(error)
-            }, onCompleted: { [weak self] in
-                guard let self = self else { return }
+        
+        task = Task {
+            do {
+                try Task.checkCancellation()
+                let stream = next()
+                for try await newData in stream {
+                    try Task.checkCancellation()
+                    self.handleData(newData)
+                }
                 if !self.isPaginationEnabled || self.cache.count < self.limit {
                     self.isLastPageLoaded = true
                 }
                 self.offset += self.limit
-                self.state.accept(.loaded)
-            })
+                self.state = .loaded
+            } catch {
+                if error is CancellationError {
+                    return
+                }
+                self.handleError(error)
+            }
+        }
     }
 
     override open func handleData(_ newItems: [T]) {
@@ -84,7 +91,7 @@ open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]>, BEListVie
         let mappedData = map(newData: newData)
         super.handleData(mappedData)
 
-        state.accept(.loading)
+        state = .loading
     }
 
     open func join(_ newItems: [T]) -> [T] {
@@ -105,13 +112,14 @@ open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]>, BEListVie
     }
 
     public func setState(_ state: BEFetcherState, withData data: [AnyHashable]? = nil) {
-        self.state.accept(state)
+        self.state = state
         if let data = data as? [T] { overrideData(by: data) }
     }
 
     public func refreshUI() {
         overrideData(by: data)
-        state.accept(state.value)
+        let state = self.state
+        self.state = state
     }
 
     public func getCurrentPage() -> Int? {

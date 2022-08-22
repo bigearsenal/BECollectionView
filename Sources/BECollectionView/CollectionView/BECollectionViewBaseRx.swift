@@ -1,6 +1,6 @@
 import Foundation
 import RxSwift
-import BECollectionView_Core
+import RxCocoa
 
 open class BECollectionViewBaseRx: BECollectionViewBase {
     let disposeBag = DisposeBag()

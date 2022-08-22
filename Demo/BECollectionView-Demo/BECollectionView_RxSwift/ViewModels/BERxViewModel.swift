@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import BECollectionView_Core
 
-open class BEViewModel<T: Hashable> {
+open class BERxViewModel<T: Hashable> {
     // MARK: - Properties
     let initialData: T
     var requestDisposable: Disposable?

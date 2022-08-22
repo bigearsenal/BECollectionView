@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B36520828B3455200BD59E3 /* BERxListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36520428B3455200BD59E3 /* BERxListViewModel.swift */; };
+		3B36520928B3455200BD59E3 /* BERxStreamListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36520528B3455200BD59E3 /* BERxStreamListViewModel.swift */; };
+		3B36520A28B3455200BD59E3 /* BERxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36520628B3455200BD59E3 /* BERxViewModel.swift */; };
+		3B36520B28B3455200BD59E3 /* BERxStreamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36520728B3455200BD59E3 /* BERxStreamViewModel.swift */; };
+		3B36520F28B345FD00BD59E3 /* BEStreamListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36520C28B345FD00BD59E3 /* BEStreamListViewModel.swift */; };
+		3B36521028B345FD00BD59E3 /* BECollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36520D28B345FD00BD59E3 /* BECollectionViewModel.swift */; };
+		3B36521128B345FD00BD59E3 /* BEStreamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B36520E28B345FD00BD59E3 /* BEStreamViewModel.swift */; };
 		3B4FA3E4283F2A4A002B13CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4FA3E3283F2A4A002B13CF /* AppDelegate.swift */; };
 		3B4FA3F0283F2A4B002B13CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B4FA3EE283F2A4B002B13CF /* LaunchScreen.storyboard */; };
 		3B4FA3FB283F2A4B002B13CF /* BECollectionView_DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4FA3FA283F2A4B002B13CF /* BECollectionView_DemoTests.swift */; };
@@ -65,6 +72,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B36520428B3455200BD59E3 /* BERxListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERxListViewModel.swift; sourceTree = "<group>"; };
+		3B36520528B3455200BD59E3 /* BERxStreamListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERxStreamListViewModel.swift; sourceTree = "<group>"; };
+		3B36520628B3455200BD59E3 /* BERxViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERxViewModel.swift; sourceTree = "<group>"; };
+		3B36520728B3455200BD59E3 /* BERxStreamViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BERxStreamViewModel.swift; sourceTree = "<group>"; };
+		3B36520C28B345FD00BD59E3 /* BEStreamListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BEStreamListViewModel.swift; sourceTree = "<group>"; };
+		3B36520D28B345FD00BD59E3 /* BECollectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BECollectionViewModel.swift; sourceTree = "<group>"; };
+		3B36520E28B345FD00BD59E3 /* BEStreamViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BEStreamViewModel.swift; sourceTree = "<group>"; };
 		3B4FA3E0283F2A4A002B13CF /* BECollectionView-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BECollectionView-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4FA3E3283F2A4A002B13CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B4FA3EF283F2A4B002B13CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -217,6 +231,10 @@
 		3B4FA47D283F2BD4002B13CF /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				3B36520428B3455200BD59E3 /* BERxListViewModel.swift */,
+				3B36520528B3455200BD59E3 /* BERxStreamListViewModel.swift */,
+				3B36520728B3455200BD59E3 /* BERxStreamViewModel.swift */,
+				3B36520628B3455200BD59E3 /* BERxViewModel.swift */,
 				3B4FA47E283F2BDF002B13CF /* RxSwiftCarsViewModel.swift */,
 				3B4FA47F283F2BDF002B13CF /* RxSwiftFriendsViewModel.swift */,
 			);
@@ -306,6 +324,9 @@
 		3B61C17E28851E9B0066F419 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				3B36520D28B345FD00BD59E3 /* BECollectionViewModel.swift */,
+				3B36520C28B345FD00BD59E3 /* BEStreamListViewModel.swift */,
+				3B36520E28B345FD00BD59E3 /* BEStreamViewModel.swift */,
 				3B61C17F28851EA90066F419 /* CombineCarsViewModel.swift */,
 				3B61C18128851EB30066F419 /* CombineFriendsViewModel.swift */,
 			);
@@ -502,21 +523,28 @@
 				3B4FA488283F2C00002B13CF /* CarsSectionHeaderFooterView.swift in Sources */,
 				3B4FA48B283F2C00002B13CF /* BaseCollectionReusableView.swift in Sources */,
 				3B4FA49C283F2C6F002B13CF /* RxSwiftStaticCollectionView.CarsSection.swift in Sources */,
+				3B36521028B345FD00BD59E3 /* BECollectionViewModel.swift in Sources */,
 				3B4FA4A2283F2C8D002B13CF /* RxSwiftDynamicCollectionView.swift in Sources */,
 				3B61C17828851B5C0066F419 /* RxSwiftViewController.swift in Sources */,
 				3B4FA3E4283F2A4A002B13CF /* AppDelegate.swift in Sources */,
 				3B4FA4A1283F2C8D002B13CF /* RxSwiftDynamicSectionsViewController.swift in Sources */,
+				3B36520B28B3455200BD59E3 /* BERxStreamViewModel.swift in Sources */,
 				3B4FA48A283F2C00002B13CF /* GlobalHeaderView.swift in Sources */,
 				3B4FA490283F2C19002B13CF /* CarCell.swift in Sources */,
 				3B4FA480283F2BDF002B13CF /* RxSwiftCarsViewModel.swift in Sources */,
+				3B36520828B3455200BD59E3 /* BERxListViewModel.swift in Sources */,
+				3B36520928B3455200BD59E3 /* BERxStreamListViewModel.swift in Sources */,
 				3B61C190288654640066F419 /* CombineStaticSectionsCollectionView.FriendsSection.swift in Sources */,
 				3B61C18228851EB30066F419 /* CombineFriendsViewModel.swift in Sources */,
 				3B4FA495283F2C3A002B13CF /* RxSwiftStaticSectionsViewController.swift in Sources */,
 				3B4FA49D283F2C6F002B13CF /* RxSwiftStaticCollectionView.FriendsSection.swift in Sources */,
 				3B61C192288655DA0066F419 /* CombineStaticSectionsViewController.swift in Sources */,
+				3B36520F28B345FD00BD59E3 /* BEStreamListViewModel.swift in Sources */,
 				3B61C18B288548870066F419 /* CombineStaticSectionsCollectionView.swift in Sources */,
 				3B61C18E288654550066F419 /* CombineStaticSectionsCollectionView.CarsSection.swift in Sources */,
+				3B36521128B345FD00BD59E3 /* BEStreamViewModel.swift in Sources */,
 				3B61C18028851EA90066F419 /* CombineCarsViewModel.swift in Sources */,
+				3B36520A28B3455200BD59E3 /* BERxViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
