@@ -188,7 +188,6 @@ open class BECollectionViewModel<T: Hashable>: BEViewModel<[T]>, BECollectionVie
     }
 }
 
-@MainActor
 open class BEViewModel<T: Hashable>: ObservableObject {
     // MARK: - Properties
     public let initialData: T
