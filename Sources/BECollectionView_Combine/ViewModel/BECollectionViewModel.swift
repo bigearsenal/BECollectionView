@@ -256,6 +256,10 @@ open class BEViewModel<T: Hashable>: ObservableObject {
         }
     }
     
+    open func refresh() {
+        request(reload: false)
+    }
+    
     open func handleNewData(_ newData: T) {
         data = newData
         error = nil
